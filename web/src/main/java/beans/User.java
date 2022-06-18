@@ -5,7 +5,7 @@ import java.util.Date;
 public abstract class User {
 	
 	public enum GenderType{MALE, FEMALE}
-	public enum UserType{ ADMIN, MANAGER, TRAINER, BUYER}
+	public enum UserType{ ADMIN, MANAGER, COACH, BUYER}
 	
 	protected String username;
 	protected String name;

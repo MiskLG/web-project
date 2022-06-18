@@ -6,8 +6,8 @@ public class Manager extends User{
 	private SportsFacility facility;
 
 	public Manager(String username, String name, String lastname, String password, GenderType gender, Date dateOfBirth,
-			UserType userType, SportsFacility facility) {
-		super(username, name, lastname, password, gender, dateOfBirth, userType);
+			SportsFacility facility) {
+		super(username, name, lastname, password, gender, dateOfBirth, UserType.MANAGER);
 		this.facility = facility;
 	}
 

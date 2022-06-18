@@ -10,9 +10,9 @@ public class Buyer extends User{
 	private BuyerType buyerType;
 		
 	public Buyer(String username, String name, String lastname, String password, GenderType gender, Date dateOfBirth,
-			UserType userType, Subscription subscriptionId, ArrayList<SportsFacility> visitedFacilities, int points,
+			Subscription subscriptionId, ArrayList<SportsFacility> visitedFacilities, int points,
 			BuyerType buyerType) {
-		super(username, name, lastname, password, gender, dateOfBirth, userType);
+		super(username, name, lastname, password, gender, dateOfBirth, UserType.BUYER);
 		this.subscriptionId = subscriptionId;
 		this.visitedFacilities = visitedFacilities;
 		this.points = points;
