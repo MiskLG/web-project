@@ -7,11 +7,11 @@ public abstract class User {
 	public enum GenderType{MALE, FEMALE}
 	public enum UserType{ ADMIN, MANAGER, TRAINER, BUYER}
 	
-	private String username;
-	private String name;
-	private String lastname;
-	private String password;
-	private GenderType gender;
-	private Date dateOfBirth;
-	private UserType userType;
+	protected String username;
+	protected String name;
+	protected String lastname;
+	protected String password;
+	protected GenderType gender;
+	protected Date dateOfBirth;
+	protected UserType userType;
 }
