@@ -3,16 +3,17 @@ package beans;
 import java.util.Date;
 
 public class Subscription {
-	enum SubscriptionType{ANNUAL, MONTHLY, WEEKLY, DAILY}
-	enum StatusType{ACTIVE,INACTIVE}
+	public enum SubscriptionType{ANNUAL, MONTHLY, WEEKLY, DAILY}
+	public enum StatusType{ACTIVE,INACTIVE}
 	private String Id;
 	private Date dateOfPaying;
 	private Date dateOfExparation;
 	private Double price;
 	private StatusType status;
 	private int numberOfAppointments;
+	private SubscriptionType type;
 	
-	public Subscription(String id, Date dateOfPaying, Date dateOfExparation, Double price, StatusType status,
+	public Subscription(String id, Date dateOfPaying, Date dateOfExparation, Double price, StatusType status, SubscriptionType type,
 			int numberOfAppointments) {
 		super();
 		Id = id;
@@ -20,6 +21,7 @@ public class Subscription {
 		this.dateOfExparation = dateOfExparation;
 		this.price = price;
 		this.status = status;
+		this.type = type;
 		this.numberOfAppointments = numberOfAppointments;
 	}
 	

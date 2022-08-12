@@ -12,8 +12,7 @@ public class Main {
         port(8080);
 
         staticFiles.externalLocation(new File("./static").getCanonicalPath());
-        UserController.login();
-        UserController.logout();
+        UserController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

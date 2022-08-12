@@ -1,0 +1,77 @@
+[
+  {
+    "subscriptionId": {
+      "Id": "0",
+      "dateOfPaying": "Aug 11, 2022, 6:39:23 PM",
+      "dateOfExparation": "Aug 11, 2022, 6:39:23 PM",
+      "price": 12.2,
+      "status": "ACTIVE",
+      "numberOfAppointments": 0,
+      "type": "DAILY"
+    },
+    "visitedFacilities": [],
+    "points": 0,
+    "buyerType": {
+      "name": "asd",
+      "discount": 12.0,
+      "pointsNeeded": 12000
+    },
+    "username": "test",
+    "name": "test",
+    "lastname": "test",
+    "password": "123",
+    "gender": "MALE",
+    "dateOfBirth": "Aug 11, 2022, 6:39:23 PM",
+    "userType": "BUYER"
+  },
+  {
+    "subscriptionId": {
+      "Id": "0",
+      "dateOfPaying": "Aug 11, 2022, 6:39:24 PM",
+      "dateOfExparation": "Aug 11, 2022, 6:39:24 PM",
+      "price": 12.2,
+      "status": "ACTIVE",
+      "numberOfAppointments": 0,
+      "type": "DAILY"
+    },
+    "visitedFacilities": [],
+    "points": 0,
+    "buyerType": {
+      "name": "asd",
+      "discount": 12.0,
+      "pointsNeeded": 12000
+    },
+    "username": "test",
+    "name": "test",
+    "lastname": "test",
+    "password": "123",
+    "gender": "MALE",
+    "dateOfBirth": "Aug 11, 2022, 6:39:24 PM",
+    "userType": "BUYER"
+  },
+  {
+    "subscriptionId": {
+      "Id": "0",
+      "dateOfPaying": "Aug 11, 2022, 6:43:09 PM",
+      "dateOfExparation": "Aug 11, 2022, 6:43:09 PM",
+      "price": 12.2,
+      "status": "ACTIVE",
+      "numberOfAppointments": 0,
+      "type": "DAILY"
+    },
+    "visitedFacilities": [],
+    "points": 0,
+    "buyerType": {
+      "name": "asd",
+      "discount": 12.0,
+      "pointsNeeded": 12000
+    },
+    "username": "test",
+    "name": "test",
+    "lastname": "test",
+    "password": "123",
+    "gender": "MALE",
+    "dateOfBirth": "Aug 11, 2022, 6:43:09 PM",
+    "userType": "BUYER"
+  }
+]
