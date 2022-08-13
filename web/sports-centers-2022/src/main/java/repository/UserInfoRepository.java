@@ -14,19 +14,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 
-public class UserRepository {
+public class UserInfoRepository {
 
     private ArrayList<Manager> managers;
     private ArrayList<Coach> coaches;
 
     private ArrayList<UserLoginInfo> userLoginInfo;
-    private static UserRepository repo = null;
+    private static UserInfoRepository repo = null;
 
-    private UserRepository() {};
+    private UserInfoRepository() {};
 
-    public static UserRepository init() {
+    public static UserInfoRepository init() {
         if(repo == null) {
-            repo = new UserRepository();
+            repo = new UserInfoRepository();
             repo.userLoginInfo = new ArrayList<UserLoginInfo>();
         }
         return repo;

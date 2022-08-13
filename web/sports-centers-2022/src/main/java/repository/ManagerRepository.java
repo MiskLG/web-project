@@ -26,7 +26,7 @@ public class ManagerRepository {
         return repo;
     }
 
-    public ArrayList<Manager> getManagers() {
+    public ArrayList<Manager> getAll() {
         read();
         return this.managers;
     }

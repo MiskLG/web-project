@@ -26,7 +26,7 @@ public class AdminRepository {
         }
         return repo;
     }
-    public ArrayList<Admin> getAdmins() {
+    public ArrayList<Admin> getAll() {
         read();
         return this.admins;
     }

@@ -7,16 +7,17 @@ import repository.*;
 
 public class UserService {
 
-    private UserRepository userRepository;
+    private UserInfoRepository userInfoRepository;
     private BuyerRepository buyerRepository;
     private AdminRepository adminRepository;
     private CoachRepository coachRepository;
     private ManagerRepository managerRepository;
     public UserService() {
-
-        userRepository = UserRepository.init();
+        userInfoRepository = UserInfoRepository.init();
         buyerRepository = BuyerRepository.init();
         adminRepository = AdminRepository.init();
+        coachRepository = CoachRepository.init();
+        managerRepository = ManagerRepository.init();
     }
 
     public User getUser(Credentials credentials) {
@@ -49,7 +50,7 @@ public class UserService {
     }
 
     private User findManager(UserLoginInfo info) {
-        for (Manager manager: managerRepository.getManagers()) {
+        for (Manager manager: managerRepository.getAll()) {
             if (info.getUsername().equalsIgnoreCase(manager.getUsername()) && info.getPassword().equals(manager.getPassword())) {
                 return manager;
             }
@@ -58,7 +59,7 @@ public class UserService {
     }
 
     private User findCoach(UserLoginInfo info) {
-        for (Coach coach: coachRepository.getCoaches()) {
+        for (Coach coach: coachRepository.getAll()) {
             if (info.getUsername().equalsIgnoreCase(coach.getUsername()) && info.getPassword().equals(coach.getPassword())) {
                 return coach;
             }
@@ -67,7 +68,7 @@ public class UserService {
     }
 
     private User findBuyer(UserLoginInfo info) {
-        for (Buyer buyer: buyerRepository.getBuyers()) {
+        for (Buyer buyer: buyerRepository.getAll()) {
             if (info.getUsername().equalsIgnoreCase(buyer.getUsername()) && info.getPassword().equals(buyer.getPassword())) {
                 return buyer;
             }
@@ -76,7 +77,7 @@ public class UserService {
     }
 
     private User findAdmin(UserLoginInfo info) {
-        for (Admin admin: adminRepository.getAdmins()) {
+        for (Admin admin: adminRepository.getAll()) {
             if (info.getUsername().equalsIgnoreCase(admin.getUsername()) && info.getPassword().equals(admin.getPassword())) {
                 return admin;
             }
@@ -85,7 +86,7 @@ public class UserService {
     }
 
     public UserLoginInfo findUserInfo(Credentials credentials) {
-        for (UserLoginInfo info: userRepository.getInfo()) {
+        for (UserLoginInfo info: userInfoRepository.getInfo()) {
             if (info.getUsername().equalsIgnoreCase(credentials.getUsername()) && info.getPassword().equals(credentials.getPassword()))
             {
                 return info;

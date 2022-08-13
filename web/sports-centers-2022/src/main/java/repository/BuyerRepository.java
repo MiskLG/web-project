@@ -28,7 +28,7 @@ public class BuyerRepository {
         return repo;
     }
 
-    public ArrayList<Buyer> getBuyers() {
+    public ArrayList<Buyer> getAll() {
         read();
         return this.buyers;
     }

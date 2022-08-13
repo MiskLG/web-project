@@ -31,7 +31,7 @@ public class CoachRepository {
         coaches.add(coach);
         write();
     }
-    public ArrayList<Coach> getCoaches() {
+    public ArrayList<Coach> getAll() {
         read();
         return this.coaches;
     }
