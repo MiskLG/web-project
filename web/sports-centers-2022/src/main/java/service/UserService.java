@@ -3,13 +3,20 @@ package service;
 import beans.*;
 import dao.UserLoginInfo;
 import dto.Credentials;
-import repository.UserRepository;
+import repository.*;
 
 public class UserService {
 
     private UserRepository userRepository;
+    private BuyerRepository buyerRepository;
+    private AdminRepository adminRepository;
+    private CoachRepository coachRepository;
+    private ManagerRepository managerRepository;
     public UserService() {
+
         userRepository = UserRepository.init();
+        buyerRepository = BuyerRepository.init();
+        adminRepository = AdminRepository.init();
     }
 
     public User getUser(Credentials credentials) {
@@ -42,7 +49,7 @@ public class UserService {
     }
 
     private User findManager(UserLoginInfo info) {
-        for (Manager manager: userRepository.getManagers()) {
+        for (Manager manager: managerRepository.getManagers()) {
             if (info.getUsername().equalsIgnoreCase(manager.getUsername()) && info.getPassword().equals(manager.getPassword())) {
                 return manager;
             }
@@ -51,7 +58,7 @@ public class UserService {
     }
 
     private User findCoach(UserLoginInfo info) {
-        for (Coach coach: userRepository.getCoaches()) {
+        for (Coach coach: coachRepository.getCoaches()) {
             if (info.getUsername().equalsIgnoreCase(coach.getUsername()) && info.getPassword().equals(coach.getPassword())) {
                 return coach;
             }
@@ -60,7 +67,7 @@ public class UserService {
     }
 
     private User findBuyer(UserLoginInfo info) {
-        for (Buyer buyer: userRepository.getBuyers()) {
+        for (Buyer buyer: buyerRepository.getBuyers()) {
             if (info.getUsername().equalsIgnoreCase(buyer.getUsername()) && info.getPassword().equals(buyer.getPassword())) {
                 return buyer;
             }
@@ -69,7 +76,7 @@ public class UserService {
     }
 
     private User findAdmin(UserLoginInfo info) {
-        for (Admin admin: userRepository.getAdmins()) {
+        for (Admin admin: adminRepository.getAdmins()) {
             if (info.getUsername().equalsIgnoreCase(admin.getUsername()) && info.getPassword().equals(admin.getPassword())) {
                 return admin;
             }
@@ -85,23 +92,5 @@ public class UserService {
             }
         }
         return null;
-    }
-
-    public void addUser(User user) {
-        switch (user.getUserType()) {
-            case MANAGER -> {
-                userRepository.add((Manager) user);
-            }
-            case COACH -> {
-                userRepository.add((Coach) user);
-            }
-            case BUYER -> {
-                userRepository.add((Buyer) user);
-            }
-            case ADMIN -> {
-                userRepository.add((Admin) user);
-            }
-        }
-        return;
     }
 }

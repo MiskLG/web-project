@@ -8,4 +8,5 @@ public class FileNames {
     public static String adminsData = basePath + "admins.json";
     public static String managersData = basePath + "managers.json";
     public static String coachesData = basePath + "coaches.json";
+    public static String buyerTypeData = basePath + "buyer_types.json";
 }

@@ -1,10 +1,9 @@
 package repository;
 
-import beans.*;
+import beans.Admin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import dao.UserLoginInfo;
 import util.FileNames;
 
 import java.io.Reader;
@@ -13,39 +12,36 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+public class AdminRepository {
 
-public class UserRepository {
+    private ArrayList<Admin> admins;
 
-    private ArrayList<Manager> managers;
-    private ArrayList<Coach> coaches;
+    private static AdminRepository repo = null;
+    private AdminRepository() {};
 
-    private ArrayList<UserLoginInfo> userLoginInfo;
-    private static UserRepository repo = null;
-
-    private UserRepository() {};
-
-    public static UserRepository init() {
+    public static AdminRepository init() {
         if(repo == null) {
-            repo = new UserRepository();
-            repo.userLoginInfo = new ArrayList<UserLoginInfo>();
+            repo = new AdminRepository();
+            repo.admins = new ArrayList<Admin>();
         }
         return repo;
     }
-
-    public ArrayList<UserLoginInfo> getInfo() {
+    public ArrayList<Admin> getAdmins() {
         read();
-        return this.userLoginInfo;
+        return this.admins;
     }
 
-    public void generateAndAddUserInfo(User user) {
-        userLoginInfo.add(new UserLoginInfo(user.getUsername(), user.getPassword(), user.getUserType()));
+
+    public void add(Admin admin) {
+        admins.add(admin);
         write();
     }
+
     public void read() {
         try {
             Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get(FileNames.userCredentials));
-            this.userLoginInfo = gson.fromJson(reader, new TypeToken<ArrayList<UserLoginInfo>>() {}.getType());
+            Reader reader = Files.newBufferedReader(Paths.get(FileNames.adminsData));
+            this.admins = gson.fromJson(reader, new TypeToken<ArrayList<Admin>>() {}.getType());
             reader.close();
         }
         catch (Exception ex) {
@@ -59,7 +55,7 @@ public class UserRepository {
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
             Writer writer = Files.newBufferedWriter(Paths.get(FileNames.userCredentials));
-            gson.toJson(this.userLoginInfo, writer);
+            gson.toJson(this.admins, writer);
             writer.flush();
             writer.close();
         }
@@ -67,8 +63,4 @@ public class UserRepository {
             ex.printStackTrace();
         }
     };
-
-
-
-
 }
