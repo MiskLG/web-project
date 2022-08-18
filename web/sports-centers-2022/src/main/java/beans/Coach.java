@@ -7,7 +7,7 @@ public class Coach extends User{
 	private ArrayList<WorkoutHistory> workoutHistory;
 
 	public Coach(String username, String name, String lastname, String password, GenderType gender, Date dateOfBirth,
-			UserType userType, ArrayList<WorkoutHistory> workoutHistory) {
+			 ArrayList<WorkoutHistory> workoutHistory) {
 		super(username, name, lastname, password, gender, dateOfBirth, UserType.COACH);
 		this.workoutHistory = workoutHistory;
 	}

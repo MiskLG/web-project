@@ -35,6 +35,21 @@ public class ManagerRepository {
         managers.add(manager);
         write();
     }
+
+    public void update(Manager manager) {
+        for (Manager man: getAll()) {
+            if (man.getUsername().equalsIgnoreCase(manager.getUsername())) {
+                man.setName(manager.getName());
+                man.setPassword(manager.getPassword());
+                man.setLastname(manager.getLastname());
+                man.setGender(manager.getGender());
+                man.setDateOfBirth(manager.getDateOfBirth());
+                write();
+                break;
+            }
+        }
+        return;
+    }
     public void read() {
         try {
             Gson gson = new Gson();
@@ -52,7 +67,7 @@ public class ManagerRepository {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
-            Writer writer = Files.newBufferedWriter(Paths.get(FileNames.userCredentials));
+            Writer writer = Files.newBufferedWriter(Paths.get(FileNames.managersData));
             gson.toJson(this.managers, writer);
             writer.flush();
             writer.close();

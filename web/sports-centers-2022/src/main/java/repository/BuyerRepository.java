@@ -38,6 +38,21 @@ public class BuyerRepository {
         write();
     }
 
+    public void update(Buyer buyer) {
+        for (Buyer buy: getAll()) {
+            if (buy.getUsername().equalsIgnoreCase(buyer.getUsername())) {
+                buy.setName(buyer.getName());
+                buy.setPassword(buyer.getPassword());
+                buy.setLastname(buyer.getLastname());
+                buy.setGender(buyer.getGender());
+                buy.setDateOfBirth(buyer.getDateOfBirth());
+                write();
+                break;
+            }
+        }
+        return;
+    }
+
     public void read() {
         try {
             Gson gson = new Gson();

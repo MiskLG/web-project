@@ -27,4 +27,8 @@ public class CoachService {
         }
         return null;
     }
+
+    public void update(Coach coach) {
+        coachRepository.update(coach);
+    }
 }

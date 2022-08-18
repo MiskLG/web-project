@@ -3,6 +3,7 @@ package beans;
 import java.util.ArrayList;
 
 public class SportsFacility {
+	private String id;
 	private String name;
 	private String type;
 	private ArrayList<String> content;
@@ -13,9 +14,10 @@ public class SportsFacility {
 	private int startTime;
 	private int endTime;	
 	
-	public SportsFacility(String name, String type, ArrayList<String> content, boolean status, Location location,
+	public SportsFacility(String id, String name, String type, ArrayList<String> content, boolean status, Location location,
 			String logo, Double rating, int startTime, int endTime) {
 		super();
+		this.setId(id);
 		this.name = name;
 		this.type = type;
 		this.content = content;
@@ -81,5 +83,12 @@ public class SportsFacility {
 	public void setEndTime(int endTime) {
 		this.endTime = endTime;
 	}
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

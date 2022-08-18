@@ -31,6 +31,20 @@ public class AdminRepository {
         return this.admins;
     }
 
+    public void update(Admin admin) {
+        for (Admin ad: getAll()) {
+            if (ad.getUsername().equalsIgnoreCase(admin.getUsername())) {
+                ad.setName(admin.getName());
+                ad.setPassword(admin.getPassword());
+                ad.setLastname(admin.getLastname());
+                ad.setGender(admin.getGender());
+                ad.setDateOfBirth(admin.getDateOfBirth());
+                write();
+                break;
+            }
+        }
+        return;
+    }
 
     public void add(Admin admin) {
         admins.add(admin);
@@ -54,7 +68,7 @@ public class AdminRepository {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
-            Writer writer = Files.newBufferedWriter(Paths.get(FileNames.userCredentials));
+            Writer writer = Files.newBufferedWriter(Paths.get(FileNames.adminsData));
             gson.toJson(this.admins, writer);
             writer.flush();
             writer.close();

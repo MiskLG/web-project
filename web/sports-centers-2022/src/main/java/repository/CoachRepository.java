@@ -36,6 +36,21 @@ public class CoachRepository {
         return this.coaches;
     }
 
+    public void update(Coach coach) {
+        for (Coach ch: getAll()) {
+            if (ch.getUsername().equalsIgnoreCase(coach.getUsername())) {
+                ch.setName(coach.getName());
+                ch.setPassword(coach.getPassword());
+                ch.setLastname(coach.getLastname());
+                ch.setGender(coach.getGender());
+                ch.setDateOfBirth(coach.getDateOfBirth());
+                write();
+                break;
+            }
+        }
+        return;
+    }
+
     public void read() {
         try {
             Gson gson = new Gson();
@@ -53,7 +68,7 @@ public class CoachRepository {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
-            Writer writer = Files.newBufferedWriter(Paths.get(FileNames.userCredentials));
+            Writer writer = Files.newBufferedWriter(Paths.get(FileNames.coachesData));
             gson.toJson(this.coaches, writer);
             writer.flush();
             writer.close();
