@@ -111,6 +111,16 @@ public class UserService {
         return list;
     }
 
+    public ArrayList<User> filter(User.UserType type, ArrayList<User> list) {
+        ArrayList<User> newList = new ArrayList<>();
+        for (User user : list) {
+            if (user.getUserType().equals(type)) {
+                newList.add(user);
+            }
+        }
+        return newList;
+    }
+
     private User getUserBasedOnInfo(UserLoginInfo info) {
         switch (info.getType()) {
             case ADMIN -> {
