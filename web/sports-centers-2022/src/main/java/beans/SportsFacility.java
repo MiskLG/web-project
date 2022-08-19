@@ -91,4 +91,26 @@ public class SportsFacility {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	/*
+		Compares location - first city, then street and then street number
+	 */
+	public int compareToLocation(SportsFacility facility) {
+		int value = facility.getLocation().getAddress().getCity().compareTo(this.getLocation().getAddress().getCity());
+		if ( value == 0) {
+			value = facility.getLocation().getAddress().getStreet().compareTo(this.getLocation().getAddress().getStreet());
+			if (value == 0) {
+				value = facility.getLocation().getAddress().getStNumber().compareTo(this.getLocation().getAddress().getStNumber());
+			}
+		}
+		return value;
+	}
+
+	public int compareToName(SportsFacility facility) {
+		return facility.getName().compareTo(this.getName());
+	}
+
+	public int compareToRating(SportsFacility facility) {
+		return facility.getRating().compareTo(this.getRating());
+	}
 }

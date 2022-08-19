@@ -4,9 +4,12 @@ import beans.SportsFacility;
 import repository.SportsFacilityRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SportsFacilityService {
     private SportsFacilityRepository facilityRepository;
+    public enum SortingParameter {NAME, LOCATION, RATING};
+    public enum SortingOrientation {ASC, DESC};
 
     public SportsFacilityService() {
         facilityRepository = SportsFacilityRepository.init();
@@ -58,6 +61,27 @@ public class SportsFacilityService {
             }
         }
         return newList;
+    }
+
+    public ArrayList<SportsFacility> sort(SortingParameter parameter, SortingOrientation orientation, ArrayList<SportsFacility> facilities) {
+        switch (parameter) {
+            case NAME -> {
+                facilities.sort(SportsFacility::compareToName);
+                break;
+            }
+            case RATING -> {
+                facilities.sort(SportsFacility::compareToRating);
+                break;
+            }
+            case LOCATION -> {
+                facilities.sort(SportsFacility::compareToLocation);
+                break;
+            }
+        }
+        if (orientation == SortingOrientation.DESC) {
+            Collections.reverse(facilities);
+        }
+        return facilities;
     }
 
     public void update(SportsFacility sportsFacility) {
