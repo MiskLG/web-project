@@ -44,6 +44,49 @@ public class UserService {
         return list;
     }
 
+    public ArrayList<User> search(String name, String lastname, String username, ArrayList<User> list) {
+        if (!name.isEmpty()) {
+            list = searchName(name, list);
+        }
+        if (!lastname.isEmpty()) {
+            list = searchLastname(lastname, list);
+        }
+        if (!username.isEmpty()) {
+            list = searchUsername(username, list);
+        }
+        return list;
+    }
+
+    public ArrayList<User> searchName(String name, ArrayList<User> list) {
+        ArrayList<User> newList = new ArrayList<>();
+        for (User user : list) {
+            if (user.getName().contains(name)) {
+                newList.add(user);
+            }
+        }
+        return newList;
+    }
+
+    public ArrayList<User> searchLastname(String lastname, ArrayList<User> list) {
+        ArrayList<User> newList = new ArrayList<>();
+        for (User user : list) {
+            if (user.getLastname().contains(lastname)) {
+                newList.add(user);
+            }
+        }
+        return newList;
+    }
+
+    public ArrayList<User> searchUsername(String username, ArrayList<User> list) {
+        ArrayList<User> newList = new ArrayList<>();
+        for (User user : list) {
+            if (user.getUsername().contains(username)) {
+                newList.add(user);
+            }
+        }
+        return newList;
+    }
+
     public ArrayList<User> sort(SortingParameter sortingParameter, SortingOrientation sortingOrientation, ArrayList<User> list) {
         switch (sortingParameter) {
             case NAME -> {
