@@ -5,7 +5,13 @@ import dao.UserLoginInfo;
 import dto.Credentials;
 import repository.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class UserService {
+
+    public enum SortingParameter {NAME, LASTNAME, USERNAME};
+    public enum SortingOrientation {ASC, DESC};
 
     private UserInfoRepository userInfoRepository;
     private BuyerRepository buyerRepository;
@@ -27,6 +33,39 @@ public class UserService {
             user = getUserBasedOnInfo(userLoginInfo);
         }
         return user;
+    }
+
+    public ArrayList<User> getAll() {
+        ArrayList<User> list = new ArrayList<>();
+        list.addAll(buyerRepository.getAll());
+        list.addAll(coachRepository.getAll());
+        list.addAll(managerRepository.getAll());
+        list.addAll(adminRepository.getAll());
+        return list;
+    }
+
+    public ArrayList<User> sort(SortingParameter sortingParameter, SortingOrientation sortingOrientation, ArrayList<User> list) {
+        switch (sortingParameter) {
+            case NAME -> {
+                list.sort(User::compareName);
+                break;
+            }
+            case LASTNAME -> {
+                list.sort(User::compareLastname);
+                break;
+            }
+            case USERNAME -> {
+                break;
+            }
+            default -> {
+                list.sort(User::compareUsername);
+                break;
+            }
+        }
+        if (sortingOrientation == SortingOrientation.DESC) {
+            Collections.reverse(list);
+        }
+        return list;
     }
 
     private User getUserBasedOnInfo(UserLoginInfo info) {

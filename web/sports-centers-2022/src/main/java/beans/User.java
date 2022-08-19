@@ -82,6 +82,15 @@ public abstract class User {
 	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
-	
-	
+
+	public int compareName(User user) {
+		return this.getName().compareTo(user.getName());
+	}
+	public int compareLastname(User user) {
+		return this.getLastname().compareTo(user.getLastname());
+	}
+	public int compareUsername(User user) {
+		return this.getUsername().compareTo(user.getUsername());
+	}
+
 }
