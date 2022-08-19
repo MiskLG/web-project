@@ -32,8 +32,70 @@ public class SportsFacilityService {
         return facilityRepository.getAll();
     }
 
-    public ArrayList<SportsFacility> filter(String type, boolean isOpenFilter) {
-        ArrayList<SportsFacility> list = this.getAll();
+    public ArrayList<String> getAllTypes() {
+        ArrayList<String> list = new ArrayList<>();
+        for (SportsFacility facility : this.getAll()) {
+           if ( !list.contains(facility.getType()) ) {
+               list.add(facility.getType());
+           }
+        }
+        return list;
+    }
+
+    public ArrayList<SportsFacility> search(String name, String type, String city, double averageRating, ArrayList<SportsFacility> list) {
+        if (!name.isEmpty()) {
+            list = searchName(name, list);
+        }
+        if (!type.isEmpty()) {
+            list = searchType(type, list);
+        }
+        if (!city.isEmpty()) {
+            list = searchCity(city, list);
+        }
+        if (averageRating != -1) {
+            searchRating(averageRating,list);
+        }
+        return list;
+    }
+
+    public ArrayList<SportsFacility> searchName(String name, ArrayList<SportsFacility> list) {
+        ArrayList<SportsFacility> newList = new ArrayList<>();
+        for (SportsFacility facility : list) {
+            if (facility.getName().contains(name)) {
+                newList.add(facility);
+            }
+        }
+        return newList;
+    }
+    public ArrayList<SportsFacility> searchCity(String city, ArrayList<SportsFacility> list) {
+        ArrayList<SportsFacility> newList = new ArrayList<>();
+        for (SportsFacility facility : list) {
+            if (facility.getLocation().getAddress().getCity().contains(city)) {
+                newList.add(facility);
+            }
+        }
+        return newList;
+    }
+    public ArrayList<SportsFacility> searchType(String type, ArrayList<SportsFacility> list) {
+        ArrayList<SportsFacility> newList = new ArrayList<>();
+        for (SportsFacility facility : list) {
+            if (facility.getType().contains(type)) {
+                newList.add(facility);
+            }
+        }
+        return newList;
+    }
+
+    public ArrayList<SportsFacility> searchRating(double rating, ArrayList<SportsFacility> list) {
+        ArrayList<SportsFacility> newList = new ArrayList<>();
+        for (SportsFacility facility : list) {
+            if (facility.getRating() > rating) {
+                newList.add(facility);
+            }
+        }
+        return newList;
+    }
+    public ArrayList<SportsFacility> filter(String type, boolean isOpenFilter, ArrayList<SportsFacility> list) {
         if (!type.isEmpty() && type != null) {
             list = filterType(list, type);
         }
