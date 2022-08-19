@@ -6,7 +6,7 @@ public class SportsFacility {
 	private String id;
 	private String name;
 	private String type;
-	private ArrayList<String> content;
+	private ArrayList<Workout> content;
 	private boolean status;
 	private Location location;
 	private String logo;
@@ -14,7 +14,7 @@ public class SportsFacility {
 	private int startTime;
 	private int endTime;	
 	
-	public SportsFacility(String id, String name, String type, ArrayList<String> content, boolean status, Location location,
+	public SportsFacility(String id, String name, String type, ArrayList<Workout> content, boolean status, Location location,
 			String logo, Double rating, int startTime, int endTime) {
 		super();
 		this.setId(id);
@@ -41,10 +41,10 @@ public class SportsFacility {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public ArrayList<String> getContent() {
+	public ArrayList<Workout> getContent() {
 		return content;
 	}
-	public void setContent(ArrayList<String> content) {
+	public void setContent(ArrayList<Workout> content) {
 		this.content = content;
 	}
 	public boolean isStatus() {
@@ -83,13 +83,11 @@ public class SportsFacility {
 	public void setEndTime(int endTime) {
 		this.endTime = endTime;
 	}
+	public String getId() { return id; }
+	public void setId(String id) { this.id = id; }
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
+	public void addContent(Workout workout) {
+		this.content.add(workout);
 	}
 
 	/*

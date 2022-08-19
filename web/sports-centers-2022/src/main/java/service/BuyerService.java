@@ -1,6 +1,7 @@
 package service;
 
 import beans.Buyer;
+import beans.Subscription;
 import repository.BuyerRepository;
 import repository.UserInfoRepository;
 
@@ -14,6 +15,10 @@ public class BuyerService {
         userInfoRepository = UserInfoRepository.init();
     }
 
+    public void addSubscription(Buyer buyer, Subscription subscription) {
+        buyer.setSubscriptionId(subscription);
+        buyerRepository.update(buyer);
+    }
     public void add(Buyer buyer) {
         buyerRepository.add(buyer);
         userInfoRepository.generateAndAddUserInfo(buyer);

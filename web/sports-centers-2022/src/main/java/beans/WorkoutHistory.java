@@ -5,10 +5,10 @@ import java.util.Date;
 public class WorkoutHistory {
 	private Date dateOfRegistration;
 	private Workout workout;
-	private String buyer;
-	private String coach;
+	private Buyer buyer;
+	private Coach coach;
 
-	public WorkoutHistory(Date dateOfRegistration, Workout workout, String buyer, String coach) {
+	public WorkoutHistory(Date dateOfRegistration, Workout workout, Buyer buyer, Coach coach) {
 		super();
 		this.dateOfRegistration = dateOfRegistration;
 		this.workout = workout;
@@ -28,16 +28,16 @@ public class WorkoutHistory {
 	public void setWorkout(Workout workout) {
 		this.workout = workout;
 	}
-	public String getBuyer() {
+	public Buyer getBuyer() {
 		return buyer;
 	}
-	public void setBuyer(String buyer) {
+	public void setBuyer(Buyer buyer) {
 		this.buyer = buyer;
 	}
-	public String getCoach() {
+	public Coach getCoach() {
 		return coach;
 	}
-	public void setCoach(String coach) {
+	public void setCoach(Coach coach) {
 		this.coach = coach;
 	}
 

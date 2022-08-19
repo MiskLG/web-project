@@ -1,6 +1,7 @@
 package service;
 
 import beans.SportsFacility;
+import beans.Workout;
 import repository.SportsFacilityRepository;
 
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ public class SportsFacilityService {
 
     public void add(SportsFacility sportsFacility) {
         facilityRepository.add(sportsFacility);
+    }
+
+    public void addContent(SportsFacility facility, Workout workout) {
+        facility.addContent(workout);
+        facilityRepository.update(facility);
     }
 
     public SportsFacility getById(String id) {
