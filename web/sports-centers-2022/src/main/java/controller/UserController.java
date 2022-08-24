@@ -1,11 +1,9 @@
 package controller;
 
-import beans.*;
+import beans.User;
 import com.google.gson.Gson;
+import dto.Credentials;
 import service.UserService;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 import static spark.Spark.*;
 
@@ -30,21 +28,44 @@ public class UserController {
     public static void login(){
         post("/login", (req, res) -> {
             res.type("application/json");
-            return "SUCCESS";
+            String payload = req.body();
+            Credentials credentials = g.fromJson(payload, Credentials.class);
+
+            User user = userService.getUser(credentials);
+
+            if (user == null) {
+                res.status(401);
+                res.body("Incorrect username or password. Please try again");
+                return res.body();
+            }
+
+            req.session().attribute("user", user);
+            return g.toJson(user);
         });
     }
     public static void logout(){
-        get("/login", (req, res) -> {
+        post("/logout", (req, res) -> {
             res.type("application/json");
-            return "SUCCESS";
+            req.session().removeAttribute("user");
+            res.status(200);
+            return res.body();
         });
     }
+
+    public static void getUsers() {
+        get("/users", (req, res) -> {
+            return g.toJson(userService.getAll());
+        });
+    }
+
     public static void add(){
         get("/add", (req, res) -> {
             res.type("application/json");
+            /*
             userService.addUser(new Buyer("test", "test", "test" , "123", User.GenderType.MALE, new Date(),
                     new Subscription("0", new Date(), new Date(), 12.2, Subscription.StatusType.ACTIVE, Subscription.SubscriptionType.DAILY, 0),
                     new ArrayList<SportsFacility>(), 0, new BuyerType("asd",12.0,12000)));
+            */
             return "SUCCESS";
         });
     }
