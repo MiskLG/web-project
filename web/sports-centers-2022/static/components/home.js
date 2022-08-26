@@ -37,8 +37,11 @@ Vue.component("home", {
 					</div>
 				</div>
 			</nav>
+			<button class="btn btn-primary mx-4 mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+				Show search options
+			</button>
 			<form>
-			<div class="bg-secondary rounded text-light row mx-4 mt-2">
+			<div class="bg-secondary rounded text-light row mx-4 mt-2 collapse border border-primary" id="collapseExample">
 				<div class="mx-4 mt-1 col-md-4 pt-1 ">
 					<div class="row m-2">
 						<label> Search parameters:</label>
@@ -83,17 +86,8 @@ Vue.component("home", {
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 m-2">
-						<div class="row">
-							<div class="col-md-12">
-								<button type="submit" class="btn btn-dark">
-									Search
-								</button>
-							</div>
-						</div>
-					</div>
 				</div>
-				<div class="col-md-4 mx-4 mt-1 pt-1 bg-secondary">
+				<div class="col-md-3 mx-4 mt-1 pt-1 bg-secondary">
 					<div class="row m-2">
 						<label>Sort by: </label>
 					</div>
@@ -116,7 +110,35 @@ Vue.component("home", {
 						</label>
 					</div>
 				</div>
+				<div class="col-md-3 mx-4 mt-1 pt-1 bg-secondary">
+					<div class="row-md-3 m-2">
+						<label>Show only (filter): </label>
+					</div>
+					<div class="row-md-3 m-2">
+						<label>Type:<label>
+						<select class="form-select form-select-sm mx-3">
+							<option>Show all</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+					  	</select> 
+					</div>
+					<div class="row-md-3 m-2">
+						<label>Open status:<label>
+						<select class="form-select form-select-sm mx-3">
+							<option>Show all</option>
+							<option>Opened</option>
+							<option>Closed</option>
+					  	</select> 
+					</div>
+				</div>
+				<div class="d-flex justify-content-center align-center row m-1">
+					<button type="submit" class="btn btn-dark">
+						Search
+					</button>
+				</div>
 			</div>
+			
 			</form>
 			<div class="m-4 bg-primary row" style="height: 400px" >
 				<div class="col-md-3 m-3 bg-secondary">
