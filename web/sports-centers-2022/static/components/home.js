@@ -1,13 +1,15 @@
 Vue.component("home", {
 	data: function () {
 	    return {
-	      username: null,
-	      password: null
+			centers: null,
+			user: null,
+	    	username: null,
+	    	password: null
 	    }
 	},
 	    template: `
 		<div>
-			<nav class="navbar navbar-expand-lg bg-light">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">SportsCenters</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,18 +21,14 @@ Vue.component("home", {
 							<a class="nav-link active" aria-current="page" href="#">Home</a>
 							</li>
 							<li class="nav-item">
-							<a class="nav-link" href="#">Link</a>
-							</li>
-							
-							<li class="nav-item">
-							<a class="nav-link disabled">Disabled</a>
+							<a class="nav-link active" aria-current="page" href="#">Workouts</a>
 							</li>
 						</ul>
-						<div class="dropdown">
+						<div class="dropdown dropstart">
 							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Dropdown button
+								Profile
 							</button>
-							<ul class="dropdown-menu">
+							<ul class="dropdown-menu dropdown-menu-dark">
 								<li><a class="dropdown-item" href="#">Action</a></li>
 								<li><a class="dropdown-item" href="#">Another action</a></li>
 								<li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -38,19 +36,96 @@ Vue.component("home", {
 						</div>
 					</div>
 				</div>
-		
 			</nav>
 			<form>
-				<div class="mb-3" >
-					<label class="form-label">Username</label>
-					<input class="form-control" type="text" placeholder="username" aria-label="username">
+			<div class="bg-secondary rounded text-light row mx-4 mt-2">
+				<div class="mx-4 mt-1 col-md-4 pt-1 ">
+					<div class="row m-2">
+						<label> Search parameters:</label>
+					</div>	
+					<div class="row m-2">
+						<div class="row">
+							<div class="col-md-2 pt-1">
+								<label class="form-label col-md-6">Name:</label>
+							</div>
+							<div class="col-md-8 align-center justify-content-center">
+								<input type="text" class="form-control" placeholder="name of facility"/>
+							</div>
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="row">
+							<div class="col-md-2 pt-1">
+								<label class="form-label">Type:</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" class="form-control" placeholder="type of facility"/>
+							</div>
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="row">
+							<div class="col-md-2 pt-1">
+								<label class="form-label">City:</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" class="form-control" placeholder="name of the city"/>
+							</div>
+						</div>
+					</div>
+					<div class="row m-2">
+						<div class="row">
+							<div class="col-md-2 pt-1">
+								<label class="form-label">Rating:</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" class="form-control" placeholder="number from 1 to 5" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 m-2">
+						<div class="row">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-dark">
+									Search
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="mb-3" >
-					<label class="form-label">Password</label>
-					<input class="form-control" type="password" placeholder="password" aria-label="password">
+				<div class="col-md-4 mx-4 mt-1 pt-1 bg-secondary">
+					<div class="row m-2">
+						<label>Sort by: </label>
+					</div>
+					<div class="form-check row-md-4 m-2">
+						<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+						<label class="form-check-label" for="flexRadioDefault1">
+						Name
+						</label>
+					</div>
+					<div class="form-check row-md-4 m-2">
+						<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+						<label class="form-check-label" for="flexRadioDefault2">
+						Location
+						</label>
+					</div>
+					<div class="form-check row-md-4 m-2">
+						<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+						<label class="form-check-label" for="flexRadioDefault2">
+						Rating
+						</label>
+					</div>
 				</div>
-				<button type="submit" class="btn btn-primary" >Primary</button>
-			<form>
+			</div>
+			</form>
+			<div class="m-4 bg-primary row" style="height: 400px" >
+				<div class="col-md-3 m-3 bg-secondary">
+				test
+				</div>
+				<div class="col-md-8 m-3 bg-info">
+				test
+				</div>
+			</div>
 		</div>
     	`,
     methods : {
@@ -67,6 +142,7 @@ Vue.component("home", {
     		}
     	},
     	mounted () {
-    		axios.get('rest/add')
+			axios.get('rest/centers/getall')
+			then(response => centers);
         }
 });
