@@ -3,28 +3,62 @@ Vue.component("home", {
 	    return {
 			centers: null,
 			user: null,
-	    	username: null,
-	    	password: null
+	    	credentials: {username: "", password: ""},
+
+			searchParameters: {name: "", city: "", type: "", rating: ""},
+			sortParameter: ""
 	    }
 	},
 	    template: `
 		<div>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#">SportsCenters</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-					</button>
+					<a class="navbar-brand" href="#/">SportsCenters</a>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Home</a>
+							<a class="nav-link active" aria-current="page" href="#/" >Home</a>
 							</li>
 							<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Workouts</a>
+							<a class="nav-link active" aria-current="page" href="#/workouts">Workouts</a>
 							</li>
 						</ul>
-						<div class="dropdown dropstart">
+						<div v-if="user == null" class="bg-secondary btn btn-dark mx-2" @click="register">
+							Register
+						</div>
+						<button v-if="user == null" type="button" class="btn bg-secondary btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							Login
+						</button>
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Login</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<form>
+										<div class="modal-body" h-auto>
+											<div class="border border-primary rounded mx-10 d-flex p-3">
+												<div class="justify-content-center align-center">
+													<div class="mb-3">
+													<label for="formGroupExampleInput" class="form-label">Username</label>
+													<input v-model="credentials.username" type="text" class="form-control" id="formGroupExampleInput" placeholder="username">
+													</div>
+													<div class="mb-3">
+													<label for="formGroupExampleInput" class="form-label">Password</label>
+													<input v-model="credentials.password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="password">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button @click="login" type="submit" class="btn btn-primary ">Login</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div v-if="user != null"  class="dropdown dropstart">
 							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Profile
 							</button>
@@ -52,7 +86,7 @@ Vue.component("home", {
 								<label class="form-label col-md-6">Name:</label>
 							</div>
 							<div class="col-md-8 align-center justify-content-center">
-								<input type="text" class="form-control" placeholder="name of facility"/>
+								<input v-model="searchParameters.name" type="text" class="form-control" placeholder="name of facility"/>
 							</div>
 						</div>
 					</div>
@@ -62,7 +96,7 @@ Vue.component("home", {
 								<label class="form-label">Type:</label>
 							</div>
 							<div class="col-md-8">
-								<input type="text" class="form-control" placeholder="type of facility"/>
+								<input v-model="searchParameters.type" type="text" class="form-control" placeholder="type of facility"/>
 							</div>
 						</div>
 					</div>
@@ -72,7 +106,7 @@ Vue.component("home", {
 								<label class="form-label">City:</label>
 							</div>
 							<div class="col-md-8">
-								<input type="text" class="form-control" placeholder="name of the city"/>
+								<input v-model="searchParameters.city" type="text" class="form-control" placeholder="name of the city"/>
 							</div>
 						</div>
 					</div>
@@ -82,7 +116,7 @@ Vue.component("home", {
 								<label class="form-label">Rating:</label>
 							</div>
 							<div class="col-md-8">
-								<input type="text" class="form-control" placeholder="number from 1 to 5" />
+								<input v-model="searchParameters.rating" type="text" class="form-control" placeholder="number from 1 to 5" />
 							</div>
 						</div>
 					</div>
@@ -92,20 +126,20 @@ Vue.component("home", {
 						<label>Sort by: </label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-						<label class="form-check-label" for="flexRadioDefault1">
+						<input v-model="sortParameter" value="name" class="form-check-input" type="radio" name="searchRadio" checked />
+						<label class="form-check-label" for="searchRadio">
 						Name
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-						<label class="form-check-label" for="flexRadioDefault2">
+						<input v-model="sortParameter" value="location" class="form-check-input" type="radio" name="searchRadio" />
+						<label class="form-check-label" for="searchRadio">
 						Location
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-						<label class="form-check-label" for="flexRadioDefault2">
+						<input v-model="sortParameter" value="rating" class="form-check-input" type="radio" name="searchRadio" />
+						<label class="form-check-label" for="searchRadio">
 						Rating
 						</label>
 					</div>
@@ -115,7 +149,7 @@ Vue.component("home", {
 						<label>Show only (filter): </label>
 					</div>
 					<div class="row-md-3 m-2">
-						<label>Type:<label>
+						<label>Type:</label>
 						<select class="form-select form-select-sm mx-3">
 							<option>Show all</option>
 							<option>2</option>
@@ -124,7 +158,7 @@ Vue.component("home", {
 					  	</select> 
 					</div>
 					<div class="row-md-3 m-2">
-						<label>Open status:<label>
+						<label>Open status:</label>
 						<select class="form-select form-select-sm mx-3">
 							<option>Show all</option>
 							<option>Opened</option>
@@ -151,16 +185,23 @@ Vue.component("home", {
 		</div>
     	`,
     methods : {
-    		editProduct : function () {
-    			event.preventDefault();
-    			if (this.id != -1){
-    				axios.put('rest/products/edit/' + this.product.id, this.product).
-    				then(response => (router.push(`/`)));
-    			}
-    			else{
-    				axios.post('rest/products/add', this.product).
-    				then(response => (router.push(`/`)));
-    			}
+			login : function () {
+				console.log(this.searchParameters.name);
+				console.log(this.sortParameter)
+				if(this.credentials.username.trim() != "" && this.credentials.password.trim() != ""){
+					axios.post('rest/login', this.credentials).
+						then(response => this.user)
+				}
+    		},
+			register : function () {
+				console.log(this.searchParameters.name);
+				console.log(this.sortParameter)
+				router.push('/register');
+    		},
+			home : function () {
+				console.log(this.searchParameters.name);
+				console.log(this.sortParameter)
+				router.push('/');
     		}
     	},
     	mounted () {
