@@ -1,10 +1,12 @@
 Vue.component("home", {
 	data: function () {
 	    return {
-			centers: null,
-			user: null,
+			
+			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
+			centers: null,
+			types: "",
 			searchParameters: {name: "", city: "", type: "", rating: ""},
 			sortParameter: ""
 	    }
@@ -22,11 +24,23 @@ Vue.component("home", {
 							<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#/workouts">Workouts</a>
 							</li>
+							<li v-if="user.type == 'ADMIN' "class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#/add-centers">Add Centers</a>
+							</li>
+							<li v-if="user.type == 'ADMIN' "class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#/add-managers">Add Managers</a>
+							</li>
+							<li v-if="user.type == 'ADMIN' "class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#/all-users">All Users</a>
+							</li>
+							<li v-if="user.type == 'MANAGER' "class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#/add-workouts">Add workouts</a>
+							</li>
 						</ul>
-						<div v-if="user == null" class="bg-secondary btn btn-dark mx-2" @click="register">
+						<div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="registerMove">
 							Register
 						</div>
-						<button v-if="user == null" type="button" class="btn bg-secondary btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						<button v-if="user.username == ''" type="button" class="btn bg-secondary btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
 							Login
 						</button>
 						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -58,14 +72,13 @@ Vue.component("home", {
 								</div>
 							</div>
 						</div>
-						<div v-if="user != null"  class="dropdown dropstart">
-							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Profile
+						<div v-if="user.username != ''"  class="dropdown dropstart">
+							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+								{{user.username}}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">
-								<li><a class="dropdown-item" href="#">Action</a></li>
-								<li><a class="dropdown-item" href="#">Another action</a></li>
-								<li><a class="dropdown-item" href="#">Something else here</a></li>
+								<li><a class="dropdown-item" @click="editProfile">Edit Profile</a></li>
+								<li><a class="dropdown-item" @click="logout">Logout</a></li>
 							</ul>
 						</div>
 					</div>
@@ -167,7 +180,7 @@ Vue.component("home", {
 					</div>
 				</div>
 				<div class="d-flex justify-content-center align-center row m-1">
-					<button type="submit" class="btn btn-dark">
+					<button type="button" class="btn btn-dark" @click="editProfile" >
 						Search
 					</button>
 				</div>
@@ -186,26 +199,57 @@ Vue.component("home", {
     	`,
     methods : {
 			login : function () {
-				console.log(this.searchParameters.name);
-				console.log(this.sortParameter)
 				if(this.credentials.username.trim() != "" && this.credentials.password.trim() != ""){
-					axios.post('rest/login', this.credentials).
-						then(response => this.user)
+					axios.post('rest/user/login', this.credentials).
+						then(response => {
+							this.user = response.data;
+						})	
 				}
+				console.log(this.user);
+				setTimeout(function(){
+					window.location.reload();
+				}, 500);
+				
     		},
-			register : function () {
+			logout : function () {
+				this.user.username = "";
+				this.user.type = "";
+				axios.post('rest/user/logout');
+				console.log(this.user);
+				setTimeout(function(){
+					window.location.reload();
+				}, 500);
+			},
+			registerMove : function () {
 				console.log(this.searchParameters.name);
 				console.log(this.sortParameter)
 				router.push('/register');
     		},
-			home : function () {
+			homeMove : function () {
 				console.log(this.searchParameters.name);
 				console.log(this.sortParameter)
 				router.push('/');
-    		}
+    		},
+			getUser : function () {
+				axios.get('rest/user/current').
+					then(response => {
+						if(response.data != 'NOUSER') {
+							console.log(response.data);
+							this.user = response.data;
+							this.user.type = response.data.type;
+						}
+					})	
+			},
+			search : function () {
+			},
+			editProfile : function () {
+				console.log(this.user);
+			},
+			getCenters : function () {
+			}
     	},
     	mounted () {
-			axios.get('rest/centers/getall')
-			then(response => centers);
+			this.getUser();
+			this.getCenters();
         }
 });

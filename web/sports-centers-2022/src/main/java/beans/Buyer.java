@@ -18,6 +18,10 @@ public class Buyer extends User{
 		this.points = points;
 		this.buyerType = buyerType;
 	}
+
+	public Buyer(String username, String name, String lastname, String password, GenderType genderType, Date date) {
+		super(username, name, lastname, password, genderType, date, UserType.BUYER);
+	}
 	
 	public Subscription getSubscriptionId() {
 		return subscriptionId;

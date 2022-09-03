@@ -3,6 +3,7 @@ package controller;
 import beans.User;
 import com.google.gson.Gson;
 import dto.Credentials;
+import dto.UserInfoDTO;
 import service.UserService;
 
 import static spark.Spark.*;
@@ -16,13 +17,14 @@ public class UserController {
     */
     private static Gson g = new Gson();
     private static UserService userService = new UserService();
-    private static String commonPath = "/rest";
+    private static String commonPath = "/rest/user";
 
     public static void init() {
         path(commonPath, () -> {
             login();
             logout();
             add();
+            current();
         });
     }
     public static void login(){
@@ -39,8 +41,9 @@ public class UserController {
                 return res.body();
             }
 
-            req.session().attribute("user", user);
-            return g.toJson(user);
+            UserInfoDTO info = new UserInfoDTO(user.getUsername(),user.getUserType().toString());
+            req.session().attribute("user", info);
+            return g.toJson(info);
         });
     }
     public static void logout(){
@@ -48,13 +51,24 @@ public class UserController {
             res.type("application/json");
             req.session().removeAttribute("user");
             res.status(200);
-            return res.body();
+            return "";
         });
     }
 
     public static void getUsers() {
         get("/users", (req, res) -> {
+            res.type("application/json");
             return g.toJson(userService.getAll());
+        });
+    }
+
+    public static void current() {
+        get("/current", (req, res) -> {
+            res.type("application/json");
+            if (req.session().attribute("user") != null)
+                return g.toJson((UserInfoDTO)req.session().attribute("user"));
+            else
+                return "NOUSER";
         });
     }
 
