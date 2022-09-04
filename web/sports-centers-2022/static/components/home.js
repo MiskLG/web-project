@@ -21,7 +21,7 @@ Vue.component("home", {
 							<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#/" >Home</a>
 							</li>
-							<li class="nav-item">
+							<li v-if="user.type == 'BUYER'" class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#/workouts">Workouts</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
@@ -29,6 +29,9 @@ Vue.component("home", {
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#/add-managers">Add Managers</a>
+							</li>
+							<li v-if="user.type == 'ADMIN' "class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#/add-coaches">Add Coaches</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" href="#/all-users">All Users</a>
@@ -77,7 +80,8 @@ Vue.component("home", {
 								{{user.username}}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">
-								<li><a class="dropdown-item" @click="editProfile">Edit Profile</a></li>
+								<li><a class="dropdown-item" href="#edit-profile">Edit Profile</a></li>
+								<li><a v-if="user.type=='BUYER' "class="dropdown-item" href="#subscription" >Subscription</a></li>
 								<li><a class="dropdown-item" @click="logout">Logout</a></li>
 							</ul>
 						</div>
@@ -234,18 +238,17 @@ Vue.component("home", {
 				axios.get('rest/user/current').
 					then(response => {
 						if(response.data != 'NOUSER') {
-							console.log(response.data);
 							this.user = response.data;
-							this.user.type = response.data.type;
 						}
 					})	
 			},
 			search : function () {
 			},
-			editProfile : function () {
-				console.log(this.user);
-			},
 			getCenters : function () {
+				axios.get('rest/centers/getAll').
+					then(response => {
+						this.centers = response.data;
+					})
 			}
     	},
     	mounted () {

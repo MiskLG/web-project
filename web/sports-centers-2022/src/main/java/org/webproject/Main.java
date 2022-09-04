@@ -1,6 +1,7 @@
 package org.webproject;
 
 import controller.BuyerController;
+import controller.SportsFacilityController;
 import controller.UserController;
 
 import java.io.File;
@@ -15,6 +16,7 @@ public class Main {
         staticFiles.externalLocation(new File("./static").getCanonicalPath());
         UserController.init();
         BuyerController.init();
+        SportsFacilityController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

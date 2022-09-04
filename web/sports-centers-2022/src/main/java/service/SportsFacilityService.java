@@ -35,7 +35,17 @@ public class SportsFacilityService {
     }
 
     public ArrayList<SportsFacility> getAll() {
-        return facilityRepository.getAll();
+        ArrayList<SportsFacility> newList = new ArrayList<>();
+        for (SportsFacility facility : facilityRepository.getAll()) {
+            if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getStartTime(), 0)) < 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getEndTime(), 0)) > 0) {
+                facility.setStatus(true);
+            }
+            else {
+                facility.setStatus(false);
+            }
+            newList.add(facility);
+        }
+        return newList;
     }
 
     public ArrayList<String> getAllTypes() {
@@ -125,7 +135,7 @@ public class SportsFacilityService {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
             if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getStartTime(), 0)) < 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getEndTime(), 0)) > 0) {
-                list.add(facility);
+                newList.add(facility);
             }
         }
         return newList;
