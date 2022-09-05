@@ -6,11 +6,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import util.FileNames;
 
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class SportsFacilityRepository {
 
@@ -19,13 +19,40 @@ public class SportsFacilityRepository {
     private static SportsFacilityRepository repo = null;
     private SportsFacilityRepository() {};
 
+    public static SportsFacilityRepository init() {
+        if(repo == null) {
+            repo = new SportsFacilityRepository();
+            repo.facilities = new ArrayList<SportsFacility>();
+        }
+        return repo;
+    }
+
     public ArrayList<SportsFacility> getAll() {
         read();
         return this.facilities;
     }
 
     public void add(SportsFacility sportsFacility) {
-        facilities.add(sportsFacility);
+        File file = new File("resources/images/" + sportsFacility.getId()+".png");
+        try {
+            if(file.createNewFile()) {
+                OutputStream iStreamOutput = null;
+                iStreamOutput = new FileOutputStream(file);
+                System.out.println(sportsFacility.getLogo());
+                byte[] imageBytes = Base64.getDecoder().decode(sportsFacility.getLogo().split(",")[1]);
+                iStreamOutput.write(imageBytes);
+            }
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        sportsFacility.setLogo(file.getPath());
+        System.out.println(sportsFacility.getLogo());
+        read();
+        if (this.facilities == null) {
+            this.facilities = new ArrayList<>();
+        }
+        this.facilities.add(sportsFacility);
         write();
     }
 
@@ -43,14 +70,6 @@ public class SportsFacilityRepository {
             }
         }
         return;
-    }
-
-    public static SportsFacilityRepository init() {
-        if(repo == null) {
-            repo = new SportsFacilityRepository();
-            repo.facilities = new ArrayList<SportsFacility>();
-        }
-        return repo;
     }
 
     public void read() {

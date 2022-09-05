@@ -19,25 +19,25 @@ Vue.component("home", {
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/" >Home</a>
+							<a class="nav-link active" aria-current="page" @click="homeMove" href="#/">Home</a>
 							</li>
 							<li v-if="user.type == 'BUYER'" class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/workouts">Workouts</a>
+							<a class="nav-link active" aria-current="page" @click="workoutsMove" href="#/workouts" >Workouts</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/add-centers">Add Centers</a>
+							<a class="nav-link active" aria-current="page" @click="addCentersMove" href="#/add-centers" >Add Centers</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/add-managers">Add Managers</a>
+							<a class="nav-link active" aria-current="page" @click="addManagersMove" href="#/add-managers" >Add Managers</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/add-coaches">Add Coaches</a>
+							<a class="nav-link active" aria-current="page" @click="addCoachesMove" href="#/add-coaches">Add Coaches</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/all-users">All Users</a>
+							<a class="nav-link active" aria-current="page" @click="allUsersMove" href="#/all-users">All Users</a>
 							</li>
 							<li v-if="user.type == 'MANAGER' "class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#/add-workouts">Add workouts</a>
+							<a class="nav-link active" aria-current="page" @click="addWorkoutsMove" href="#/add-workouts">Add workouts</a>
 							</li>
 						</ul>
 						<div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="registerMove">
@@ -230,9 +230,32 @@ Vue.component("home", {
 				router.push('/register');
     		},
 			homeMove : function () {
-				console.log(this.searchParameters.name);
-				console.log(this.sortParameter)
 				router.push('/');
+				window.location.reload();
+    		},
+			workoutsMove : function () {
+				router.push('/workouts');
+				window.location.reload();
+    		},
+			addCentersMove : function () {
+				router.push('/add-centers');
+				window.location.reload();
+    		},
+			addManagersMove : function () {
+				router.push('/add-managers');
+				window.location.reload();
+    		},
+			addCoachesMove : function () {
+				router.push('/add-coaches');
+				window.location.reload();
+    		},
+			allUsersMove : function () {
+				router.push('/all-users');
+				window.location.reload();
+    		},
+			addWorkoutsMove : function () {
+				router.push('/add-workouts');
+				window.location.reload();
     		},
 			getUser : function () {
 				axios.get('rest/user/current').

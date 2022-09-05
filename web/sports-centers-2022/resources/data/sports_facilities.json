@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R1pmJEwE",
+    "name": "asd",
+    "type": "ASD",
+    "status": true,
+    "location": {
+      "latitude": 22.0,
+      "longitude": 222.0,
+      "address": {
+        "street": "asd",
+        "stNumber": "ad",
+        "city": "asd",
+        "poNumber": "21212"
+      }
+    },
+    "logo": "resources/images/R1pmJEwE.png",
+    "rating": 0.0,
+    "startTime": 22,
+    "endTime": 2222
+  }
+]

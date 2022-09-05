@@ -1,12 +1,14 @@
 package service;
 
 import beans.Admin;
+import dto.Credentials;
 import repository.AdminRepository;
 import repository.UserInfoRepository;
 
 public class AdminService {
     private AdminRepository adminRepository;
     private UserInfoRepository userInfoRepository;
+    private UserService userService;
 
     public AdminService() {
         adminRepository = AdminRepository.init();
@@ -14,8 +16,10 @@ public class AdminService {
     }
 
     public void add(Admin admin) {
-        adminRepository.add(admin);
-        userInfoRepository.generateAndAddUserInfo(admin);
+        if (userService.getUser(new Credentials(admin.getUsername(),admin.getPassword())) == null) {
+            adminRepository.add(admin);
+            userInfoRepository.generateAndAddUserInfo(admin);
+        }
     }
 
     public Admin getById(String id) {

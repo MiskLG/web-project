@@ -1,12 +1,14 @@
 package service;
 
 import beans.Manager;
+import dto.Credentials;
 import repository.ManagerRepository;
 import repository.UserInfoRepository;
 
 public class ManagerService {
     private ManagerRepository managerRepository;
     private UserInfoRepository userInfoRepository;
+    private UserService userService;
 
     public ManagerService() {
         managerRepository = ManagerRepository.init();
@@ -14,8 +16,10 @@ public class ManagerService {
     }
 
     public void add(Manager manager) {
-        managerRepository.add(manager);
-        userInfoRepository.generateAndAddUserInfo(manager);
+        if (userService.getUser(new Credentials(manager.getUsername(),manager.getPassword())) == null) {
+            managerRepository.add(manager);
+            userInfoRepository.generateAndAddUserInfo(manager);
+        }
     }
 
     public Manager getById(String id) {

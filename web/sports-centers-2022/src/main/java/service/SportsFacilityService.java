@@ -3,6 +3,7 @@ package service;
 import beans.SportsFacility;
 import beans.Workout;
 import repository.SportsFacilityRepository;
+import util.IdGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,11 @@ public class SportsFacilityService {
     }
 
     public void add(SportsFacility sportsFacility) {
+        String id = "";
+        do {
+            id = IdGenerator.generate();
+        }while (this.getById(id) != null);
+        sportsFacility.setId(id);
         facilityRepository.add(sportsFacility);
     }
 
@@ -26,7 +32,11 @@ public class SportsFacilityService {
     }
 
     public SportsFacility getById(String id) {
-        for (SportsFacility sportsFacility: facilityRepository.getAll()) {
+        ArrayList<SportsFacility> list = this.getAll();
+        if (list == null) {
+            return null;
+        }
+        for (SportsFacility sportsFacility: list) {
             if (sportsFacility.getId().equals(id)) {
                 return sportsFacility;
             }
@@ -35,9 +45,19 @@ public class SportsFacilityService {
     }
 
     public ArrayList<SportsFacility> getAll() {
+
+        ArrayList<SportsFacility> list = facilityRepository.getAll();
         ArrayList<SportsFacility> newList = new ArrayList<>();
-        for (SportsFacility facility : facilityRepository.getAll()) {
-            if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getStartTime(), 0)) < 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getEndTime(), 0)) > 0) {
+        if(list == null) {
+            return null;
+        }
+
+        for (SportsFacility facility : list) {
+            int hoursStart = facility.getStartTime()/100;
+            int minutesStart = facility.getStartTime()%100;
+            int hoursEnd = facility.getEndTime()/100;
+            int minutesEnd = facility.getEndTime()%100;
+            if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursStart, minutesStart)) > 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursEnd, minutesEnd)) < 0) {
                 facility.setStatus(true);
             }
             else {

@@ -2,6 +2,7 @@ package service;
 
 import beans.Buyer;
 import beans.Subscription;
+import dto.Credentials;
 import repository.BuyerRepository;
 import repository.UserInfoRepository;
 
@@ -9,6 +10,7 @@ public class BuyerService {
 
     private BuyerRepository buyerRepository;
     private UserInfoRepository userInfoRepository;
+    private UserService userService;
 
     public BuyerService() {
         buyerRepository = BuyerRepository.init();
@@ -20,8 +22,10 @@ public class BuyerService {
         buyerRepository.update(buyer);
     }
     public void add(Buyer buyer) {
-        buyerRepository.add(buyer);
-        userInfoRepository.generateAndAddUserInfo(buyer);
+        if (userService.getUser(new Credentials(buyer.getUsername(),buyer.getPassword())) == null) {
+            buyerRepository.add(buyer);
+            userInfoRepository.generateAndAddUserInfo(buyer);
+        }
     }
 
     public Buyer getById(String id) {

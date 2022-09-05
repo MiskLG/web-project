@@ -1,0 +1,11 @@
+[
+    {
+      "username": "admin",
+      "name": "asd",
+      "lastname": "asd",
+      "password": "admin",
+      "gender": "MALE",
+      "dateOfBirth": "Sep 3, 2022, 2:59:20 PM",
+      "userType": "ADMIN"
+    }
+  ]

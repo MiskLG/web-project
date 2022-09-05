@@ -1,7 +1,9 @@
 package controller;
 
+import beans.Location;
 import beans.SportsFacility;
 import com.google.gson.Gson;
+import dto.SportsFacilityAddDTO;
 import dto.SportsFacilityDTO;
 import service.SportsFacilityService;
 import spark.utils.IOUtils;
@@ -30,6 +32,12 @@ public class SportsFacilityController {
             res.type("application/json");
 
             ArrayList<SportsFacilityDTO> array = new ArrayList<>();
+            ArrayList<SportsFacility> list = facilityService.getAll();
+            if (list == null) {
+                res.status(204);
+                res.body("No facility centers found");
+                return res.raw();
+            }
 
             for (SportsFacility facility: facilityService.getAll()) {
                 InputStream iSteamReader = new FileInputStream(facility.getLogo());
@@ -56,7 +64,19 @@ public class SportsFacilityController {
     public static void add() {
         post("/add", (req, res) -> {
             res.type("application/json");
-            return "";
+
+            String payload = req.body();
+            SportsFacilityAddDTO data = g.fromJson(payload, SportsFacilityAddDTO.class);
+
+            Location location = new Location(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()), data.getStreet(), data.getStNumber(), data.getCity(), data.getPoNumber());
+
+            SportsFacility facility = new SportsFacility("",data.getName(),data.getType().toUpperCase(), null,
+                    true, location, data.getImage(), 0.0, Integer.parseInt(data.getStartTime()), Integer.parseInt(data.getEndTime()));
+
+            facilityService.add(facility);
+            res.body("Added");
+            res.status(200);
+            return res.raw();
         });
     }
 }

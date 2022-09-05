@@ -8,5 +8,15 @@
     "gender": "MALE",
     "dateOfBirth": "Sep 3, 2022, 2:59:20 PM",
     "userType": "BUYER"
+  },
+  {
+    "points": 0,
+    "username": "mad",
+    "name": "mad",
+    "lastname": "mad",
+    "password": "mad",
+    "gender": "MALE",
+    "dateOfBirth": "Sep 4, 2022, 8:38:13 PM",
+    "userType": "BUYER"
   }
 ]
