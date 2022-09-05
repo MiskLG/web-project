@@ -94,7 +94,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Name:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.name" type="text" class="form-control" placeholder="username"/>
+                            <input v-model="center.name" type="text" class="form-control" placeholder="name"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -102,7 +102,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Type:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.type" type="text" class="form-control" placeholder="name"/>
+                            <input v-model="center.type" type="text" class="form-control" placeholder="type"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -110,7 +110,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Latitude:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.latitude" type="text" class="form-control" placeholder="lastname"/>
+                            <input v-model="center.latitude" type="text" class="form-control" placeholder="latitude (number)"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -118,7 +118,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Longitude:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.longitude" type="text" class="form-control" placeholder="password"/>
+                            <input v-model="center.longitude" type="text" class="form-control" placeholder="longitude (number)"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -126,7 +126,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">City:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.city" type="text" class="form-control" placeholder="repeat password"/>
+                            <input v-model="center.city" type="text" class="form-control" placeholder="city"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -134,7 +134,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Street:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.street" class="form-control" type="text"/>
+                            <input v-model="center.street" class="form-control" type="text" placeholder="street" />
                         </div>
                     </div>
                     <div class="row m-2">
@@ -142,7 +142,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Street number:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.stNumber" class="form-control" type="text"/>
+                            <input v-model="center.stNumber" class="form-control" type="text" placeholder="street number"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -150,7 +150,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Post Office number:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.poNumber" class="form-control" type="number"/>
+                            <input v-model="center.poNumber" class="form-control" type="number" placeholder="po. number"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -158,7 +158,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">Start time:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.startTime" class="form-control" type="text" />
+                            <input v-model="center.startTime" class="form-control" type="text" placeholder="start time in format hh:mm"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -166,7 +166,7 @@ Vue.component("add-centers", {
                             <label class="form-label col-md-6">End time:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="center.endTime" class="form-control" type="text" />
+                            <input v-model="center.endTime" class="form-control" type="text" placeholder="end time in format hh:mm"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -262,6 +262,23 @@ Vue.component("add-centers", {
                         alert("Every field must be filled");
                         return;
                     }
+                if(isNaN(this.center.latitude) || isNaN(this.center.longitude)) {
+                    alert("Latitude and Logitude must be a number");
+                    return;
+                }
+                if(!/[0-9][0-9]:[0-9][0-9]/.test(this.center.endTime) || !(/[0-9][0-9]:[0-9][0-9]/.test(this.center.startTime))) {
+                    alert("Start or End time are not in good format, use hh:mm format");
+                    return;
+                }
+                if(parseInt(this.center.startTime.split(":")[0]) > parseInt(this.center.endTime.split(":")[0])) {
+                    alert("End time must be bigger than Start time");
+                    return;
+                }
+                else if (parseInt(this.center.startTime.split(":")[0]) == parseInt(this.center.endTime.split(":")[0]) && parseInt(this.center.startTime.split(":")[1]) > parseInt(this.center.endTime.split(":")[1])) {
+                    alert("End time must be bigger than Start time");
+                    return;
+                }
+
                 axios.post('rest/centers/add',this.center);
                 setTimeout(function(){
 					window.location.reload();

@@ -56,7 +56,7 @@ public class SportsFacilityController {
                         boolToString, facility.getLocation().getLatitude().toString(), facility.getLocation().getLongitude().toString(),
                         facility.getLocation().getAddress().getCity(), facility.getLocation().getAddress().getStreet(),
                         facility.getLocation().getAddress().getStNumber(), facility.getLocation().getAddress().getPoNumber(),
-                        base64, facility.getRating().toString(), ""+facility.getStartTime(), ""+facility.getEndTime()));
+                        base64, facility.getRating().toString(), facility.getStartTime()/100+":"+facility.getStartTime()%100, facility.getEndTime()/100+":"+facility.getEndTime()%100));
             }
 
             return g.toJson(array);
@@ -72,8 +72,10 @@ public class SportsFacilityController {
 
             Location location = new Location(Double.parseDouble(data.getLatitude()), Double.parseDouble(data.getLongitude()), data.getStreet(), data.getStNumber(), data.getCity(), data.getPoNumber());
 
+            int startTime = Integer.parseInt(data.getStartTime().split(":")[0])*100 + Integer.parseInt(data.getStartTime().split(":")[1]);
+            int endTime = Integer.parseInt(data.getEndTime().split(":")[0])*100 + Integer.parseInt(data.getEndTime().split(":")[1]);
             SportsFacility facility = new SportsFacility("",data.getName(),data.getType().toUpperCase(), null,
-                    true, location, data.getImage(), 0.0, Integer.parseInt(data.getStartTime()), Integer.parseInt(data.getEndTime()));
+                    true, location, data.getImage(), 0.0, startTime, endTime);
 
             facilityService.add(facility);
             res.body("Added");
