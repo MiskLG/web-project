@@ -8,7 +8,8 @@ Vue.component("home", {
 			centers: null,
 			types: "",
 			searchParameters: {name: "", city: "", type: "", rating: ""},
-			sortParameter: ""
+			sortParameter: "",
+			sortOrientation: "",
 	    }
 	},
 	    template: `
@@ -160,6 +161,21 @@ Vue.component("home", {
 						Rating
 						</label>
 					</div>
+					<div class="row-md-4 m-6" style="height: 20px">
+					<span> </span>
+					</div>
+					<div class="form-check row-md-4 m-2">
+						<input v-model="sortOrientation" value="asc" class="form-check-input" type="radio" name="sortOrientation" />
+						<label class="form-check-label" for="sortOrientation">
+						Ascending
+						</label>
+					</div>
+					<div class="form-check row-md-4 m-2">
+						<input v-model="sortOrientation" value="desc" class="form-check-input" type="radio" name="sortOrientation" />
+						<label class="form-check-label" for="sortOrientation">
+						Descending
+						</label>
+					</div>
 				</div>
 				<div class="col-md-3 mx-4 mt-1 pt-1 bg-secondary">
 					<div class="row-md-3 m-2">
@@ -169,9 +185,7 @@ Vue.component("home", {
 						<label>Type:</label>
 						<select class="form-select form-select-sm mx-3">
 							<option>Show all</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
+							<option v-for="type in types">{{type}}</option>
 					  	</select> 
 					</div>
 					<div class="row-md-3 m-2">
@@ -184,7 +198,7 @@ Vue.component("home", {
 					</div>
 				</div>
 				<div class="d-flex justify-content-center align-center row m-1">
-					<button type="button" class="btn btn-dark" @click="editProfile" >
+					<button type="button" class="btn btn-dark" @click="search" >
 						Search
 					</button>
 				</div>
@@ -265,6 +279,15 @@ Vue.component("home", {
 						}
 					})	
 			},
+			editProfile() {
+				if (user.username.length === 0) {
+					return;
+				}
+				router.push('edit-profile');
+				window.location.reload();
+			},
+			
+
 			search : function () {
 			},
 			getCenters : function () {
@@ -272,10 +295,17 @@ Vue.component("home", {
 					then(response => {
 						this.centers = response.data;
 					})
+			},
+			getAllTypes : function() {
+				axios.get('rest/centers/getAllTypes').
+					then(response => {
+						this.types = response.data;
+					})
 			}
     	},
     	mounted () {
 			this.getUser();
 			this.getCenters();
+			this.getAllTypes();
         }
 });

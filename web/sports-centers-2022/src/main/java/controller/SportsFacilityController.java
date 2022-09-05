@@ -24,6 +24,7 @@ public class SportsFacilityController {
         path(commonPath, () -> {
             getAll();
             add();
+            getAllTypes();
         });
     }
 
@@ -77,6 +78,13 @@ public class SportsFacilityController {
             res.body("Added");
             res.status(200);
             return res.raw();
+        });
+    }
+
+    public static void getAllTypes() {
+        get("/getAllTypes", (req, res) -> {
+            res.type("application/json");
+            return g.toJson(facilityService.getAllTypes());
         });
     }
 }
