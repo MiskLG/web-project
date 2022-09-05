@@ -44,6 +44,7 @@ public class SportsFacilityController {
                 InputStream iSteamReader = new FileInputStream(facility.getLogo());
                 byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
                 String base64 = Base64.getEncoder().encodeToString(imageBytes);
+                base64 = "data:image/png;base64," + base64;
                 String boolToString;
                 if (facility.isStatus()) {
                     boolToString = "Open";

@@ -205,12 +205,35 @@ Vue.component("home", {
 			</div>
 			
 			</form>
-			<div class="m-4 bg-primary row" style="height: 400px" >
-				<div class="col-md-3 m-3 bg-secondary">
-				test
+			<div v-for="center in centers" class="m-4 bg-secondary row rounded" >
+				<div class="col-md-3 m-3">
+					<img :src="center.image" class="img-thumbnail"/>
 				</div>
-				<div class="col-md-8 m-3 bg-info">
-				test
+				<div class="col-md-8 m-3 bg-secondary">
+					<div class="row mb-3">
+						<label class="col-6 fs-2 d-flex justify-content-end text-light"> {{center.name}} </label>
+						<label class="col-6 fs-4 d-flex justify-content-end text-light"> Rating:  <span class="mx-2 text-info">{{center.rating}}/5</span> </label>
+					</div>
+					<div class="row">
+						<label class="text-light fs-5">Type: <span class="text-info mx-2">{{center.type}}</span></label>
+					</div>
+					<div class="row">
+						<label class="text-light fs-5">Status: <span class="text-info mx-2">{{center.status}}</span></label>
+					</div>
+					<div class="row">
+						<label class="text-light fs-5">Work hours: <span class="text-info mx-2">{{center.startTime}}h - {{center.endTime}}h </span></label>
+					</div>
+					<div class="row">
+						<label class="text-light fs-5">Location: <span class="text-info mx-2">{{center.city}}, {{center.poNumber}}, {{center.street}} {{center.stNumber}} </span></label>
+					</div>
+					<div class="row">
+						<label class="col-6 text-light fs-5">Longitude: <span class="text-info mx-2">{{center.longitude}}</span> Latitude: <span class="text-info mx-2">{{center.latitude}}</span></label>
+						<div class="col-6 d-flex justify-content-end">
+							<button class="btn btn-primary" type="button" @click="seeContent(center.id)">
+								See content =>
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -301,6 +324,9 @@ Vue.component("home", {
 					then(response => {
 						this.types = response.data;
 					})
+			},
+			seeContent : function(id) {
+				router.push('/'+id);
 			}
     	},
     	mounted () {
