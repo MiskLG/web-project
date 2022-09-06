@@ -16,6 +16,9 @@ Vue.component("all-users", {
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#/">SportsCenters</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						Menu
+					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
@@ -78,8 +81,8 @@ Vue.component("all-users", {
 								</div>
 							</div>
 						</div>
-						<div v-if="user.username != ''"  class="dropdown dropstart">
-							<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+						<div v-if="user.username != ''"  class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" style="min-width:120px" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
 								{{user.username}}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">

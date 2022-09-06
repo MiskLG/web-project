@@ -13,80 +13,86 @@ Vue.component("add-centers", {
 		<div>
         <div v-if="user.type == 'ADMIN'">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#/">SportsCenters</a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/" >Home</a>
-                        </li>
-                        <li v-if="user.type == 'BUYER'" class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/workouts">Workouts</a>
-                        </li>
-                        <li v-if="user.type == 'ADMIN' "class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/add-centers">Add Centers</a>
-                        </li>
-                        <li v-if="user.type == 'ADMIN' "class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/add-managers">Add Managers</a>
-                        </li>
-                        <li v-if="user.type == 'ADMIN' "class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/add-coaches">Add Coaches</a>
-                        </li>
-                        <li v-if="user.type == 'ADMIN' "class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/all-users">All Users</a>
-                        </li>
-                        <li v-if="user.type == 'MANAGER' "class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#/add-workouts">Add workouts</a>
-                        </li>
-                    </ul>
-                    <div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="registerMove">
-                        Register
-                    </div>
-                    <button v-if="user.username == ''" type="button" class="btn bg-secondary btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Login
-                    </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form>
-                                    <div class="modal-body" h-auto>
-                                        <div class="border border-primary rounded mx-10 d-flex p-3">
-                                            <div class="justify-content-center align-center">
-                                                <div class="mb-3">
-                                                <label for="formGroupExampleInput" class="form-label">Username</label>
-                                                <input v-model="credentials.username" type="text" class="form-control" id="formGroupExampleInput" placeholder="username">
-                                                </div>
-                                                <div class="mb-3">
-                                                <label for="formGroupExampleInput" class="form-label">Password</label>
-                                                <input v-model="credentials.password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="password">
-                                                </div>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#/">SportsCenters</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="homeMove" href="#/">Home</a>
+                    </li>
+                    <li v-if="user.type == 'BUYER'" class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="workoutsMove" href="#/workouts" >Workouts</a>
+                    </li>
+                    <li v-if="user.type == 'ADMIN' "class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="addCentersMove" href="#/add-centers" >Add Centers</a>
+                    </li>
+                    <li v-if="user.type == 'ADMIN' "class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="addManagersMove" href="#/add-managers" >Add Managers</a>
+                    </li>
+                    <li v-if="user.type == 'ADMIN' "class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="addCoachesMove" href="#/add-coaches">Add Coaches</a>
+                    </li>
+                    <li v-if="user.type == 'ADMIN' "class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="allUsersMove" href="#/all-users">All Users</a>
+                    </li>
+                    <li v-if="user.type == 'MANAGER' "class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="addWorkoutsMove" href="#/add-workouts">Add workouts</a>
+                    </li>
+                    <li v-if="user.type == 'ADMIN' "class="nav-item">
+                    <a class="nav-link active" aria-current="page" @click="promoCodesMove" href="#/promo-codes">Define promo codes</a>
+                    </li>
+                </ul>
+                <div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="registerMove">
+                    Register
+                </div>
+                <button v-if="user.username == ''" type="button" class="btn bg-secondary btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Login
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form>
+                                <div class="modal-body" h-auto>
+                                    <div class="border border-primary rounded mx-10 d-flex p-3">
+                                        <div class="justify-content-center align-center">
+                                            <div class="mb-3">
+                                            <label for="formGroupExampleInput" class="form-label">Username</label>
+                                            <input v-model="credentials.username" type="text" class="form-control" id="formGroupExampleInput" placeholder="username">
+                                            </div>
+                                            <div class="mb-3">
+                                            <label for="formGroupExampleInput" class="form-label">Password</label>
+                                            <input v-model="credentials.password" type="password" class="form-control" id="formGroupExampleInput2" placeholder="password">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button @click="login" type="submit" class="btn btn-primary ">Login</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button @click="login" type="submit" class="btn btn-primary ">Login</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div v-if="user.username != ''"  class="dropdown dropstart">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                            {{user.username}}
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#edit-profile">Edit Profile</a></li>
-                            <li><a v-if="user.type=='BUYER' "class="dropdown-item" href="#subscription" >Subscription</a></li>
-                            <li><a class="dropdown-item" @click="logout">Logout</a></li>
-                        </ul>
-                    </div>
+                </div>
+                <div v-if="user.username != ''"  class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" style="min-width:120px" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                        {{user.username}}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="#edit-profile">Edit Profile</a></li>
+                        <li><a v-if="user.type=='BUYER' "class="dropdown-item" href="#subscription" >Subscription</a></li>
+                        <li><a class="dropdown-item" @click="logout">Logout</a></li>
+                    </ul>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
         <form>
                 <div class="bg-secondary rounded text-light row mx-4 mt-2 border border-primary">
                     <div class="row m-2">
