@@ -115,7 +115,7 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> searchType(String type, ArrayList<SportsFacility> list) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (facility.getType().contains(type)) {
+            if (facility.getType().contains(type.toUpperCase())) {
                 newList.add(facility);
             }
         }
@@ -131,13 +131,17 @@ public class SportsFacilityService {
         }
         return newList;
     }
-    public ArrayList<SportsFacility> filter(String type, boolean isOpenFilter, ArrayList<SportsFacility> list) {
-        if (!type.isEmpty() && type != null) {
+    public ArrayList<SportsFacility> filter(String type, Boolean isOpenFilter, ArrayList<SportsFacility> list) {
+        if (!type.isEmpty() && type != null && !type.equals("Show all")) {
             list = filterType(list, type);
         }
-        if (true == isOpenFilter) {
-            list = filterOpen(list);
+        if (isOpenFilter == null) {
+            return list;
         }
+        else {
+            list = filterOpen(list, isOpenFilter);
+        }
+
         return list;
     }
 
@@ -151,12 +155,27 @@ public class SportsFacilityService {
         return newList;
     }
 
-    public ArrayList<SportsFacility> filterOpen(ArrayList<SportsFacility> list) {
+    public ArrayList<SportsFacility> filterOpen(ArrayList<SportsFacility> list, Boolean open) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getStartTime(), 0)) < 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(facility.getEndTime(), 0)) > 0) {
-                newList.add(facility);
+            int hoursStart = facility.getStartTime()/100;
+            int minutesStart = facility.getStartTime()%100;
+            int hoursEnd = facility.getEndTime()/100;
+            int minutesEnd = facility.getEndTime()%100;
+            if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursStart, minutesStart)) > 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursEnd, minutesEnd)) < 0) {
+                facility.setStatus(true);
+                if(open) {
+                    newList.add(facility);
+                }
+
             }
+            else {
+                facility.setStatus(false);
+                if(!open) {
+                    newList.add(facility);
+                }
+            }
+
         }
         return newList;
     }

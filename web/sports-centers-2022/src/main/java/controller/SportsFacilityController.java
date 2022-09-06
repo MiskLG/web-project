@@ -5,6 +5,7 @@ import beans.SportsFacility;
 import com.google.gson.Gson;
 import dto.SportsFacilityAddDTO;
 import dto.SportsFacilityDTO;
+import dto.SportsFacilitySearchDTO;
 import service.SportsFacilityService;
 import spark.utils.IOUtils;
 
@@ -25,6 +26,7 @@ public class SportsFacilityController {
             getAll();
             add();
             getAllTypes();
+            search();
         });
     }
 
@@ -88,6 +90,78 @@ public class SportsFacilityController {
         get("/getAllTypes", (req, res) -> {
             res.type("application/json");
             return g.toJson(facilityService.getAllTypes());
+        });
+    }
+
+    public static void search() {
+        post("/search", (req, res) -> {
+            res.type("application/json");
+            String payload = req.body();
+            SportsFacilitySearchDTO data = g.fromJson(payload, SportsFacilitySearchDTO.class);
+
+            ArrayList<SportsFacilityDTO> array = new ArrayList<>();
+            ArrayList<SportsFacility> list = facilityService.getAll();
+            if (list == null) {
+                res.status(204);
+                res.body("No facility centers found");
+                return res.raw();
+            }
+
+            Boolean stringToBool;
+            if (data.getFilterStatus().equals("Opened")) {
+                stringToBool = true;
+            }
+            else if (data.getFilterStatus().equals("Closed")) {
+                stringToBool = false;
+            }
+            else {
+                stringToBool = null;
+            }
+            if(data.getRating().isEmpty())
+            {
+                data.setRating("-1");
+            }
+            SportsFacilityService.SortingParameter parameter;
+            if(data.getSortParameter().equals("NAME")) {
+                parameter = SportsFacilityService.SortingParameter.NAME;
+            } else if (data.getSortParameter().equals("LOCATION")) {
+                parameter = SportsFacilityService.SortingParameter.LOCATION;
+            } else {
+                parameter = SportsFacilityService.SortingParameter.RATING;
+            }
+
+            SportsFacilityService.SortingOrientation orientation;
+            if(data.getSortOrientation().equals("ASC")) {
+                orientation = SportsFacilityService.SortingOrientation.ASC;
+            }
+            else {
+                orientation = SportsFacilityService.SortingOrientation.DESC;
+            }
+
+            list = facilityService.search(data.getName(),data.getType(), data.getCity(), Double.parseDouble(data.getRating()),list);
+            list = facilityService.sort(parameter, orientation,list);
+            list = facilityService.filter(data.getFilterType(),stringToBool,list);
+
+            for (SportsFacility facility: list) {
+                InputStream iSteamReader = new FileInputStream(facility.getLogo());
+                byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
+                String base64 = Base64.getEncoder().encodeToString(imageBytes);
+                base64 = "data:image/png;base64," + base64;
+                String boolToString;
+                if (facility.isStatus()) {
+                    boolToString = "Open";
+                }
+                else {
+                    boolToString = "Closed";
+                }
+                array.add(new SportsFacilityDTO(facility.getId(),facility.getName(),facility.getType(),
+                        boolToString, facility.getLocation().getLatitude().toString(), facility.getLocation().getLongitude().toString(),
+                        facility.getLocation().getAddress().getCity(), facility.getLocation().getAddress().getStreet(),
+                        facility.getLocation().getAddress().getStNumber(), facility.getLocation().getAddress().getPoNumber(),
+                        base64, facility.getRating().toString(), facility.getStartTime()/100+":"+facility.getStartTime()%100, facility.getEndTime()/100+":"+facility.getEndTime()%100));
+            }
+
+            return g.toJson(array);
         });
     }
 }

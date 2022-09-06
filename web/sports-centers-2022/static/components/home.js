@@ -7,9 +7,7 @@ Vue.component("home", {
 
 			centers: null,
 			types: "",
-			searchParameters: {name: "", city: "", type: "", rating: ""},
-			sortParameter: "",
-			sortOrientation: "",
+			wrapper: {name: "", city: "", type: "", rating: "",filterType: "Show all", filterStatus: "Show all", sortParameter: "NAME", sortOrientation: "ASC",}
 	    }
 	},
 	    template: `
@@ -104,7 +102,7 @@ Vue.component("home", {
 								<label class="form-label col-md-6">Name:</label>
 							</div>
 							<div class="col-md-8 align-center justify-content-center">
-								<input v-model="searchParameters.name" type="text" class="form-control" placeholder="name of facility"/>
+								<input v-model="wrapper.name" type="text" class="form-control" placeholder="name of facility"/>
 							</div>
 						</div>
 					</div>
@@ -114,7 +112,7 @@ Vue.component("home", {
 								<label class="form-label">Type:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="searchParameters.type" type="text" class="form-control" placeholder="type of facility"/>
+								<input v-model="wrapper.type" type="text" class="form-control" placeholder="type of facility"/>
 							</div>
 						</div>
 					</div>
@@ -124,7 +122,7 @@ Vue.component("home", {
 								<label class="form-label">City:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="searchParameters.city" type="text" class="form-control" placeholder="name of the city"/>
+								<input v-model="wrapper.city" type="text" class="form-control" placeholder="name of the city"/>
 							</div>
 						</div>
 					</div>
@@ -134,7 +132,7 @@ Vue.component("home", {
 								<label class="form-label">Rating:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="searchParameters.rating" type="text" class="form-control" placeholder="number from 1 to 5" />
+								<input v-model="wrapper.rating" type="text" class="form-control" placeholder="number from 1 to 5" />
 							</div>
 						</div>
 					</div>
@@ -144,19 +142,19 @@ Vue.component("home", {
 						<label>Sort by: </label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="sortParameter" value="name" class="form-check-input" type="radio" name="searchRadio" checked />
+						<input v-model="wrapper.sortParameter" value="NAME" class="form-check-input" type="radio" name="searchRadio" checked />
 						<label class="form-check-label" for="searchRadio">
 						Name
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="sortParameter" value="location" class="form-check-input" type="radio" name="searchRadio" />
+						<input v-model="wrapper.sortParameter" value="LOCATION" class="form-check-input" type="radio" name="searchRadio" />
 						<label class="form-check-label" for="searchRadio">
 						Location
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="sortParameter" value="rating" class="form-check-input" type="radio" name="searchRadio" />
+						<input v-model="wrapper.sortParameter" value="RATING" class="form-check-input" type="radio" name="searchRadio" />
 						<label class="form-check-label" for="searchRadio">
 						Rating
 						</label>
@@ -165,13 +163,13 @@ Vue.component("home", {
 					<span> </span>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="sortOrientation" value="asc" class="form-check-input" type="radio" name="sortOrientation" />
+						<input v-model="wrapper.sortOrientation" value="ASC" class="form-check-input" type="radio" name="sortOrientation" />
 						<label class="form-check-label" for="sortOrientation">
 						Ascending
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="sortOrientation" value="desc" class="form-check-input" type="radio" name="sortOrientation" />
+						<input v-model="wrapper.sortOrientation" value="DESC" class="form-check-input" type="radio" name="sortOrientation" />
 						<label class="form-check-label" for="sortOrientation">
 						Descending
 						</label>
@@ -183,14 +181,14 @@ Vue.component("home", {
 					</div>
 					<div class="row-md-3 m-2">
 						<label>Type:</label>
-						<select class="form-select form-select-sm mx-3">
+						<select v-model="wrapper.filterType" class="form-select form-select-sm mx-3">
 							<option>Show all</option>
 							<option v-for="type in types">{{type}}</option>
 					  	</select> 
 					</div>
 					<div class="row-md-3 m-2">
 						<label>Open status:</label>
-						<select class="form-select form-select-sm mx-3">
+						<select v-model="wrapper.filterStatus" class="form-select form-select-sm mx-3">
 							<option>Show all</option>
 							<option>Opened</option>
 							<option>Closed</option>
@@ -262,9 +260,8 @@ Vue.component("home", {
 				}, 500);
 			},
 			registerMove : function () {
-				console.log(this.searchParameters.name);
-				console.log(this.sortParameter)
 				router.push('/register');
+				window.location.reload();
     		},
 			homeMove : function () {
 				router.push('/');
@@ -312,6 +309,18 @@ Vue.component("home", {
 			
 
 			search : function () {
+				if(isNaN(this.wrapper.rating)) {
+					alert("Rating must be a number from 1 to 5");
+					return;
+				}
+				if(parseInt(this.wrapper.rating) < 1 || parseInt(this.wrapper.rating) > 5) {
+					alert("Rating must be a number from 1 to 5");
+					return;
+				}
+				axios.post('rest/centers/search',this.wrapper).
+					then(response => {
+						this.centers = response.data;
+					})
 			},
 			getCenters : function () {
 				axios.get('rest/centers/getAll').

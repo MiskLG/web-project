@@ -38,7 +38,6 @@ public class SportsFacilityRepository {
             if(file.createNewFile()) {
                 OutputStream iStreamOutput = null;
                 iStreamOutput = new FileOutputStream(file);
-                System.out.println(sportsFacility.getLogo());
                 byte[] imageBytes = Base64.getDecoder().decode(sportsFacility.getLogo().split(",")[1]);
                 iStreamOutput.write(imageBytes);
             }
@@ -47,7 +46,6 @@ public class SportsFacilityRepository {
             throw new RuntimeException(e);
         }
         sportsFacility.setLogo(file.getPath());
-        System.out.println(sportsFacility.getLogo());
         read();
         if (this.facilities == null) {
             this.facilities = new ArrayList<>();

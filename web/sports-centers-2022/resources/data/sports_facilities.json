@@ -18,5 +18,25 @@
     "rating": 0.0,
     "startTime": 22,
     "endTime": 2222
+  },
+  {
+    "id": "EhPcM4sT",
+    "name": "asd",
+    "type": "DDDD",
+    "status": true,
+    "location": {
+      "latitude": 123.0,
+      "longitude": 123.0,
+      "address": {
+        "street": "asd",
+        "stNumber": "asd",
+        "city": "asd",
+        "poNumber": "123"
+      }
+    },
+    "logo": "resources/images/EhPcM4sT.png",
+    "rating": 0.0,
+    "startTime": 1200,
+    "endTime": 2000
   }
 ]
