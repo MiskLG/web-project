@@ -195,7 +195,7 @@ Vue.component("all-users", {
 			<div v-for="user in users" class="m-2 bg-secondary row rounded" >
                 <div class="mx-1 row">
 				    <label class="fs-5 text-light col-md-2">Username: <span class="mx-1 text-info">{{user.username}}</span> </label>
-                    <label class="fs-5 text-light col-md-2">User Type: <span class="mx-1 text-info">{{user.type}}</span> </label>
+                    <label class="fs-5 text-light col-md-2">User Type: <span class="mx-1 text-info">{{user.userType}}</span> </label>
                 </div>
                 <div class="mx-1 row">
                     <label class="fs-5 text-light col-md-2">Name: <span class="mx-1 text-info">{{user.name}}</span> </label>
