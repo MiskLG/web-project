@@ -210,82 +210,79 @@ Vue.component("all-users", {
 		</div>
     	`,
     methods : {
-			login : function () {
-				if(this.credentials.username.trim() != "" && this.credentials.password.trim() != ""){
-					axios.post('rest/user/login', this.credentials).
-						then(response => {
-							this.user = response.data;
-						})	
-				}
-				if(this.user.username == "") {
-					alert("Wrong username or password");
-					return;
-				}
-				setTimeout(function(){
-					window.location.reload();
-				}, 500);
-				
-    		},
-			logout : function () {
-				this.user.username = "";
-				this.user.type = "";
-				axios.post('rest/user/logout');
-				console.log(this.user);
-				setTimeout(function(){
-					window.location.reload();
-				}, 500);
-			},
-			registerMove : function () {
-				router.push('/register');
-				window.location.reload();
-    		},
-			homeMove : function () {
-				router.push('/');
-				window.location.reload();
-    		},
-			workoutsMove : function () {
-				router.push('/workouts');
-				window.location.reload();
-    		},
-			addCentersMove : function () {
-				router.push('/add-centers');
-				window.location.reload();
-    		},
-			addManagersMove : function () {
-				router.push('/add-managers');
-				window.location.reload();
-    		},
-			addCoachesMove : function () {
-				router.push('/add-coaches');
-				window.location.reload();
-    		},
-			allUsersMove : function () {
-				router.push('/all-users');
-				window.location.reload();
-    		},
-			addWorkoutsMove : function () {
-				router.push('/add-workouts');
-				window.location.reload();
-    		},
-			promoCodesMove : function () {
-				router.push('/promo-codes');
-				window.location.reload();
-    		},
-			getUser : function () {
-				axios.get('rest/user/current').
-					then(response => {
-						if(response.data != 'NOUSER') {
-							this.user = response.data;
-						}
-					})	
-			},
-			editProfile() {
-				if (user.username.length === 0) {
-					return;
-				}
-				router.push('edit-profile');
-				window.location.reload();
-			},
+            login : function () {
+                if(this.credentials.username.trim() != "" && this.credentials.password.trim() != ""){
+                    axios.post('rest/user/login', this.credentials).
+                        then(response => {
+                            this.user = response.data;
+                            window.location.reload();
+                        })	
+                        .catch(error => {
+                            alert("Wrong username or password");
+                        })
+                }		
+            },
+            logout : function () {
+                this.user.username = "";
+                this.user.type = "";
+                axios.post('rest/user/logout')
+                    .then(response => {
+                        router.push('/');
+                    })
+            },
+            registerMove : function () {
+                router.push('/register');
+                window.location.reload();
+            },
+            homeMove : function () {
+                router.push('/');
+                window.location.reload();
+            },
+            workoutsMove : function () {
+                router.push('/workouts');
+                window.location.reload();
+            },
+            addCentersMove : function () {
+                router.push('/add-centers');
+                window.location.reload();
+            },
+            addManagersMove : function () {
+                router.push('/add-managers');
+                window.location.reload();
+            },
+            addCoachesMove : function () {
+                router.push('/add-coaches');
+                window.location.reload();
+            },
+            allUsersMove : function () {
+                router.push('/all-users');
+                window.location.reload();
+            },
+            addWorkoutsMove : function () {
+                router.push('/add-workouts');
+                window.location.reload();
+            },
+            promoCodesMove : function () {
+                router.push('/promo-codes');
+                window.location.reload();
+            },
+            getUser : function () {
+                axios.get('rest/user/current').
+                    then(response => {
+                        if(response.data != 'NOUSER') {
+                            this.user = response.data;
+                        }
+                    }).catch(error => {
+                        
+                    })	
+            },
+            editProfile() {
+                if (user.username.length === 0) {
+                    return;
+                }
+                router.push('edit-profile');
+                window.location.reload();
+            },
 			
 
 			search : function () {
@@ -293,11 +290,17 @@ Vue.component("all-users", {
 					then(response => {
 						this.users = response.data;
 					})
+                    .catch(error => {
+                        
+                    })
 			},
             getAllUsers : function () {
                 axios.get("rest/user/getAll").
                     then(response => {
                         this.users = response.data;
+                    })
+                    .catch(error => {
+
                     })
             }
     	},

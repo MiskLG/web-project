@@ -193,27 +193,24 @@ Vue.component("add-centers", {
                     axios.post('rest/user/login', this.credentials).
                         then(response => {
                             this.user = response.data;
+                            window.location.reload();
                         })	
-                }
-                console.log(this.user);
-                setTimeout(function(){
-                    window.location.reload();
-                }, 500);
-                
+                        .catch(error => {
+                            alert("Wrong username or password");
+                        })
+                }		
             },
             logout : function () {
                 this.user.username = "";
                 this.user.type = "";
-                axios.post('rest/user/logout');
-                console.log(this.user);
-                setTimeout(function(){
-                    window.location.reload();
-                }, 500);
+                axios.post('rest/user/logout')
+                    .then(response => {
+                        router.push('/');
+                    })
             },
             registerMove : function () {
-                console.log(this.searchParameters.name);
-                console.log(this.sortParameter)
                 router.push('/register');
+                window.location.reload();
             },
             homeMove : function () {
                 router.push('/');
@@ -243,13 +240,26 @@ Vue.component("add-centers", {
                 router.push('/add-workouts');
                 window.location.reload();
             },
+            promoCodesMove : function () {
+                router.push('/promo-codes');
+                window.location.reload();
+            },
             getUser : function () {
                 axios.get('rest/user/current').
                     then(response => {
                         if(response.data != 'NOUSER') {
                             this.user = response.data;
                         }
+                    }).catch(error => {
+                        
                     })	
+            },
+            editProfile() {
+                if (user.username.length === 0) {
+                    return;
+                }
+                router.push('edit-profile');
+                window.location.reload();
             },
 
 
@@ -279,10 +289,13 @@ Vue.component("add-centers", {
                     return;
                 }
 
-                axios.post('rest/centers/add',this.center);
-                setTimeout(function(){
-					window.location.reload();
-				}, 500);
+                axios.post('rest/centers/add',this.center)
+                    .then(response => {
+                        window.location.reload();
+                    })
+                    .catch(error => {
+
+                    });
             },
             trimData : function() {
                 this.center.name.trim();

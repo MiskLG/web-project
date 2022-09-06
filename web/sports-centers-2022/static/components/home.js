@@ -302,7 +302,9 @@ Vue.component("home", {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
 						}
-					})	
+					}).catch(error => {
+                        
+                    })	
 			},
 			editProfile() {
 				if (user.username.length === 0) {
