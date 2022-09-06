@@ -5,6 +5,7 @@ import beans.User;
 import com.google.gson.Gson;
 import dto.BuyerRegisterDTO;
 import dto.Credentials;
+import dto.UserInfoDTO;
 import service.BuyerService;
 import service.UserService;
 
@@ -32,6 +33,13 @@ public class BuyerController {
             res.type("application/json");
             String payload = req.body();
             BuyerRegisterDTO data = g.fromJson(payload, BuyerRegisterDTO.class);
+
+          if(userService.getUser(new Credentials(data.getUsername(), data.getPassword())) != null) {
+              res.body("Username is taken");
+              res.status(400);
+              return res.raw();
+          }
+
             User.GenderType genderType;
             if(data.getGender().equals("male")) {
                  genderType = User.GenderType.MALE;
@@ -41,15 +49,15 @@ public class BuyerController {
             }
             data.fillDate();
             System.out.println(data.getUsername() + data.getYear() + data.getDay() + data.getMonth() + data.getDate());
-            Calendar.getInstance().set(Integer.parseInt(data.getYear()), Integer.parseInt(data.getMonth()), Integer.parseInt(data.getDay()));
-            Date date = Calendar.getInstance().getTime();
+            Calendar cal = Calendar.getInstance();
+            cal.set(Integer.parseInt(data.getYear()), Integer.parseInt(data.getMonth())-1, Integer.parseInt(data.getDay()));
+            Date date = cal.getTime();
 
             Buyer buyer = new Buyer(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
             buyerService.add(buyer);
-
-            User user = userService.getUser(new Credentials(data.getUsername(), data.getPassword()));
-            req.session().attribute("user", user);
-            return g.toJson(user);
+            UserInfoDTO info = new UserInfoDTO(buyer.getUsername(),buyer.getUserType().toString());
+            req.session().attribute("user", info);
+            return g.toJson(info);
         });
     }
 }

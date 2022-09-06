@@ -37,10 +37,28 @@ public class UserService {
 
     public ArrayList<User> getAll() {
         ArrayList<User> list = new ArrayList<>();
-        list.addAll(buyerRepository.getAll());
-        list.addAll(coachRepository.getAll());
-        list.addAll(managerRepository.getAll());
-        list.addAll(adminRepository.getAll());
+
+        ArrayList<Buyer> listHelper;
+        listHelper = buyerRepository.getAll();
+        if(listHelper != null) {
+            list.addAll(listHelper);
+        }
+
+        ArrayList<Manager> listHelper1;
+        listHelper1 = managerRepository.getAll();
+        if(listHelper1 != null) {
+            list.addAll(listHelper1);
+        }
+        ArrayList<Coach> listHelper2;
+        listHelper2 = coachRepository.getAll();
+        if(listHelper2 != null) {
+            list.addAll(listHelper2);
+        }
+        ArrayList<Admin> listHelper3;
+        listHelper3 = adminRepository.getAll();
+        if(listHelper3 != null) {
+            list.addAll(listHelper3);
+        }
         return list;
     }
 

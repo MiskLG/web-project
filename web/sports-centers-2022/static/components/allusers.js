@@ -1,17 +1,18 @@
-Vue.component("home", {
+Vue.component("all-users", {
 	data: function () {
 	    return {
 			
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
-			centers: null,
+			users: null,
 			types: "",
-			wrapper: {name: "", city: "", type: "", rating: "",filterType: "Show all", filterStatus: "Show all", sortParameter: "NAME", sortOrientation: "ASC",}
+			wrapper: {name: "", lastname: "", username: "", filterType: "Show all", sortParameter: "NAME", sortOrientation: "ASC",}
 	    }
 	},
 	    template: `
 		<div>
+            <div v-if="user.type == 'ADMIN'">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#/">SportsCenters</a>
@@ -105,7 +106,7 @@ Vue.component("home", {
 								<label class="form-label col-md-6">Name:</label>
 							</div>
 							<div class="col-md-8 align-center justify-content-center">
-								<input v-model="wrapper.name" type="text" class="form-control" placeholder="name of facility"/>
+								<input v-model="wrapper.name" type="text" class="form-control" placeholder="name of user"/>
 							</div>
 						</div>
 					</div>
@@ -115,7 +116,7 @@ Vue.component("home", {
 								<label class="form-label">Type:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="wrapper.type" type="text" class="form-control" placeholder="type of facility"/>
+								<input v-model="wrapper.lastname" type="text" class="form-control" placeholder="type of facility"/>
 							</div>
 						</div>
 					</div>
@@ -125,17 +126,7 @@ Vue.component("home", {
 								<label class="form-label">City:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="wrapper.city" type="text" class="form-control" placeholder="name of the city"/>
-							</div>
-						</div>
-					</div>
-					<div class="row m-2">
-						<div class="row">
-							<div class="col-md-2 pt-1">
-								<label class="form-label">Rating:</label>
-							</div>
-							<div class="col-md-8">
-								<input v-model="wrapper.rating" type="text" class="form-control" placeholder="number from 1 to 5" />
+								<input v-model="wrapper.username" type="text" class="form-control" placeholder="name of the city"/>
 							</div>
 						</div>
 					</div>
@@ -151,13 +142,13 @@ Vue.component("home", {
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="wrapper.sortParameter" value="LOCATION" class="form-check-input" type="radio" name="searchRadio" />
+						<input v-model="wrapper.sortParameter" value="LASTNAME" class="form-check-input" type="radio" name="searchRadio" />
 						<label class="form-check-label" for="searchRadio">
 						Location
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
-						<input v-model="wrapper.sortParameter" value="RATING" class="form-check-input" type="radio" name="searchRadio" />
+						<input v-model="wrapper.sortParameter" value="USERNAME" class="form-check-input" type="radio" name="searchRadio" />
 						<label class="form-check-label" for="searchRadio">
 						Rating
 						</label>
@@ -186,15 +177,10 @@ Vue.component("home", {
 						<label>Type:</label>
 						<select v-model="wrapper.filterType" class="form-select form-select-sm mx-3">
 							<option>Show all</option>
-							<option v-for="type in types">{{type}}</option>
-					  	</select> 
-					</div>
-					<div class="row-md-3 m-2">
-						<label>Open status:</label>
-						<select v-model="wrapper.filterStatus" class="form-select form-select-sm mx-3">
-							<option>Show all</option>
-							<option>Opened</option>
-							<option>Closed</option>
+							<option>Buyer</option>
+                            <option>Manager</option>
+                            <option>Coach</option>
+                            <option>Admin</option>
 					  	</select> 
 					</div>
 				</div>
@@ -206,37 +192,21 @@ Vue.component("home", {
 			</div>
 			
 			</form>
-			<div v-for="center in centers" class="m-4 bg-secondary row rounded" >
-				<div class="col-md-3 m-3">
-					<img :src="center.image" class="img-thumbnail"/>
-				</div>
-				<div class="col-md-8 m-3 bg-secondary">
-					<div class="row mb-3">
-						<label class="col-6 fs-2 d-flex justify-content-end text-light"> {{center.name}} </label>
-						<label class="col-6 fs-4 d-flex justify-content-end text-light"> Rating:  <span class="mx-2 text-info">{{center.rating}}/5</span> </label>
-					</div>
-					<div class="row">
-						<label class="text-light fs-5">Type: <span class="text-info mx-2">{{center.type}}</span></label>
-					</div>
-					<div class="row">
-						<label class="text-light fs-5">Status: <span class="text-info mx-2">{{center.status}}</span></label>
-					</div>
-					<div class="row">
-						<label class="text-light fs-5">Work hours: <span class="text-info mx-2">{{center.startTime}}h - {{center.endTime}}h </span></label>
-					</div>
-					<div class="row">
-						<label class="text-light fs-5">Location: <span class="text-info mx-2">{{center.city}}, {{center.poNumber}}, {{center.street}} {{center.stNumber}} </span></label>
-					</div>
-					<div class="row">
-						<label class="col-6 text-light fs-5">Longitude: <span class="text-info mx-2">{{center.longitude}}</span> Latitude: <span class="text-info mx-2">{{center.latitude}}</span></label>
-						<div class="col-6 d-flex justify-content-end">
-							<button class="btn btn-primary" type="button" @click="seeContent(center.id)">
-								See content =>
-							</button>
-						</div>
-					</div>
-				</div>
+			<div v-for="user in users" class="m-2 bg-secondary row rounded" >
+                <div class="mx-1 row">
+				    <label class="fs-5 text-light col-md-2">Username: <span class="mx-1 text-info">{{user.username}}</span> </label>
+                    <label class="fs-5 text-light col-md-2">User Type: <span class="mx-1 text-info">{{user.type}}</span> </label>
+                </div>
+                <div class="mx-1 row">
+                    <label class="fs-5 text-light col-md-2">Name: <span class="mx-1 text-info">{{user.name}}</span> </label>
+                    <label class="fs-5 text-light col-md-2">Lastname: <span class="mx-1 text-info">{{user.lastname}}</span> </label>
+                    <label class="fs-5 text-light col-md-2">Gender: <span class="mx-1 text-info">{{user.gender}}</span></label>
+                    <label class="fs-5 text-light col-md-5">Date of birth: <span class="mx-1 text-info">{{user.dateOfBirth}}</span> </label>
+                </div>
+                
+                
 			</div>
+            </div>
 		</div>
     	`,
     methods : {
@@ -245,20 +215,25 @@ Vue.component("home", {
 					axios.post('rest/user/login', this.credentials).
 						then(response => {
 							this.user = response.data;
-							window.location.reload();
 						})	
-						.catch(error => {
-							alert("Wrong username or password");
-						})
-				}		
+				}
+				if(this.user.username == "") {
+					alert("Wrong username or password");
+					return;
+				}
+				setTimeout(function(){
+					window.location.reload();
+				}, 500);
+				
     		},
 			logout : function () {
 				this.user.username = "";
 				this.user.type = "";
-				axios.post('rest/user/logout')
-					.then(response => {
-						router.push('/');
-					})
+				axios.post('rest/user/logout');
+				console.log(this.user);
+				setTimeout(function(){
+					window.location.reload();
+				}, 500);
 			},
 			registerMove : function () {
 				router.push('/register');
@@ -314,38 +289,20 @@ Vue.component("home", {
 			
 
 			search : function () {
-				if(isNaN(this.wrapper.rating)) {
-					alert("Rating must be a number from 1 to 5");
-					return;
-				}
-				if(parseInt(this.wrapper.rating) < 1 || parseInt(this.wrapper.rating) > 5) {
-					alert("Rating must be a number from 1 to 5");
-					return;
-				}
-				axios.post('rest/centers/search',this.wrapper).
+				axios.post('rest/user/search',this.wrapper).
 					then(response => {
-						this.centers = response.data;
+						this.users = response.data;
 					})
 			},
-			getCenters : function () {
-				axios.get('rest/centers/getAll').
-					then(response => {
-						this.centers = response.data;
-					})
-			},
-			getAllTypes : function() {
-				axios.get('rest/centers/getAllTypes').
-					then(response => {
-						this.types = response.data;
-					})
-			},
-			seeContent : function(id) {
-				router.push('/'+id);
-			}
+            getAllUsers : function () {
+                axios.get("rest/user/getAll").
+                    then(response => {
+                        this.users = response.data;
+                    })
+            }
     	},
     	mounted () {
 			this.getUser();
-			this.getCenters();
-			this.getAllTypes();
+            this.getAllUsers();
         }
 });

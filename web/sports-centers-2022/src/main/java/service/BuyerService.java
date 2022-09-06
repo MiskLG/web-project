@@ -15,6 +15,7 @@ public class BuyerService {
     public BuyerService() {
         buyerRepository = BuyerRepository.init();
         userInfoRepository = UserInfoRepository.init();
+        userService = new UserService();
     }
 
     public void addSubscription(Buyer buyer, Subscription subscription) {

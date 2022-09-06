@@ -3,8 +3,11 @@ package controller;
 import beans.User;
 import com.google.gson.Gson;
 import dto.Credentials;
+import dto.UserDTO;
 import dto.UserInfoDTO;
 import service.UserService;
+
+import java.util.ArrayList;
 
 import static spark.Spark.*;
 
@@ -23,6 +26,7 @@ public class UserController {
         path(commonPath, () -> {
             login();
             logout();
+            getUsers();
             add();
             current();
         });
@@ -56,9 +60,15 @@ public class UserController {
     }
 
     public static void getUsers() {
-        get("/users", (req, res) -> {
+        get("/getAll", (req, res) -> {
             res.type("application/json");
-            return g.toJson(userService.getAll());
+
+            ArrayList<UserDTO> list = new ArrayList<>();
+            for (User user: userService.getAll()) {
+                list.add(new UserDTO(user.getName(),user.getLastname(), user.getUsername(), user.getUserType().toString(),user.getGender().toString(), user.getDateOfBirth().toString()));
+            }
+
+            return g.toJson(list);
         });
     }
 

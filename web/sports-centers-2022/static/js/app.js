@@ -4,6 +4,7 @@ const Register = {template: '<register></register>'}
 const AddCenters = {template: '<add-centers></add-centers>'}
 const Center = {template: '<show-center></show-center>'}
 const Edit = {template: '<edit-profile></edit-profile>'}
+const AllUsers = {template: '<all-users></all-users>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -14,6 +15,7 @@ const router = new VueRouter({
 		{ path: '/add-centers', component: AddCenters},
 		{ path: '/center/:id', component: Center},
 		{ path: '/profile/:username', component: Edit},
+		{ path: '/all-users', component: AllUsers},
 	  ]
 });
 

@@ -6,17 +6,37 @@
     "lastname": "asd",
     "password": "asd",
     "gender": "MALE",
-    "dateOfBirth": "Sep 3, 2022, 2:59:20 PM",
+    "dateOfBirth": "Feb 21, 2001, 3:00:23 PM",
     "userType": "BUYER"
   },
   {
     "points": 0,
     "username": "mad",
-    "name": "mad",
-    "lastname": "mad",
-    "password": "mad",
+    "name": "asd",
+    "lastname": "asd",
+    "password": "asd",
     "gender": "MALE",
-    "dateOfBirth": "Sep 4, 2022, 8:38:13 PM",
+    "dateOfBirth": "Sep 6, 1988, 3:16:02 PM",
+    "userType": "BUYER"
+  },
+  {
+    "points": 0,
+    "username": "kad",
+    "name": "kad",
+    "lastname": "kad",
+    "password": "kad",
+    "gender": "FEMALE",
+    "dateOfBirth": "Sep 21, 2022, 3:17:35 PM",
+    "userType": "BUYER"
+  },
+  {
+    "points": 0,
+    "username": "bad",
+    "name": "bad",
+    "lastname": "bad",
+    "password": "bad",
+    "gender": "MALE",
+    "dateOfBirth": "Aug 31, 2022, 3:18:54 PM",
     "userType": "BUYER"
   }
 ]
