@@ -1,5 +1,6 @@
 package service;
 
+import beans.Manager;
 import beans.SportsFacility;
 import beans.Workout;
 import repository.SportsFacilityRepository;
@@ -10,11 +11,13 @@ import java.util.Collections;
 
 public class SportsFacilityService {
     private SportsFacilityRepository facilityRepository;
+    private ManagerService managerService;
     public enum SortingParameter {NAME, LOCATION, RATING};
     public enum SortingOrientation {ASC, DESC};
 
     public SportsFacilityService() {
         facilityRepository = SportsFacilityRepository.init();
+        managerService = new ManagerService();
     }
 
     public void add(SportsFacility sportsFacility) {
@@ -66,6 +69,34 @@ public class SportsFacilityService {
             newList.add(facility);
         }
         return newList;
+    }
+
+    public ArrayList<SportsFacility> getWithoutManagers() {
+        ArrayList<SportsFacility> list = new ArrayList<>();
+        ArrayList<SportsFacility> oldList = this.getAll();
+        ArrayList<Manager> managers = managerService.getAll();
+
+        if(oldList == null) {
+            return null;
+        }
+        if(managers == null) {
+            return oldList;
+        }
+
+        for (SportsFacility facility: oldList) {
+            boolean found = false;
+            for (Manager manager: managers) {
+                if (manager.getFacility().getId().equals(facility.getId()))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (false == found) {
+               list.add(facility);
+            }
+        }
+        return list;
     }
 
     public ArrayList<String> getAllTypes() {

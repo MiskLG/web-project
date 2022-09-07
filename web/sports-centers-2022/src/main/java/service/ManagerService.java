@@ -5,6 +5,8 @@ import dto.Credentials;
 import repository.ManagerRepository;
 import repository.UserInfoRepository;
 
+import java.util.ArrayList;
+
 public class ManagerService {
     private ManagerRepository managerRepository;
     private UserInfoRepository userInfoRepository;
@@ -20,6 +22,10 @@ public class ManagerService {
             managerRepository.add(manager);
             userInfoRepository.generateAndAddUserInfo(manager);
         }
+    }
+
+    public ArrayList<Manager> getAll() {
+        return managerRepository.getAll();
     }
 
     public Manager getById(String id) {

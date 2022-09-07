@@ -27,6 +27,7 @@ public class SportsFacilityController {
             add();
             getAllTypes();
             search();
+            getEmpty();
         });
     }
 
@@ -42,7 +43,7 @@ public class SportsFacilityController {
                 return res.raw();
             }
 
-            for (SportsFacility facility: facilityService.getAll()) {
+            for (SportsFacility facility: list) {
                 InputStream iSteamReader = new FileInputStream(facility.getLogo());
                 byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
                 String base64 = Base64.getEncoder().encodeToString(imageBytes);
@@ -141,6 +142,41 @@ public class SportsFacilityController {
             list = facilityService.search(data.getName(),data.getType(), data.getCity(), Double.parseDouble(data.getRating()),list);
             list = facilityService.sort(parameter, orientation,list);
             list = facilityService.filter(data.getFilterType(),stringToBool,list);
+
+            for (SportsFacility facility: list) {
+                InputStream iSteamReader = new FileInputStream(facility.getLogo());
+                byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
+                String base64 = Base64.getEncoder().encodeToString(imageBytes);
+                base64 = "data:image/png;base64," + base64;
+                String boolToString;
+                if (facility.isStatus()) {
+                    boolToString = "Open";
+                }
+                else {
+                    boolToString = "Closed";
+                }
+                array.add(new SportsFacilityDTO(facility.getId(),facility.getName(),facility.getType(),
+                        boolToString, facility.getLocation().getLatitude().toString(), facility.getLocation().getLongitude().toString(),
+                        facility.getLocation().getAddress().getCity(), facility.getLocation().getAddress().getStreet(),
+                        facility.getLocation().getAddress().getStNumber(), facility.getLocation().getAddress().getPoNumber(),
+                        base64, facility.getRating().toString(), facility.getStartTime()/100+":"+facility.getStartTime()%100, facility.getEndTime()/100+":"+facility.getEndTime()%100));
+            }
+
+            return g.toJson(array);
+        });
+    }
+
+    public static void getEmpty() {
+        get("/getWithoutManagers", (req, res) -> {
+            res.type("application/json");
+
+            ArrayList<SportsFacilityDTO> array = new ArrayList<>();
+            ArrayList<SportsFacility> list = facilityService.getWithoutManagers();
+            if (list == null) {
+                res.status(204);
+                res.body("No facility centers found");
+                return res.raw();
+            }
 
             for (SportsFacility facility: list) {
                 InputStream iSteamReader = new FileInputStream(facility.getLogo());
