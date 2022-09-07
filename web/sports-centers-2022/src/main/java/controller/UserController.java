@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import dto.Credentials;
 import dto.UserDTO;
 import dto.UserInfoDTO;
+import dto.UserSearchDTO;
 import service.UserService;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class UserController {
             getUsers();
             add();
             current();
+            search();
         });
     }
     public static void login(){
@@ -91,6 +93,65 @@ public class UserController {
                     new ArrayList<SportsFacility>(), 0, new BuyerType("asd",12.0,12000)));
             */
             return "SUCCESS";
+        });
+    }
+    public static void search(){
+        post("/search", (req, res) -> {
+            res.type("application/json");
+            res.status(200);
+
+            String payload = req.body();
+            UserSearchDTO data = g.fromJson(payload, UserSearchDTO.class);
+
+            ArrayList<User> users = userService.getAll();
+            if (users == null) {
+                res.status(204);
+                res.body("No users found");
+                return res.raw();
+            }
+
+            ArrayList<UserDTO> list = new ArrayList<>();
+
+            UserService.SortingParameter parameter;
+            if(data.getSortParameter().equals("NAME")) {
+                parameter = UserService.SortingParameter.NAME;
+            } else if (data.getSortParameter().equals("USERNAME")) {
+                parameter = UserService.SortingParameter.USERNAME;
+            } else {
+                parameter = UserService.SortingParameter.LASTNAME;
+            }
+
+            UserService.SortingOrientation orientation;
+            if(data.getSortOrientation().equals("ASC")) {
+                orientation = UserService.SortingOrientation.ASC;
+            }
+            else {
+                orientation = UserService.SortingOrientation.DESC;
+            }
+            User.UserType type;
+            if(data.getFilterType().equalsIgnoreCase("ADMIN")) {
+                type = User.UserType.ADMIN;
+                users = userService.filter(type, users);
+            } else if (data.getFilterType().equalsIgnoreCase("BUYER")) {
+                type = User.UserType.BUYER;
+                users = userService.filter(type, users);
+            }else if (data.getFilterType().equalsIgnoreCase("MANAGER")) {
+                type = User.UserType.MANAGER;
+                users = userService.filter(type, users);
+            } else if(data.getFilterType().equalsIgnoreCase("COACH")){
+                type = User.UserType.COACH;
+                users = userService.filter(type, users);
+            }
+
+
+            users = userService.search(data.getName(), data.getLastname(), data.getUsername(), users);
+            users = userService.sort(parameter,orientation,users);
+
+            for (User user: users) {
+                list.add(new UserDTO(user.getName(),user.getLastname(), user.getUsername(), user.getUserType().toString(),user.getGender().toString(), user.getDateOfBirth().toString()));
+            }
+
+            return g.toJson(list);
         });
     }
 }

@@ -4,6 +4,7 @@ Vue.component("add-centers", {
 	    	user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
+            managers: null,
             center: {name: "",type: "",latitude: "",longitude: "",city: "",
                     street: "", stNumber: "", poNumber: "", image: "",
                      startTime: "", endTime: ""} 
@@ -342,9 +343,23 @@ Vue.component("add-centers", {
             removeImage: function(){
                 this.center.image="";
                 this.$refs.imgUpload.value = null;
+            },
+            getManagers : function() {
+                axios.get('/rest/managers/getFree').
+                    then(response => {
+                        managers = response.data;
+                    })
+                    .catch(error => {
+                        if(error.response.status == 400) {
+                            alert("There are no free managers, please add some first");
+                            router.push('/add-managers');
+                        }
+                        
+                    })
             }
     	},
     	mounted () {
             this.getUser();
+            this.getManagers();
         }
 });

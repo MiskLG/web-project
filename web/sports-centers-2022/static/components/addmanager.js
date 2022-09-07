@@ -5,7 +5,6 @@ Vue.component("add-managers", {
 	    	credentials: {username: "", password: ""},
             
             show: "",
-            centers: null,
             registerData: {username: "", name:"", lastname:"", password:"", password2:"", gender:"", date:"", centerId:""}
 	    }
 	},
@@ -93,9 +92,6 @@ Vue.component("add-managers", {
 					</div>
 				</div>
 			</nav>
-			<button class="btn btn-primary mx-4 mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-				Show search options
-			</button>
 			<form>
                 <div class="bg-secondary rounded text-light row mx-4 mt-2 border border-primary">
                     <div class="row m-2">
@@ -163,22 +159,9 @@ Vue.component("add-managers", {
                             </label>
 					    </div>
                     </div>
-                    <div class="row m-2">
-                            <div class="col-md-4">
-                                <label class="fs-6">Show only centers without managers</label>
-                                <input class="mx-4 form-check-input" type="checkbox" value="freeOnly" v-model="show" @change="getEmptyCenterOnly" >
-                            </div>
-                            <div class="col-md-4">
-                            <select class="col-md-5 mx-2" v-model="registerData.centerId">
-                                <option v-for="center in centers" :value="center.id" class="form-select form-select-sm mx-3"> 
-                                    {{center.name}} {{center.type}}
-                                </option>
-                            </select>
-                            </div>
-			        </div>
                     
                     <button @click="register" type="button" class="btn btn-primary">
-						Register
+						Register Manager
 					</button>
                 </div>
             </form>
@@ -308,9 +291,6 @@ Vue.component("add-managers", {
                     alert("Password does not match");
                     return;
                 }
-                if(this.registerData.centerid.length === 0) {
-                    alert("Please choose a sports facility where manager will be");
-                }
                 
                 axios.post('rest/buyer/register', this.registerData).
                     then(response => {
@@ -327,6 +307,5 @@ Vue.component("add-managers", {
     	},
     	mounted () {
 			this.getUser();
-			this.getCenters();
         }
 });

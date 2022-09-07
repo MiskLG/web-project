@@ -1,6 +1,6 @@
 package dto;
 
-public class BuyerRegisterDTO {
+public class UserRegisterDTO {
     private String username;
     private String name;
     private String lastname;
@@ -12,10 +12,10 @@ public class BuyerRegisterDTO {
     private String month;
     private String year;
 
-    public BuyerRegisterDTO() {
+    public UserRegisterDTO() {
     }
 
-    public BuyerRegisterDTO(String username, String name, String lastname, String password, String gender, String date) {
+    public UserRegisterDTO(String username, String name, String lastname, String password, String gender, String date) {
         this.username = username;
         this.name = name;
         this.lastname = lastname;

@@ -109,27 +109,27 @@ Vue.component("all-users", {
 								<label class="form-label col-md-6">Name:</label>
 							</div>
 							<div class="col-md-8 align-center justify-content-center">
-								<input v-model="wrapper.name" type="text" class="form-control" placeholder="name of user"/>
+								<input v-model="wrapper.name" type="text" class="form-control" placeholder="name"/>
 							</div>
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="row">
 							<div class="col-md-2 pt-1">
-								<label class="form-label">Type:</label>
+								<label class="form-label">Lastname:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="wrapper.lastname" type="text" class="form-control" placeholder="type of facility"/>
+								<input v-model="wrapper.lastname" type="text" class="form-control" placeholder="lastname"/>
 							</div>
 						</div>
 					</div>
 					<div class="row m-2">
 						<div class="row">
 							<div class="col-md-2 pt-1">
-								<label class="form-label">City:</label>
+								<label class="form-label">Username:</label>
 							</div>
 							<div class="col-md-8">
-								<input v-model="wrapper.username" type="text" class="form-control" placeholder="name of the city"/>
+								<input v-model="wrapper.username" type="text" class="form-control" placeholder="username"/>
 							</div>
 						</div>
 					</div>
@@ -147,13 +147,13 @@ Vue.component("all-users", {
 					<div class="form-check row-md-4 m-2">
 						<input v-model="wrapper.sortParameter" value="LASTNAME" class="form-check-input" type="radio" name="searchRadio" />
 						<label class="form-check-label" for="searchRadio">
-						Location
+						Last name
 						</label>
 					</div>
 					<div class="form-check row-md-4 m-2">
 						<input v-model="wrapper.sortParameter" value="USERNAME" class="form-check-input" type="radio" name="searchRadio" />
 						<label class="form-check-label" for="searchRadio">
-						Rating
+						Username
 						</label>
 					</div>
 					<div class="row-md-4 m-6" style="height: 20px">

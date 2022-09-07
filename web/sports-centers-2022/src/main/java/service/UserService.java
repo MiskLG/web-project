@@ -116,10 +116,10 @@ public class UserService {
                 break;
             }
             case USERNAME -> {
+                list.sort(User::compareUsername);
                 break;
             }
             default -> {
-                list.sort(User::compareUsername);
                 break;
             }
         }
@@ -132,7 +132,7 @@ public class UserService {
     public ArrayList<User> filter(User.UserType type, ArrayList<User> list) {
         ArrayList<User> newList = new ArrayList<>();
         for (User user : list) {
-            if (user.getUserType().equals(type)) {
+            if (user.getUserType().toString().equalsIgnoreCase(type.toString())) {
                 newList.add(user);
             }
         }

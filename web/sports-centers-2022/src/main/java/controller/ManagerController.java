@@ -1,26 +1,23 @@
 package controller;
 
-import beans.Buyer;
+import beans.Manager;
 import beans.User;
 import com.google.gson.Gson;
 import dto.UserRegisterDTO;
 import dto.Credentials;
-import dto.UserInfoDTO;
-import service.BuyerService;
+import service.ManagerService;
 import service.UserService;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import static spark.Spark.path;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
-public class BuyerController {
-
+public class ManagerController {
     private static Gson g = new Gson();
-    private static BuyerService buyerService = new BuyerService();
+    private static ManagerService managerService = new ManagerService();
     private static UserService userService = new UserService();
-    private static String commonPath = "/rest/buyer";
+    private static String commonPath = "/rest/manager";
 
     public static void init() {
         path(commonPath, () -> {
@@ -29,20 +26,20 @@ public class BuyerController {
     }
 
     public static void register() {
-        post("/register", (req, res) -> {
+        post("/register",(req, res) -> {
             res.type("application/json");
             String payload = req.body();
             UserRegisterDTO data = g.fromJson(payload, UserRegisterDTO.class);
 
-          if(userService.getUser(new Credentials(data.getUsername(), data.getPassword())) != null) {
-              res.body("Username is taken");
-              res.status(400);
-              return res.raw();
-          }
+            if(userService.getUser(new Credentials(data.getUsername(), data.getPassword())) != null) {
+                res.body("Username is taken");
+                res.status(400);
+                return res.raw();
+            }
 
             User.GenderType genderType;
             if(data.getGender().equals("male")) {
-                 genderType = User.GenderType.MALE;
+                genderType = User.GenderType.MALE;
             }
             else {
                 genderType = User.GenderType.FEMALE;
@@ -53,11 +50,16 @@ public class BuyerController {
             cal.set(Integer.parseInt(data.getYear()), Integer.parseInt(data.getMonth())-1, Integer.parseInt(data.getDay()));
             Date date = cal.getTime();
 
-            Buyer buyer = new Buyer(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
-            buyerService.add(buyer);
-            UserInfoDTO info = new UserInfoDTO(buyer.getUsername(),buyer.getUserType().toString());
-            req.session().attribute("user", info);
-            return g.toJson(info);
+            Manager manager = new Manager(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
+            managerService.add(manager);
+            return res.raw();
+        });
+    }
+
+    public static void getFree() {
+        get("/getFree", (req, res) -> {
+            res.type("application/json");
+            return res.raw();
         });
     }
 }
