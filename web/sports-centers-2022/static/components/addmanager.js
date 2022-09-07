@@ -11,6 +11,7 @@ Vue.component("add-managers", {
 	},
 	    template: `
 		<div>
+            <div v-if="user.type == 'ADMIN'">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#/">SportsCenters</a>
@@ -181,6 +182,7 @@ Vue.component("add-managers", {
 					</button>
                 </div>
             </form>
+            </div>
 		</div>
     	`,
     methods : {
