@@ -1,42 +1,12 @@
 [
   {
     "points": 0,
-    "username": "asd",
-    "name": "asd",
-    "lastname": "asd",
-    "password": "asd",
+    "username": "manager1",
+    "name": "Marko",
+    "lastname": "Markovic",
+    "password": "123",
     "gender": "MALE",
-    "dateOfBirth": "Feb 21, 2001, 3:00:23 PM",
-    "userType": "BUYER"
-  },
-  {
-    "points": 0,
-    "username": "mad",
-    "name": "asd",
-    "lastname": "asd",
-    "password": "asd",
-    "gender": "MALE",
-    "dateOfBirth": "Sep 6, 1988, 3:16:02 PM",
-    "userType": "BUYER"
-  },
-  {
-    "points": 0,
-    "username": "kad",
-    "name": "kad",
-    "lastname": "kad",
-    "password": "kad",
-    "gender": "FEMALE",
-    "dateOfBirth": "Sep 21, 2022, 3:17:35 PM",
-    "userType": "BUYER"
-  },
-  {
-    "points": 0,
-    "username": "bad",
-    "name": "bad",
-    "lastname": "bad",
-    "password": "bad",
-    "gender": "MALE",
-    "dateOfBirth": "Aug 31, 2022, 3:18:54 PM",
+    "dateOfBirth": "Sep 13, 1989, 11:39:42 PM",
     "userType": "BUYER"
   }
 ]

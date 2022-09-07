@@ -15,6 +15,7 @@ public class ManagerService {
     public ManagerService() {
         managerRepository = ManagerRepository.init();
         userInfoRepository = UserInfoRepository.init();
+        userService = new UserService();
     }
 
     public void add(Manager manager) {
@@ -26,6 +27,20 @@ public class ManagerService {
 
     public ArrayList<Manager> getAll() {
         return managerRepository.getAll();
+    }
+
+    public ArrayList<Manager> getFree() {
+        ArrayList<Manager> list = this.getAll();
+        ArrayList<Manager> newList = new ArrayList<>();
+        if(list == null) {
+            return null;
+        }
+        for (Manager manager: list) {
+            if(manager.getFacility() == null) {
+                newList.add(manager);
+            }
+        }
+        return newList;
     }
 
     public Manager getById(String id) {

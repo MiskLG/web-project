@@ -22,12 +22,12 @@ public class ManagerRepository {
         if(repo == null) {
             repo = new ManagerRepository();
             repo.managers = new ArrayList<Manager>();
+            repo.read();
         }
         return repo;
     }
 
     public ArrayList<Manager> getAll() {
-        read();
         return this.managers;
     }
 
@@ -56,6 +56,9 @@ public class ManagerRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.managersData));
             this.managers = gson.fromJson(reader, new TypeToken<ArrayList<Manager>>() {}.getType());
             reader.close();
+            if (managers == null) {
+                managers = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

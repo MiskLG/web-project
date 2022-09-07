@@ -23,12 +23,12 @@ public class SportsFacilityRepository {
         if(repo == null) {
             repo = new SportsFacilityRepository();
             repo.facilities = new ArrayList<SportsFacility>();
+            repo.read();
         }
         return repo;
     }
 
     public ArrayList<SportsFacility> getAll() {
-        read();
         return this.facilities;
     }
 
@@ -46,10 +46,6 @@ public class SportsFacilityRepository {
             throw new RuntimeException(e);
         }
         sportsFacility.setLogo(file.getPath());
-        read();
-        if (this.facilities == null) {
-            this.facilities = new ArrayList<>();
-        }
         this.facilities.add(sportsFacility);
         write();
     }
@@ -76,6 +72,9 @@ public class SportsFacilityRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.sportsFacilitiesData));
             this.facilities = gson.fromJson(reader, new TypeToken<ArrayList<SportsFacility>>() {}.getType());
             reader.close();
+            if (facilities == null) {
+                facilities = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

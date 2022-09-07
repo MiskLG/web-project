@@ -19,7 +19,6 @@ public class WorkoutHistoryRepository {
     private WorkoutHistoryRepository() {};
 
     public ArrayList<WorkoutHistory> getAll() {
-        read();
         return this.workoutHistories;
     }
 
@@ -40,6 +39,7 @@ public class WorkoutHistoryRepository {
         if(repo == null) {
             repo = new WorkoutHistoryRepository();
             repo.workoutHistories = new ArrayList<WorkoutHistory>();
+            repo.read();
         }
         return repo;
     }
@@ -50,6 +50,9 @@ public class WorkoutHistoryRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.workoutHistoryData));
             this.workoutHistories = gson.fromJson(reader, new TypeToken<ArrayList<WorkoutHistory>>() {}.getType());
             reader.close();
+            if (workoutHistories == null) {
+                workoutHistories = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

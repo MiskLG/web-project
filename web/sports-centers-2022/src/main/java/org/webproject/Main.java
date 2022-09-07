@@ -1,6 +1,7 @@
 package org.webproject;
 
 import controller.BuyerController;
+import controller.ManagerController;
 import controller.SportsFacilityController;
 import controller.UserController;
 
@@ -17,6 +18,7 @@ public class Main {
         UserController.init();
         BuyerController.init();
         SportsFacilityController.init();
+        ManagerController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

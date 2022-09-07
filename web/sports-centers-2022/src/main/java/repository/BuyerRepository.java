@@ -24,12 +24,12 @@ public class BuyerRepository {
         if(repo == null) {
             repo = new BuyerRepository();
             repo.buyers = new ArrayList<Buyer>();
+            repo.read();
         }
         return repo;
     }
 
     public ArrayList<Buyer> getAll() {
-        read();
         return this.buyers;
     }
 
@@ -59,6 +59,9 @@ public class BuyerRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.buyersData));
             this.buyers = gson.fromJson(reader, new TypeToken<ArrayList<Buyer>>() {}.getType());
             reader.close();
+            if (buyers == null) {
+                buyers = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

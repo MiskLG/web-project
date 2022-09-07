@@ -3,12 +3,12 @@ package dto;
 public class ManagerInfoDTO {
     private String username;
     private String name;
-    private String lastsname;
+    private String lastname;
 
-    public ManagerInfoDTO(String username, String name, String lastsname) {
+    public ManagerInfoDTO(String username, String name, String lastname) {
         this.username = username;
         this.name = name;
-        this.lastsname = lastsname;
+        this.lastname = lastname;
     }
 
     public String getUsername() {
@@ -27,11 +27,11 @@ public class ManagerInfoDTO {
         this.name = name;
     }
 
-    public String getLastsname() {
-        return lastsname;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastsname(String lastsname) {
-        this.lastsname = lastsname;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }

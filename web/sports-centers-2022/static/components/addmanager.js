@@ -292,10 +292,9 @@ Vue.component("add-managers", {
                     return;
                 }
                 
-                axios.post('rest/buyer/register', this.registerData).
+                axios.post('rest/managers/register', this.registerData).
                     then(response => {
-                        this.user = response.data;
-                        router.push('/');
+                        window.location.reload();
                     })	
                     .catch(error => {
                         alert("User with that username already exists");

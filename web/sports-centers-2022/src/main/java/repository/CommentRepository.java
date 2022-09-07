@@ -44,6 +44,7 @@ public class CommentRepository {
         if(repo == null) {
             repo = new CommentRepository();
             repo.comments = new ArrayList<Comment>();
+            repo.read();
         }
         return repo;
     }
@@ -54,6 +55,9 @@ public class CommentRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.commentsData));
             this.comments = gson.fromJson(reader, new TypeToken<ArrayList<Comment>>() {}.getType());
             reader.close();
+            if (comments == null) {
+                comments = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

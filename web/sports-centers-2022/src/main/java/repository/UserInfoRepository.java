@@ -16,9 +16,6 @@ import java.util.ArrayList;
 
 public class UserInfoRepository {
 
-    private ArrayList<Manager> managers;
-    private ArrayList<Coach> coaches;
-
     private ArrayList<UserLoginInfo> userLoginInfo;
     private static UserInfoRepository repo = null;
 
@@ -28,12 +25,12 @@ public class UserInfoRepository {
         if(repo == null) {
             repo = new UserInfoRepository();
             repo.userLoginInfo = new ArrayList<UserLoginInfo>();
+            repo.read();
         }
         return repo;
     }
 
     public ArrayList<UserLoginInfo> getInfo() {
-        read();
         return this.userLoginInfo;
     }
 
@@ -47,6 +44,9 @@ public class UserInfoRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.userCredentials));
             this.userLoginInfo = gson.fromJson(reader, new TypeToken<ArrayList<UserLoginInfo>>() {}.getType());
             reader.close();
+            if (userLoginInfo == null) {
+                userLoginInfo = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

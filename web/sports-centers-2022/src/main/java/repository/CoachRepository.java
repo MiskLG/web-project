@@ -23,6 +23,7 @@ public class CoachRepository {
         if(repo == null) {
             repo = new CoachRepository();
             repo.coaches = new ArrayList<Coach>();
+            repo.read();
         }
         return repo;
     }
@@ -32,7 +33,6 @@ public class CoachRepository {
         write();
     }
     public ArrayList<Coach> getAll() {
-        read();
         return this.coaches;
     }
 
@@ -57,6 +57,9 @@ public class CoachRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.coachesData));
             this.coaches = gson.fromJson(reader, new TypeToken<ArrayList<Coach>>() {}.getType());
             reader.close();
+            if (coaches == null) {
+                coaches = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

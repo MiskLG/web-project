@@ -19,7 +19,6 @@ public class WorkoutRepository {
     private WorkoutRepository() {};
 
     public ArrayList<Workout> getAll() {
-        read();
         return this.workouts;
     }
 
@@ -40,6 +39,7 @@ public class WorkoutRepository {
         if(repo == null) {
             repo = new WorkoutRepository();
             repo.workouts = new ArrayList<Workout>();
+            repo.read();
         }
         return repo;
     }
@@ -50,6 +50,9 @@ public class WorkoutRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.workoutData));
             this.workouts = gson.fromJson(reader, new TypeToken<ArrayList<Workout>>() {}.getType());
             reader.close();
+            if (workouts == null) {
+                workouts = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

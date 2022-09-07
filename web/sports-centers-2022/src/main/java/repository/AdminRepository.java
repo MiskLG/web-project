@@ -23,11 +23,11 @@ public class AdminRepository {
         if(repo == null) {
             repo = new AdminRepository();
             repo.admins = new ArrayList<Admin>();
+            repo.read();
         }
         return repo;
     }
     public ArrayList<Admin> getAll() {
-        read();
         return this.admins;
     }
 
@@ -57,6 +57,9 @@ public class AdminRepository {
             Reader reader = Files.newBufferedReader(Paths.get(FileNames.adminsData));
             this.admins = gson.fromJson(reader, new TypeToken<ArrayList<Admin>>() {}.getType());
             reader.close();
+            if (admins == null) {
+                admins = new ArrayList<>();
+            }
         }
         catch (Exception ex) {
             ex.printStackTrace();

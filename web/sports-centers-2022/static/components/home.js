@@ -5,7 +5,7 @@ Vue.component("home", {
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
-			centers: null,
+			centers: "",
 			types: "",
 			wrapper: {name: "", city: "", type: "", rating: "",filterType: "Show all", filterStatus: "Show all", sortParameter: "NAME", sortOrientation: "ASC",}
 	    }
@@ -336,13 +336,17 @@ Vue.component("home", {
 				axios.get('rest/centers/getAll').
 					then(response => {
 						this.centers = response.data;
-					})
+					}).catch(error => {
+                        
+                    })	
 			},
 			getAllTypes : function() {
 				axios.get('rest/centers/getAllTypes').
 					then(response => {
 						this.types = response.data;
-					})
+					}).catch(error => {
+                        
+                    })	
 			},
 			seeContent : function(id) {
 				router.push('/'+id);

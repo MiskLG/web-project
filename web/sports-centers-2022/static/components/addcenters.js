@@ -4,10 +4,10 @@ Vue.component("add-centers", {
 	    	user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
-            managers: null,
+            managers: "",
             center: {name: "",type: "",latitude: "",longitude: "",city: "",
                     street: "", stNumber: "", poNumber: "", image: "",
-                     startTime: "", endTime: ""} 
+                     startTime: "", endTime: "", managerUsername: ""} 
 	    }
 	},
 	    template: `
@@ -184,6 +184,18 @@ Vue.component("add-centers", {
                             <input class="form-control date input-group" type="file" @change="onFileInput($event)"/>
                         </div>
                     </div>
+                    <div class="row m-2">
+                        <div class="col-md-2 pt-1">
+                             <label class="form-label col-md-6">Manager:</label>
+                        </div>
+                        <div class="col-md-8 align-center justify-content-center">
+                            <select v-model="center.managerUsername" class="form-select form-select-sm">
+                                <option v-for="m in managers" :value="m.username">
+                                    {{m.username}} - {{m.name}} {{m.lastname}}
+                                </option>
+                            </select>
+                         </div>
+                    </div>   
                     <div class="d-flex justify-content-center align-center row m-1">
 					<button @click="addFacility" type="button" class="btn btn-primary">
 						Add Facility
@@ -347,14 +359,15 @@ Vue.component("add-centers", {
             getManagers : function() {
                 axios.get('/rest/managers/getFree').
                     then(response => {
-                        managers = response.data;
-                    })
-                    .catch(error => {
-                        if(error.response.status == 400) {
+                        if(response.status == 204) {
                             alert("There are no free managers, please add some first");
                             router.push('/add-managers');
                         }
-                        
+                        else{
+                            this.managers = response.data;
+                        }
+                    })
+                    .catch(error => {
                     })
             }
     	},
