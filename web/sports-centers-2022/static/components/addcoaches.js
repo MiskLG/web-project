@@ -4,7 +4,6 @@ Vue.component("add-coaches", {
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
             
-            show: "",
             registerData: {username: "", name:"", lastname:"", password:"", password2:"", gender:"", date:""}
 	    }
 	},
@@ -276,12 +275,10 @@ Vue.component("add-coaches", {
                     .catch(error => {
                         alert("User with that username already exists");
                     })
-                
-                
             },
 
     	},
     	mounted () {
-			this.getUser();
+			this.getUser();    
         }
 });

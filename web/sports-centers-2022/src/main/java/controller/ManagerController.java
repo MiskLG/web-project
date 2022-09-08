@@ -4,7 +4,7 @@ import beans.Manager;
 import beans.User;
 import com.google.gson.Gson;
 import dto.Credentials;
-import dto.ManagerInfoDTO;
+import dto.UserInfoExpandedDTO;
 import dto.UserRegisterDTO;
 import service.ManagerService;
 import service.UserService;
@@ -73,9 +73,9 @@ public class ManagerController {
                 return res.raw();
             }
 
-            ArrayList<ManagerInfoDTO> info = new ArrayList<>();
+            ArrayList<UserInfoExpandedDTO> info = new ArrayList<>();
             for (Manager manager: managers) {
-                info.add(new ManagerInfoDTO(manager.getUsername(),manager.getName(),manager.getLastname()));
+                info.add(new UserInfoExpandedDTO(manager.getUsername(),manager.getName(),manager.getLastname()));
             }
             return g.toJson(info);
         });

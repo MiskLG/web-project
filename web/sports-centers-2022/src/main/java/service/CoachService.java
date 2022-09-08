@@ -5,6 +5,8 @@ import dto.Credentials;
 import repository.CoachRepository;
 import repository.UserInfoRepository;
 
+import java.util.ArrayList;
+
 public class CoachService {
 
     private CoachRepository coachRepository;
@@ -22,6 +24,10 @@ public class CoachService {
             coachRepository.add(coach);
             userInfoRepository.generateAndAddUserInfo(coach);
         }
+    }
+
+    public ArrayList<Coach> getAll() {
+        return coachRepository.getAll();
     }
 
     public Coach getById(String id) {

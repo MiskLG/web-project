@@ -5,7 +5,6 @@ Vue.component("register", {
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
-            message: "",
 			registerData: {username: "", name:"", lastname:"", password:"", password2:"", gender:"", date:"",}
 	    }
 	},

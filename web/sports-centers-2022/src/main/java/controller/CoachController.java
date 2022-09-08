@@ -4,15 +4,16 @@ import beans.Coach;
 import beans.User;
 import com.google.gson.Gson;
 import dto.Credentials;
+import dto.UserInfoExpandedDTO;
 import dto.UserRegisterDTO;
 import service.CoachService;
 import service.UserService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static spark.Spark.path;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class CoachController {
     private static Gson g = new Gson();
@@ -23,6 +24,7 @@ public class CoachController {
     public static void init() {
         path(commonPath, () -> {
             register();
+            getAll();
         });
     }
 
@@ -54,6 +56,28 @@ public class CoachController {
             Coach coach = new Coach(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
             coachService.add(coach);
             return res.raw();
+        });
+    }
+
+    public static void getAll() {
+        get("/getAll", (req, res) -> {
+            res.type("application/json");
+            ArrayList<Coach> coaches = coachService.getAll();
+
+            if (coaches == null) {
+                res.status(204);
+                return res.raw();
+            }
+            if (coaches.size() == 0) {
+                res.status(204);
+                return res.raw();
+            }
+
+            ArrayList<UserInfoExpandedDTO> info = new ArrayList<>();
+            for (Coach coach: coaches) {
+                info.add(new UserInfoExpandedDTO(coach.getUsername(),coach.getName(),coach.getLastname()));
+            }
+            return g.toJson(info);
         });
     }
 }

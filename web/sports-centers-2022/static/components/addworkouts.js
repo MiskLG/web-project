@@ -1,15 +1,16 @@
-Vue.component("add-managers", {
+Vue.component("add-workouts", {
 	data: function () {
 	    return {
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
             
-            registerData: {username: "", name:"", lastname:"", password:"", password2:"", gender:"", date:""}
+            coaches: "",
+            workout: {name: "", type:"", duration:"", coach:"", description:"", image:""}
 	    }
 	},
 	    template: `
 		<div>
-            <div v-if="user.type == 'ADMIN'">
+            <div v-if="user.type == 'MANAGER'">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#/">SportsCenters</a>
@@ -98,7 +99,7 @@ Vue.component("add-managers", {
                             <label class="form-label col-md-6">Username:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="registerData.username" type="text" class="form-control" placeholder="username"/>
+                            <input v-model="workout.username" type="text" class="form-control" placeholder="name of workout (unique)"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -106,7 +107,7 @@ Vue.component("add-managers", {
                             <label class="form-label col-md-6">Name:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="registerData.name" type="text" class="form-control" placeholder="name"/>
+                            <input v-model="workout.type" type="text" class="form-control" placeholder="type of a workout"/>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -114,53 +115,40 @@ Vue.component("add-managers", {
                             <label class="form-label col-md-6">Lastname:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="registerData.lastname" type="text" class="form-control" placeholder="lastname"/>
+                            <input v-model="workout.duration" type="number" class="form-control" placeholder="in minutes (optional)"/>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Password:</label>
+                            <label class="form-label col-md-6">Description:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="registerData.password" type="password" class="form-control" placeholder="password"/>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="(optional)" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Repeat password:</label>
+                            <label class="form-label col-md-6">Image:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="registerData.password2" type="password" class="form-control" placeholder="repeat password"/>
+                            <input class="form-control date input-group" type="file" @change="onFileInput($event)"/>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Date of Birth:</label>
+                            <label class="form-label col-md-6">Coach:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="registerData.date" class="form-control date input-group" type="date" data-provide="datepicker"  />
+                            <select v-model="workout.coach" class="form-select form-select-sm">
+                                <option v-for="c in coaches" :value="c.username">
+                                    {{c.username}} - {{c.name}} {{c.lastname}}
+                                </option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Gender:</label>
-                        </div>
-                        <div class="form-check col-md-2 m-2">
-                            <input v-model="registerData.gender" value="male" class="form-check-input" type="radio" name="searchRadio" />
-                            <label class="form-check-label" for="searchRadio">
-                            Male
-                            </label>
-					    </div>
-                        <div class="form-check col-md-2 m-2">
-                            <input v-model="registerData.gender" value="female" class="form-check-input" type="radio" name="searchRadio" />
-                            <label class="form-check-label" for="searchRadio">
-                            Female
-                            </label>
-					    </div>
-                    </div>
+                     </div>   
                     
-                    <button @click="register" type="button" class="btn btn-primary">
-						Register Manager
+                    <button @click="addWorkout" type="button" class="btn btn-primary">
+						Add Workout
 					</button>
                 </div>
             </form>
@@ -229,7 +217,7 @@ Vue.component("add-managers", {
 					then(response => {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
-							if (this.user.type != "ADMIN" ) {
+                            if (this.user.type != "MANAGER" ) {
                                 router.push("/");
                                 window.location.reload();
                             }
@@ -249,38 +237,74 @@ Vue.component("add-managers", {
 				router.push('edit-profile');
 				window.location.reload();
 			},
+            
+			
+            addWorkout : function () {
+                this.workout.name.trim();
+                this.workout.type.trim();
+                this.workout.description.trim();
+                this.workout.duration.trim();
+                
+                if(this.workout.name.length === 0 || this.workout.type.length === 0 || this.workout.image.length === 0) {
+                    alert("Only optional fields can be left empty");
+                    return;
+                }
 
-            register : function () {
-                this.registerData.username.trim();
-                this.registerData.name.trim();
-                this.registerData.lastname.trim();
-                this.registerData.password.trim();
-                this.registerData.password2.trim();
-                
-                if(this.registerData.username.length === 0 || this.registerData.name.length === 0 || this.registerData.lastname.length === 0 
-                    || this.registerData.password.length === 0 || this.registerData.password2.length === 0 || this.registerData.gender.length === 0
-                    || this.registerData.date.length === 0) {
-                    alert("Every field must be filled");
-                    return;
-                }
-                if (this.registerData.password != this.registerData.password2) {
-                    alert("Password does not match");
-                    return;
-                }
-                
-                axios.post('rest/managers/register', this.registerData).
-                    then(response => {
+                axios.post('rest/workouts/add',this.workout)
+                    .then(response => {
                         window.location.reload();
-                    })	
-                    .catch(error => {
-                        alert("User with that username already exists");
                     })
+                    .catch(error => {
+
+                    });
                 
                 
             },
+            onFileInput: function(e){
+                var patternFileExtension = /\.([0-9a-z]+)(?:[\?#]|$)/i;
+                var files = e.target.files;
+                if(!files.length){
+                    return;
+                }
+                var fileExtension = (files[0].name).match(patternFileExtension)[1];
+                if(fileExtension=="png" || fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="gif"){
+                    this.createImage(files[0]);
+                }
+                else{
+                    alert("Chosen file must be an image");
+                    this.removeImage();
+                }
+            },
+            createImage: function(file){
+                var reader = new FileReader();
+    
+                reader.onload = (e) =>{
+                    this.workout.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
+            removeImage: function(){
+                this.workout.image="";
+                this.$refs.imgUpload.value = null;
+            },
+            getCoaches : function() {
+                axios.get('/rest/coaches/getAll').
+                    then(response => {
+                        if(response.status == 204) {
+                            alert("There are no coaches, please add some first or ask someone that can");
+                            router.push('/');
+                        }
+                        else{
+                            this.coaches = response.data;
+                        }
+                    })
+                    .catch(error => {
+                    })
+            }
 
     	},
     	mounted () {
 			this.getUser();
+            this.getCoaches();
         }
 });

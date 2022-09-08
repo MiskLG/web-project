@@ -1,11 +1,11 @@
 package dto;
 
-public class ManagerInfoDTO {
+public class UserInfoExpandedDTO {
     private String username;
     private String name;
     private String lastname;
 
-    public ManagerInfoDTO(String username, String name, String lastname) {
+    public UserInfoExpandedDTO(String username, String name, String lastname) {
         this.username = username;
         this.name = name;
         this.lastname = lastname;

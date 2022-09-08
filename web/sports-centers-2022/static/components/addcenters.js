@@ -295,7 +295,7 @@ Vue.component("add-centers", {
                 if(this.center.name.length === 0 || this.center.type.length === 0 || this.center.latitude.length === 0 ||
                     this.center.longitude.length === 0 || this.center.city.length === 0 || this.center.street.length === 0 ||
                     this.center.stNumber.length === 0 || this.center.stNumber.length === 0 || this.center.poNumber.length === 0 ||
-                    this.center.startTime.length === 0 || this.center.endTime.length === 0) {
+                    this.center.startTime.length === 0 || this.center.endTime.length === 0 || this.center.image.length === 0) {
                         alert("Every field must be filled");
                         return;
                     }

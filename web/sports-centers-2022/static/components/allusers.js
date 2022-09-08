@@ -1,12 +1,10 @@
 Vue.component("all-users", {
 	data: function () {
 	    return {
-			
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
 			users: null,
-			types: "",
 			wrapper: {name: "", lastname: "", username: "", filterType: "Show all", sortParameter: "NAME", sortOrientation: "ASC",}
 	    }
 	},
