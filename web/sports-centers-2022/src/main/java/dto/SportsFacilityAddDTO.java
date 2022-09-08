@@ -13,7 +13,9 @@ public class SportsFacilityAddDTO {
     String startTime;
     String endTime;
 
-    public SportsFacilityAddDTO(String name, String type, String latitude, String longitude, String city, String street, String stNumber, String poNumber, String image, String startTime, String endTime) {
+    String managerUsername;
+
+    public SportsFacilityAddDTO(String name, String type, String latitude, String longitude, String city, String street, String stNumber, String poNumber, String image, String startTime, String endTime, String managerUsername) {
         this.name = name;
         this.type = type;
         this.latitude = latitude;
@@ -25,6 +27,7 @@ public class SportsFacilityAddDTO {
         this.image = image;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.managerUsername = managerUsername;
     }
 
     public String getName() {
@@ -113,5 +116,13 @@ public class SportsFacilityAddDTO {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getManagerUsername() {
+        return managerUsername;
+    }
+
+    public void setManagerUsername(String managerUsername) {
+        this.managerUsername = managerUsername;
     }
 }

@@ -1,5 +1,25 @@
 [
   {
+    "facility": {
+      "id": "FBKegPyp",
+      "name": "Big Pool",
+      "type": "POOL",
+      "status": true,
+      "location": {
+        "latitude": 21.22,
+        "longitude": 41.22,
+        "address": {
+          "street": "Cara Dusana",
+          "stNumber": "23a",
+          "city": "Novi Sad",
+          "poNumber": "21000"
+        }
+      },
+      "logo": "resources/images/FBKegPyp.png",
+      "rating": 0.0,
+      "startTime": 800,
+      "endTime": 2200
+    },
     "username": "manager2",
     "name": "Pera",
     "lastname": "Peric",

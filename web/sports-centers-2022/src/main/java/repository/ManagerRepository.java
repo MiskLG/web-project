@@ -44,6 +44,7 @@ public class ManagerRepository {
                 man.setLastname(manager.getLastname());
                 man.setGender(manager.getGender());
                 man.setDateOfBirth(manager.getDateOfBirth());
+                man.setFacility(manager.getFacility());
                 write();
                 break;
             }

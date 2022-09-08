@@ -43,6 +43,11 @@ public class ManagerService {
         return newList;
     }
 
+    public void update(Manager manager) {
+        managerRepository.update(manager);
+        return;
+    }
+
     public Manager getById(String id) {
         for (Manager manager: managerRepository.getAll()) {
             if (manager.getUsername().equalsIgnoreCase(id)) {

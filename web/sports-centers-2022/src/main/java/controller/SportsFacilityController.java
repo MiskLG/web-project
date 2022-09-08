@@ -1,11 +1,13 @@
 package controller;
 
 import beans.Location;
+import beans.Manager;
 import beans.SportsFacility;
 import com.google.gson.Gson;
 import dto.SportsFacilityAddDTO;
 import dto.SportsFacilityDTO;
 import dto.SportsFacilitySearchDTO;
+import service.ManagerService;
 import service.SportsFacilityService;
 import spark.utils.IOUtils;
 
@@ -19,6 +21,7 @@ import static spark.Spark.*;
 public class SportsFacilityController {
     private static Gson g = new Gson();
     private static SportsFacilityService facilityService = new SportsFacilityService();
+    private static ManagerService managerService = new ManagerService();
     private static String commonPath = "/rest/centers";
 
     public static void init() {
@@ -81,6 +84,11 @@ public class SportsFacilityController {
                     true, location, data.getImage(), 0.0, startTime, endTime);
 
             facilityService.add(facility);
+
+            Manager manager = managerService.getById(data.getManagerUsername());
+            manager.setFacility(facility);
+            managerService.update(manager);
+
             res.body("Added");
             res.status(200);
             return res.raw();
