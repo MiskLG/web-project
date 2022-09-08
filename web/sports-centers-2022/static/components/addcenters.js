@@ -303,7 +303,7 @@ Vue.component("add-centers", {
                     alert("Latitude and Logitude must be a number");
                     return;
                 }
-                if(!/[0-9][0-9]:[0-9][0-9]/.test(this.center.endTime) || !(/[0-9][0-9]:[0-9][0-9]/.test(this.center.startTime))) {
+                if(!/[0-9]?[0-9]:[0-9][0-9]/.test(this.center.endTime) || !(/[0-9]?[0-9]:[0-9][0-9]/.test(this.center.startTime))) {
                     alert("Start or End time are not in good format, use hh:mm format");
                     return;
                 }
