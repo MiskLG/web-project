@@ -12,6 +12,10 @@ public class Coach extends User{
 		this.workoutHistory = workoutHistory;
 	}
 
+	public Coach(String username, String name, String lastname, String password, GenderType gender, Date dateOfBirth) {
+		super(username, name, lastname, password, gender, dateOfBirth, UserType.COACH);
+	}
+
 	public ArrayList<WorkoutHistory> getWorkoutHistory() {
 		return workoutHistory;
 	}

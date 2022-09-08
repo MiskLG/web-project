@@ -1,9 +1,6 @@
 package org.webproject;
 
-import controller.BuyerController;
-import controller.ManagerController;
-import controller.SportsFacilityController;
-import controller.UserController;
+import controller.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +16,7 @@ public class Main {
         BuyerController.init();
         SportsFacilityController.init();
         ManagerController.init();
+        CoachController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

@@ -1,0 +1,11 @@
+[
+  {
+    "username": "coach1",
+    "name": "Marko",
+    "lastname": "Markovic",
+    "password": "123",
+    "gender": "MALE",
+    "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+    "userType": "COACH"
+  }
+]

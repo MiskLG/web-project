@@ -1,30 +1,28 @@
 package controller;
 
-import beans.Manager;
+import beans.Coach;
 import beans.User;
 import com.google.gson.Gson;
 import dto.Credentials;
-import dto.ManagerInfoDTO;
 import dto.UserRegisterDTO;
-import service.ManagerService;
+import service.CoachService;
 import service.UserService;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static spark.Spark.*;
+import static spark.Spark.path;
+import static spark.Spark.post;
 
-public class ManagerController {
+public class CoachController {
     private static Gson g = new Gson();
-    private static ManagerService managerService = new ManagerService();
+    private static CoachService coachService = new CoachService();
     private static UserService userService = new UserService();
-    private static String commonPath = "/rest/managers";
+    private static String commonPath = "/rest/coaches";
 
     public static void init() {
         path(commonPath, () -> {
             register();
-            getFree();
         });
     }
 
@@ -53,31 +51,9 @@ public class ManagerController {
             cal.set(Integer.parseInt(data.getYear()), Integer.parseInt(data.getMonth())-1, Integer.parseInt(data.getDay()));
             Date date = cal.getTime();
 
-            Manager manager = new Manager(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
-            managerService.add(manager);
+            Coach coach = new Coach(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
+            coachService.add(coach);
             return res.raw();
-        });
-    }
-
-    public static void getFree() {
-        get("/getFree", (req, res) -> {
-            res.type("application/json");
-            ArrayList<Manager> managers = managerService.getFree();
-
-            if (managers == null) {
-                res.status(204);
-                return res.raw();
-            }
-            if (managers.size() == 0) {
-                res.status(204);
-                return res.raw();
-            }
-
-            ArrayList<ManagerInfoDTO> info = new ArrayList<>();
-            for (Manager manager: managers) {
-                info.add(new ManagerInfoDTO(manager.getUsername(),manager.getName(),manager.getLastname()));
-            }
-            return g.toJson(info);
         });
     }
 }

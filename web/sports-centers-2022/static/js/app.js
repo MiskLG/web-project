@@ -6,6 +6,7 @@ const Center = {template: '<show-center></show-center>'}
 const Edit = {template: '<edit-profile></edit-profile>'}
 const AllUsers = {template: '<all-users></all-users>'}
 const AddManagers = {template: '<add-managers></add-managers>'}
+const AddCoaches = {template: '<add-coaches></add-coaches>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -18,6 +19,7 @@ const router = new VueRouter({
 		{ path: '/profile/:username', component: Edit},
 		{ path: '/all-users', component: AllUsers},
 		{ path: '/add-managers', component: AddManagers},
+		{ path: '/add-coaches', component: AddCoaches},
 	  ]
 });
 

@@ -14,6 +14,7 @@ public class CoachService {
     public CoachService() {
         coachRepository = CoachRepository.init();
         userInfoRepository = UserInfoRepository.init();
+        userService = new UserService();
     }
 
     public void add(Coach coach) {

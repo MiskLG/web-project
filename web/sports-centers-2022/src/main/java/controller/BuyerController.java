@@ -41,7 +41,7 @@ public class BuyerController {
           }
 
             User.GenderType genderType;
-            if(data.getGender().equals("male")) {
+            if(data.getGender().equalsIgnoreCase("male")) {
                  genderType = User.GenderType.MALE;
             }
             else {

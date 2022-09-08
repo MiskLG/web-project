@@ -268,6 +268,14 @@ Vue.component("add-centers", {
                     then(response => {
                         if(response.data != 'NOUSER') {
                             this.user = response.data;
+                            if (this.user.type != "ADMIN" ) {
+                                router.push("/");
+                                window.location.reload();
+                            }
+						}
+                        else{
+                            router.push("/");
+                            window.location.reload();
                         }
                     }).catch(error => {
                         

@@ -1,4 +1,4 @@
-Vue.component("add-managers", {
+Vue.component("add-coaches", {
 	data: function () {
 	    return {
 			user: {username:"", type:""},
@@ -161,7 +161,7 @@ Vue.component("add-managers", {
                     </div>
                     
                     <button @click="register" type="button" class="btn btn-primary">
-						Register Manager
+						Register Coach
 					</button>
                 </div>
             </form>
@@ -230,7 +230,7 @@ Vue.component("add-managers", {
 					then(response => {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
-							if (this.user.type != "ADMIN" ) {
+                            if (this.user.type != "ADMIN" ) {
                                 router.push("/");
                                 window.location.reload();
                             }
@@ -250,7 +250,7 @@ Vue.component("add-managers", {
 				router.push('edit-profile');
 				window.location.reload();
 			},
-
+			
             register : function () {
                 this.registerData.username.trim();
                 this.registerData.name.trim();
@@ -269,7 +269,7 @@ Vue.component("add-managers", {
                     return;
                 }
                 
-                axios.post('rest/managers/register', this.registerData).
+                axios.post('rest/coaches/register', this.registerData).
                     then(response => {
                         window.location.reload();
                     })	
