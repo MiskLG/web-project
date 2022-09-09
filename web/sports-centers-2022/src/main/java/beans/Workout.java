@@ -5,19 +5,19 @@ public class Workout {
 	private String name;
 	private String type;
 	private Double duration;
-	private SportsFacility facility;
+	private SportsFacility __facility;
 	private Coach coach;
 	private String description;
 	private String photo;
 	
-	public Workout(String id, String name, String type, Double duration, SportsFacility facility, Coach coach, String description,
-			String photo) {
+	public Workout(String id, String name, String type, Double duration, SportsFacility __facility, Coach coach, String description,
+				   String photo) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.duration = duration;
-		this.facility = facility;
+		this.__facility = __facility;
 		this.coach = coach;
 		this.description = description;
 		this.photo = photo;
@@ -41,11 +41,11 @@ public class Workout {
 	public void setDuration(Double duration) {
 		this.duration = duration;
 	}
-	public SportsFacility getFacility() {
-		return facility;
+	public SportsFacility get__facility() {
+		return __facility;
 	}
-	public void setFacility(SportsFacility facility) {
-		this.facility = facility;
+	public void set__facility(SportsFacility __facility) {
+		this.__facility = __facility;
 	}
 	public Coach getCoach() {
 		return coach;

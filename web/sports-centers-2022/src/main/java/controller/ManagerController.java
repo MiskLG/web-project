@@ -50,7 +50,7 @@ public class ManagerController {
             data.fillDate();
             System.out.println(data.getUsername() + data.getYear() + data.getDay() + data.getMonth() + data.getDate());
             Calendar cal = Calendar.getInstance();
-            cal.set(Integer.parseInt(data.getYear()), Integer.parseInt(data.getMonth())-1, Integer.parseInt(data.getDay()));
+            cal.set(Integer.parseInt(data.getYear()), Integer.parseInt(data.getMonth())-1, Integer.parseInt(data.getDay()), 0, 0, 0);
             Date date = cal.getTime();
 
             Manager manager = new Manager(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);

@@ -1,22 +1,41 @@
 [
   {
-    "id": "FBKegPyp",
-    "name": "Big Pool",
-    "type": "POOL",
-    "status": true,
-    "location": {
+    "id": "eOTlDWGD",
+    "_name": "Big Pool",
+    "_type": "POOL",
+    "_content": [
+      {
+        "id": "0AWSi2TI",
+        "name": "Pool 3h - Marko",
+        "type": "POOL",
+        "duration": 180.0,
+        "coach": {
+          "username": "coach1",
+          "name": "Marko",
+          "lastname": "Markovic",
+          "password": "123",
+          "gender": "MALE",
+          "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+          "userType": "COACH"
+        },
+        "description": "",
+        "photo": "resources/images/workouts/0AWSi2TI.png"
+      }
+    ],
+    "_status": false,
+    "_location": {
       "latitude": 21.22,
-      "longitude": 41.22,
+      "longitude": 22.22,
       "address": {
         "street": "Cara Dusana",
-        "stNumber": "23a",
+        "stNumber": "26a",
         "city": "Novi Sad",
         "poNumber": "21000"
       }
     },
-    "logo": "resources/images/FBKegPyp.png",
-    "rating": 0.0,
-    "startTime": 800,
-    "endTime": 2200
+    "_logo": "resources/images/sports_centers/eOTlDWGD.png",
+    "_rating": 0.0,
+    "_startTime": 800,
+    "_endTime": 2000
   }
 ]

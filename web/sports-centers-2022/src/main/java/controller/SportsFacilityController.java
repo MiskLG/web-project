@@ -47,22 +47,23 @@ public class SportsFacilityController {
             }
 
             for (SportsFacility facility: list) {
-                InputStream iSteamReader = new FileInputStream(facility.getLogo());
+                System.out.println(facility.get_logo());
+                InputStream iSteamReader = new FileInputStream(facility.get_logo());
                 byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
                 String base64 = Base64.getEncoder().encodeToString(imageBytes);
                 base64 = "data:image/png;base64," + base64;
                 String boolToString;
-                if (facility.isStatus()) {
+                if (facility.is_status()) {
                     boolToString = "Open";
                 }
                 else {
                     boolToString = "Closed";
                 }
-                array.add(new SportsFacilityDTO(facility.getId(),facility.getName(),facility.getType(),
-                        boolToString, facility.getLocation().getLatitude().toString(), facility.getLocation().getLongitude().toString(),
-                        facility.getLocation().getAddress().getCity(), facility.getLocation().getAddress().getStreet(),
-                        facility.getLocation().getAddress().getStNumber(), facility.getLocation().getAddress().getPoNumber(),
-                        base64, facility.getRating().toString(), facility.getStartTime()/100+":"+facility.getStartTime()%100, facility.getEndTime()/100+":"+facility.getEndTime()%100));
+                array.add(new SportsFacilityDTO(facility.getId(),facility.get_name(),facility.get_type(),
+                        boolToString, facility.get_location().getLatitude().toString(), facility.get_location().getLongitude().toString(),
+                        facility.get_location().getAddress().getCity(), facility.get_location().getAddress().getStreet(),
+                        facility.get_location().getAddress().getStNumber(), facility.get_location().getAddress().getPoNumber(),
+                        base64, facility.get_rating().toString(), facility.get_startTime()/100+":"+facility.get_startTime()%100, facility.get_endTime()/100+":"+facility.get_endTime()%100));
             }
 
             return g.toJson(array);
@@ -152,22 +153,22 @@ public class SportsFacilityController {
             list = facilityService.filter(data.getFilterType(),stringToBool,list);
 
             for (SportsFacility facility: list) {
-                InputStream iSteamReader = new FileInputStream(facility.getLogo());
+                InputStream iSteamReader = new FileInputStream(facility.get_logo());
                 byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
                 String base64 = Base64.getEncoder().encodeToString(imageBytes);
                 base64 = "data:image/png;base64," + base64;
                 String boolToString;
-                if (facility.isStatus()) {
+                if (facility.is_status()) {
                     boolToString = "Open";
                 }
                 else {
                     boolToString = "Closed";
                 }
-                array.add(new SportsFacilityDTO(facility.getId(),facility.getName(),facility.getType(),
-                        boolToString, facility.getLocation().getLatitude().toString(), facility.getLocation().getLongitude().toString(),
-                        facility.getLocation().getAddress().getCity(), facility.getLocation().getAddress().getStreet(),
-                        facility.getLocation().getAddress().getStNumber(), facility.getLocation().getAddress().getPoNumber(),
-                        base64, facility.getRating().toString(), facility.getStartTime()/100+":"+facility.getStartTime()%100, facility.getEndTime()/100+":"+facility.getEndTime()%100));
+                array.add(new SportsFacilityDTO(facility.getId(),facility.get_name(),facility.get_type(),
+                        boolToString, facility.get_location().getLatitude().toString(), facility.get_location().getLongitude().toString(),
+                        facility.get_location().getAddress().getCity(), facility.get_location().getAddress().getStreet(),
+                        facility.get_location().getAddress().getStNumber(), facility.get_location().getAddress().getPoNumber(),
+                        base64, facility.get_rating().toString(), facility.get_startTime()/100+":"+facility.get_startTime()%100, facility.get_endTime()/100+":"+facility.get_endTime()%100));
             }
 
             return g.toJson(array);
@@ -187,22 +188,22 @@ public class SportsFacilityController {
             }
 
             for (SportsFacility facility: list) {
-                InputStream iSteamReader = new FileInputStream(facility.getLogo());
+                InputStream iSteamReader = new FileInputStream(facility.get_logo());
                 byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
                 String base64 = Base64.getEncoder().encodeToString(imageBytes);
                 base64 = "data:image/png;base64," + base64;
                 String boolToString;
-                if (facility.isStatus()) {
+                if (facility.is_status()) {
                     boolToString = "Open";
                 }
                 else {
                     boolToString = "Closed";
                 }
-                array.add(new SportsFacilityDTO(facility.getId(),facility.getName(),facility.getType(),
-                        boolToString, facility.getLocation().getLatitude().toString(), facility.getLocation().getLongitude().toString(),
-                        facility.getLocation().getAddress().getCity(), facility.getLocation().getAddress().getStreet(),
-                        facility.getLocation().getAddress().getStNumber(), facility.getLocation().getAddress().getPoNumber(),
-                        base64, facility.getRating().toString(), facility.getStartTime()/100+":"+facility.getStartTime()%100, facility.getEndTime()/100+":"+facility.getEndTime()%100));
+                array.add(new SportsFacilityDTO(facility.getId(),facility.get_name(),facility.get_type(),
+                        boolToString, facility.get_location().getLatitude().toString(), facility.get_location().getLongitude().toString(),
+                        facility.get_location().getAddress().getCity(), facility.get_location().getAddress().getStreet(),
+                        facility.get_location().getAddress().getStNumber(), facility.get_location().getAddress().getPoNumber(),
+                        base64, facility.get_rating().toString(), facility.get_startTime()/100+":"+facility.get_startTime()%100, facility.get_endTime()/100+":"+facility.get_endTime()%100));
             }
 
             return g.toJson(array);

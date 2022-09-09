@@ -3,112 +3,117 @@ package beans;
 import java.util.ArrayList;
 
 public class SportsFacility {
+
 	private String id;
-	private String name;
-	private String type;
-	private ArrayList<Workout> content;
-	private boolean status;
-	private Location location;
-	private String logo;
-	private Double rating;
-	private int startTime;
-	private int endTime;	
+	private String _name;
+	private String _type;
+
+	private volatile ArrayList<Workout> _content;
+	private boolean _status;
+	private Location _location;
+	private String _logo;
+	private Double _rating;
+	private int _startTime;
+	private int _endTime;
 	
-	public SportsFacility(String id, String name, String type, ArrayList<Workout> content, boolean status, Location location,
-			String logo, Double rating, int startTime, int endTime) {
+	public SportsFacility(String id, String _name, String _type, ArrayList<Workout> _content, boolean _status, Location _location,
+						  String _logo, Double _rating, int _startTime, int _endTime) {
 		super();
 		this.setId(id);
-		this.name = name;
-		this.type = type;
-		this.content = content;
-		this.status = status;
-		this.location = location;
-		this.logo = logo;
-		this.rating = rating;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this._name = _name;
+		this._type = _type;
+		this._content = _content;
+		this._status = _status;
+		this._location = _location;
+		this._logo = _logo;
+		this._rating = _rating;
+		this._startTime = _startTime;
+		this._endTime = _endTime;
 	}
 	
-	public String getName() {
-		return name;
+	public String get_name() {
+		return _name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void set_name(String _name) {
+		this._name = _name;
 	}
-	public String getType() {
-		return type;
+	public String get_type() {
+		return _type;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void set_type(String _type) {
+		this._type = _type;
 	}
-	public ArrayList<Workout> getContent() {
-		return content;
+	public ArrayList<Workout> get_content() {
+		return _content;
 	}
-	public void setContent(ArrayList<Workout> content) {
-		this.content = content;
+	public void set_content(ArrayList<Workout> _content) {
+		this._content = _content;
 	}
-	public boolean isStatus() {
-		return status;
+	public boolean is_status() {
+		return _status;
 	}
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void set_status(boolean _status) {
+		this._status = _status;
 	}
-	public Location getLocation() {
-		return location;
+	public Location get_location() {
+		return _location;
 	}
-	public void setLocation(Location location) {
-		this.location = location;
+	public void set_location(Location _location) {
+		this._location = _location;
 	}
-	public String getLogo() {
-		return logo;
+	public String get_logo() {
+		return _logo;
 	}
-	public void setLogo(String logo) {
-		this.logo = logo;
+	public void set_logo(String _logo) {
+		this._logo = _logo;
 	}
-	public Double getRating() {
-		return rating;
+	public Double get_rating() {
+		return _rating;
 	}
-	public void setRating(Double rating) {
-		this.rating = rating;
+	public void set_rating(Double _rating) {
+		this._rating = _rating;
 	}
-	public int getStartTime() {
-		return startTime;
+	public int get_startTime() {
+		return _startTime;
 	}
-	public void setStartTime(int startTime) {
-		this.startTime = startTime;
+	public void set_startTime(int _startTime) {
+		this._startTime = _startTime;
 	}
-	public int getEndTime() {
-		return endTime;
+	public int get_endTime() {
+		return _endTime;
 	}
-	public void setEndTime(int endTime) {
-		this.endTime = endTime;
+	public void set_endTime(int _endTime) {
+		this._endTime = _endTime;
 	}
 	public String getId() { return id; }
 	public void setId(String id) { this.id = id; }
 
 	public void addContent(Workout workout) {
-		this.content.add(workout);
+		if(this._content == null) {
+			this._content = new ArrayList<>();
+		}
+		this._content.add(workout);
 	}
 
 	/*
 		Compares location - first city, then street and then street number
 	 */
 	public int compareToLocation(SportsFacility facility) {
-		int value = facility.getLocation().getAddress().getCity().compareTo(this.getLocation().getAddress().getCity());
+		int value = facility.get_location().getAddress().getCity().compareTo(this.get_location().getAddress().getCity());
 		if ( value == 0) {
-			value = facility.getLocation().getAddress().getStreet().compareTo(this.getLocation().getAddress().getStreet());
+			value = facility.get_location().getAddress().getStreet().compareTo(this.get_location().getAddress().getStreet());
 			if (value == 0) {
-				value = facility.getLocation().getAddress().getStNumber().compareTo(this.getLocation().getAddress().getStNumber());
+				value = facility.get_location().getAddress().getStNumber().compareTo(this.get_location().getAddress().getStNumber());
 			}
 		}
 		return value;
 	}
 
 	public int compareToName(SportsFacility facility) {
-		return facility.getName().compareTo(this.getName());
+		return facility.get_name().compareTo(this.get_name());
 	}
 
 	public int compareToRating(SportsFacility facility) {
-		return facility.getRating().compareTo(this.getRating());
+		return facility.get_rating().compareTo(this.get_rating());
 	}
 }

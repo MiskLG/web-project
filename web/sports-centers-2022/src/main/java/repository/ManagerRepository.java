@@ -1,6 +1,8 @@
 package repository;
 
 import beans.Manager;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -68,7 +70,17 @@ public class ManagerRepository {
 
     public void write(){
         try {
-            GsonBuilder gsonBuilder = new GsonBuilder();
+            GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().contains("_");
+                }
+
+                @Override
+                public boolean shouldSkipClass(Class<?> incomingClass) {
+                    return false;
+                }
+            });
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
             Writer writer = Files.newBufferedWriter(Paths.get(FileNames.managersData));

@@ -17,6 +17,7 @@ public class Main {
         SportsFacilityController.init();
         ManagerController.init();
         CoachController.init();
+        WorkoutController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

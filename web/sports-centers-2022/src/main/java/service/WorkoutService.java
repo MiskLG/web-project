@@ -2,6 +2,7 @@ package service;
 
 import beans.Workout;
 import repository.WorkoutRepository;
+import util.IdGenerator;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,11 @@ public class WorkoutService {
     }
 
     public void add(Workout workout) {
+        String id = "";
+        do {
+            id = IdGenerator.generate();
+        }while (this.getById(id) != null);
+        workout.setId(id);
         workoutRepository.add(workout);
     }
 

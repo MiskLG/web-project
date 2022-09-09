@@ -30,8 +30,9 @@ public class SportsFacilityService {
     }
 
     public void addContent(SportsFacility facility, Workout workout) {
-        facility.addContent(workout);
-        facilityRepository.update(facility);
+        SportsFacility facility1 = getById(facility.getId());
+        facility1.addContent(workout);
+        facilityRepository.update(facility1);
     }
 
     public SportsFacility getById(String id) {
@@ -56,15 +57,15 @@ public class SportsFacilityService {
         }
 
         for (SportsFacility facility : list) {
-            int hoursStart = facility.getStartTime()/100;
-            int minutesStart = facility.getStartTime()%100;
-            int hoursEnd = facility.getEndTime()/100;
-            int minutesEnd = facility.getEndTime()%100;
+            int hoursStart = facility.get_startTime()/100;
+            int minutesStart = facility.get_startTime()%100;
+            int hoursEnd = facility.get_endTime()/100;
+            int minutesEnd = facility.get_endTime()%100;
             if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursStart, minutesStart)) > 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursEnd, minutesEnd)) < 0) {
-                facility.setStatus(true);
+                facility.set_status(true);
             }
             else {
-                facility.setStatus(false);
+                facility.set_status(false);
             }
             newList.add(facility);
         }
@@ -102,8 +103,8 @@ public class SportsFacilityService {
     public ArrayList<String> getAllTypes() {
         ArrayList<String> list = new ArrayList<>();
         for (SportsFacility facility : this.getAll()) {
-           if ( !list.contains(facility.getType()) ) {
-               list.add(facility.getType());
+           if ( !list.contains(facility.get_type()) ) {
+               list.add(facility.get_type());
            }
         }
         return list;
@@ -128,7 +129,7 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> searchName(String name, ArrayList<SportsFacility> list) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (facility.getName().contains(name)) {
+            if (facility.get_name().contains(name)) {
                 newList.add(facility);
             }
         }
@@ -137,7 +138,7 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> searchCity(String city, ArrayList<SportsFacility> list) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (facility.getLocation().getAddress().getCity().contains(city)) {
+            if (facility.get_location().getAddress().getCity().contains(city)) {
                 newList.add(facility);
             }
         }
@@ -146,7 +147,7 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> searchType(String type, ArrayList<SportsFacility> list) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (facility.getType().contains(type.toUpperCase())) {
+            if (facility.get_type().contains(type.toUpperCase())) {
                 newList.add(facility);
             }
         }
@@ -156,7 +157,7 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> searchRating(double rating, ArrayList<SportsFacility> list) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (facility.getRating() > rating) {
+            if (facility.get_rating() > rating) {
                 newList.add(facility);
             }
         }
@@ -179,7 +180,7 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> filterType(ArrayList<SportsFacility> list, String type) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            if (facility.getType().equalsIgnoreCase(type)) {
+            if (facility.get_type().equalsIgnoreCase(type)) {
                 newList.add(facility);
             }
         }
@@ -189,19 +190,19 @@ public class SportsFacilityService {
     public ArrayList<SportsFacility> filterOpen(ArrayList<SportsFacility> list, Boolean open) {
         ArrayList<SportsFacility> newList = new ArrayList<>();
         for (SportsFacility facility : list) {
-            int hoursStart = facility.getStartTime()/100;
-            int minutesStart = facility.getStartTime()%100;
-            int hoursEnd = facility.getEndTime()/100;
-            int minutesEnd = facility.getEndTime()%100;
+            int hoursStart = facility.get_startTime()/100;
+            int minutesStart = facility.get_startTime()%100;
+            int hoursEnd = facility.get_endTime()/100;
+            int minutesEnd = facility.get_endTime()%100;
             if (java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursStart, minutesStart)) > 0 && java.time.LocalTime.now().compareTo(java.time.LocalTime.of(hoursEnd, minutesEnd)) < 0) {
-                facility.setStatus(true);
+                facility.set_status(true);
                 if(open) {
                     newList.add(facility);
                 }
 
             }
             else {
-                facility.setStatus(false);
+                facility.set_status(false);
                 if(!open) {
                     newList.add(facility);
                 }

@@ -5,7 +5,7 @@ Vue.component("add-workouts", {
 	    	credentials: {username: "", password: ""},
             
             coaches: "",
-            workout: {name: "", type:"", duration:"", coach:"", description:"", image:""}
+            workout: {name: "", type:"", duration:"", description:"", image:"", coach:"", manager:""}
 	    }
 	},
 	    template: `
@@ -96,15 +96,15 @@ Vue.component("add-workouts", {
                 <div class="bg-secondary rounded text-light row mx-4 mt-2 border border-primary">
                     <div class="row m-2">
                         <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Username:</label>
+                            <label class="form-label col-md-6">Name:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <input v-model="workout.username" type="text" class="form-control" placeholder="name of workout (unique)"/>
+                            <input v-model="workout.name" type="text" class="form-control" placeholder="name of workout (unique)"/>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Name:</label>
+                            <label class="form-label col-md-6">Type:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
                             <input v-model="workout.type" type="text" class="form-control" placeholder="type of a workout"/>
@@ -112,7 +112,7 @@ Vue.component("add-workouts", {
                     </div>
                     <div class="row m-2">
                         <div class="col-md-2 pt-1">
-                            <label class="form-label col-md-6">Lastname:</label>
+                            <label class="form-label col-md-6">Duration:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
                             <input v-model="workout.duration" type="number" class="form-control" placeholder="in minutes (optional)"/>
@@ -123,7 +123,7 @@ Vue.component("add-workouts", {
                             <label class="form-label col-md-6">Description:</label>
                         </div>
                         <div class="col-md-8 align-center justify-content-center">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="(optional)" rows="3"></textarea>
+                            <textarea v-model="workout.description" class="form-control" id="exampleFormControlTextarea1" placeholder="(optional)" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -244,8 +244,8 @@ Vue.component("add-workouts", {
                 this.workout.type.trim();
                 this.workout.description.trim();
                 this.workout.duration.trim();
-                
-                if(this.workout.name.length === 0 || this.workout.type.length === 0 || this.workout.image.length === 0) {
+                this.workout.manager = this.user.username;
+                if(this.workout.name.length === 0 || this.workout.type.length === 0 || this.workout.image.length === 0 || this.workout.coach.length === 0) {
                     alert("Only optional fields can be left empty");
                     return;
                 }

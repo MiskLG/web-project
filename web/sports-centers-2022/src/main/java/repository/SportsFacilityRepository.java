@@ -1,6 +1,8 @@
 package repository;
 
 import beans.SportsFacility;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -33,19 +35,19 @@ public class SportsFacilityRepository {
     }
 
     public void add(SportsFacility sportsFacility) {
-        File file = new File("resources/images/" + sportsFacility.getId()+".png");
+        File file = new File("resources/images/sports_centers/" + sportsFacility.getId()+".png");
         try {
             if(file.createNewFile()) {
                 OutputStream iStreamOutput = null;
                 iStreamOutput = new FileOutputStream(file);
-                byte[] imageBytes = Base64.getDecoder().decode(sportsFacility.getLogo().split(",")[1]);
+                byte[] imageBytes = Base64.getDecoder().decode(sportsFacility.get_logo().split(",")[1]);
                 iStreamOutput.write(imageBytes);
             }
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-        sportsFacility.setLogo(file.getPath());
+        sportsFacility.set_logo(file.getPath());
         this.facilities.add(sportsFacility);
         write();
     }
@@ -53,12 +55,12 @@ public class SportsFacilityRepository {
     public void update(SportsFacility facility) {
         for (SportsFacility fac: getAll()) {
             if (fac.getId().equals(facility.getId())) {
-                fac.setName(facility.getName());
-                fac.setEndTime(facility.getEndTime());
-                fac.setLocation(facility.getLocation());
-                fac.setType(facility.getType());
-                fac.setStartTime(facility.getStartTime());
-                fac.setContent(facility.getContent());
+                fac.set_name(facility.get_name());
+                fac.set_endTime(facility.get_endTime());
+                fac.set_location(facility.get_location());
+                fac.set_type(facility.get_type());
+                fac.set_startTime(facility.get_startTime());
+                fac.set_content(facility.get_content());
                 write();
                 break;
             }
@@ -83,7 +85,17 @@ public class SportsFacilityRepository {
 
     public void write(){
         try {
-            GsonBuilder gsonBuilder = new GsonBuilder();
+            GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes f) {
+                    return f.getName().contains("__");
+                }
+
+                @Override
+                public boolean shouldSkipClass(Class<?> incomingClass) {
+                    return false;
+                }
+            });
             gsonBuilder.setPrettyPrinting();
             Gson gson = gsonBuilder.create();
             Writer writer = Files.newBufferedWriter(Paths.get(FileNames.sportsFacilitiesData));
