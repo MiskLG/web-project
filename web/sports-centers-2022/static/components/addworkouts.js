@@ -311,7 +311,7 @@ Vue.component("add-workouts", {
 						}
 					})
 					.catch(error => {
-						//router.push('/');
+						router.push('/');
 					})
 			}
 
