@@ -153,7 +153,7 @@ Vue.component("facility-overview", {
                                     <label class="text-light">Description: <span class="text-info mx-2">{{w.description}}</span></label>
                                 </div>
                                 <div class="row m-2">
-                                    <button class="btn btn-primary" type="button" @click="changePage('edit-workout/?'+ w.id)">
+                                    <button class="btn btn-primary" type="button" @click="editWorkout(w.id)">
                                         Edit workout
                                     </button>
                                 </div>
@@ -263,6 +263,9 @@ Vue.component("facility-overview", {
                     .catch(error => {
                       
                     })
+            },
+            editWorkout : function(id) {
+                router.push(`edit-workout/${id}`);
             }
     	},
     	mounted () {

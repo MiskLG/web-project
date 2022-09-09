@@ -2,7 +2,7 @@
   {
     "id": "0AWSi2TI",
     "name": "Pool 3h - Marko",
-    "type": "POOL",
+    "type": "PERSONAL",
     "duration": 180.0,
     "__facility": {
       "id": "eOTlDWGD"
@@ -16,7 +16,7 @@
       "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
       "userType": "COACH"
     },
-    "description": "",
+    "description": "No Description added yet",
     "photo": "resources/images/workouts/0AWSi2TI.png"
   }
 ]

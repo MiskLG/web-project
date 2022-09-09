@@ -44,8 +44,14 @@ public class WorkoutRepository {
 
     public void update(Workout workout) {
         for (Workout w: getAll()) {
-            //TODO if u need it
-            break;
+            if(workout.getId().equals(w.getId())) {
+                w.setType(workout.getType());
+                w.setDuration(workout.getDuration());
+                w.setDescription(workout.getDescription());
+                w.setCoach(workout.getCoach());
+                write();
+                break;
+            }
         }
         return;
     }

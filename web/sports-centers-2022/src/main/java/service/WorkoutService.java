@@ -34,4 +34,8 @@ public class WorkoutService {
         }
         return null;
     }
+
+    public void update(Workout workout) {
+        workoutRepository.update(workout);
+    }
 }
