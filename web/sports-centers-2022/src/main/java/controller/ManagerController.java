@@ -1,6 +1,7 @@
 package controller;
 
 import beans.Manager;
+import beans.SportsFacility;
 import beans.User;
 import com.google.gson.Gson;
 import dto.Credentials;
@@ -25,6 +26,7 @@ public class ManagerController {
         path(commonPath, () -> {
             register();
             getFree();
+            checkFacility();
         });
     }
 
@@ -78,6 +80,19 @@ public class ManagerController {
                 info.add(new UserInfoExpandedDTO(manager.getUsername(),manager.getName(),manager.getLastname()));
             }
             return g.toJson(info);
+        });
+    }
+
+    public static void checkFacility() {
+        get("/checkFacility", (req, res) -> {
+            res.type("application/json");
+            SportsFacility facility = managerService.getById(req.queryParams("username")).getFacility();
+
+            if (facility == null) {
+                res.status(204);
+            }
+
+            return res.raw();
         });
     }
 }

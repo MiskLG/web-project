@@ -221,6 +221,7 @@ Vue.component("add-workouts", {
                                 router.push("/");
                                 window.location.reload();
                             }
+							this.checkFacility();
 						}
                         else{
                             router.push("/");
@@ -300,11 +301,24 @@ Vue.component("add-workouts", {
                     })
                     .catch(error => {
                     })
-            }
+            },
+			checkFacility : function() {
+				axios.get('/rest/managers/checkFacility', {params : {username: this.user.username}}).
+					then(response => {
+						if(response.status == 204) {
+							alert("You are currently not manager of any facility, please ask admin to add you to your facility");
+                            router.push('/');
+						}
+					})
+					.catch(error => {
+						//router.push('/');
+					})
+			}
 
     	},
     	mounted () {
 			this.getUser();
             this.getCoaches();
+			
         }
 });
