@@ -26,6 +26,9 @@ Vue.component("home", {
 							<li v-if="user.type == 'BUYER'" class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/workouts')" href="#/workouts" >Workouts</a>
 							</li>
+							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
+							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-centers')" href="#/add-centers" >Add Centers</a>
 							</li>
@@ -44,9 +47,16 @@ Vue.component("home", {
 							<li v-if="user.type == 'MANAGER' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-workouts')" href="#/add-workouts">Add workouts</a>
 							</li>
+							<li v-if="user.type == 'MANAGER' "class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/approve-arrival')" href="#/approve-arrival">Approve arrivals</a>
+							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/promo-codes')" href="#/promo-codes">Define promo codes</a>
 							</li>
+							<li v-if="user.type == 'ADMIN' "class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/comments-overview')" href="#/comments-overview">Approve comments</a>
+							</li>
+							
 						</ul>
 						<div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="changePage('/register')">
 							Register
@@ -319,7 +329,7 @@ Vue.component("home", {
                     })	
 			},
 			seeContent : function(id) {
-				router.push('/'+id);
+				router.push(`/center/${id}`);
 			}
     	},
     	mounted () {

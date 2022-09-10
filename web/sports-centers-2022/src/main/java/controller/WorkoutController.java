@@ -6,6 +6,7 @@ import beans.Workout;
 import com.google.gson.Gson;
 import dto.WorkoutAddDTO;
 import dto.WorkoutDTO;
+import dto.WorkoutExpandedDTO;
 import dto.WorkoutUpdateDTO;
 import service.CoachService;
 import service.ManagerService;
@@ -34,6 +35,7 @@ public class WorkoutController {
             getByFacility();
             getById();
             update();
+            getAll();
         });
     }
 
@@ -114,6 +116,36 @@ public class WorkoutController {
             workout.setType(data.getType().toUpperCase());
             workoutService.update(workout);
             return res.raw();
+        });
+    }
+
+    public static void getAll() {
+        get("/getAll", (req, res) -> {
+            res.type("application/json");
+            ArrayList<Workout> workouts = workoutService.getAll();
+            ArrayList<WorkoutExpandedDTO> dto = new ArrayList<>();
+
+            if(workouts == null){
+                res.status(204);
+                return res.raw();
+            }
+            if(workouts.size() == 0) {
+                res.status(204);
+                return res.raw();
+            }
+
+            for(Workout workout: workouts) {
+                InputStream iSteamReader = new FileInputStream(workout.getPhoto());
+                byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
+                String base64 = Base64.getEncoder().encodeToString(imageBytes);
+                base64 = "data:image/png;base64," + base64;
+                WorkoutDTO w = new WorkoutDTO(workout.getId(), workout.getName(), workout.getType(), workout.getDuration().toString(),
+                        workout.getCoach().getUsername(), workout.getCoach().getName(), workout.getCoach().getLastname(),
+                        workout.getDescription(), base64);
+                WorkoutExpandedDTO w1 = new WorkoutExpandedDTO(workout.get__facility().get_name(), w);
+                dto.add(w1);
+            }
+            return g.toJson(dto);
         });
     }
 

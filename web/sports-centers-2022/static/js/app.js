@@ -2,7 +2,7 @@ const Home = {template: '<home></home>' }
 const Login = {template: '<login></login>'}
 const Register = {template: '<register></register>'}
 const AddCenters = {template: '<add-centers></add-centers>'}
-const Center = {template: '<show-center></show-center>'}
+const Center = {template: '<center></center>'}
 const Edit = {template: '<edit-profile></edit-profile>'}
 const AllUsers = {template: '<all-users></all-users>'}
 const AddManagers = {template: '<add-managers></add-managers>'}
@@ -10,6 +10,7 @@ const AddCoaches = {template: '<add-coaches></add-coaches>'}
 const AddWorkouts = {template: '<add-workouts></add-workouts>'}
 const FacilityOverview = {template: '<facility-overview></facility-overview>'}
 const EditWorkout = {template: '<edit-workout></edit-workout>'}
+const Workouts = {template: '<workouts></workouts>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -26,6 +27,7 @@ const router = new VueRouter({
 		{ path: '/add-workouts', component: AddWorkouts},
 		{ path: '/facility-overview', component: FacilityOverview},
 		{ path: '/edit-workout/:id', component: EditWorkout},
+		{ path: '/workouts', component: Workouts},
 	  ]
 });
 

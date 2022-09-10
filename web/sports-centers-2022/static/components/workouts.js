@@ -1,19 +1,17 @@
-Vue.component("facility-overview", {
+Vue.component("workouts", {
 	data: function () {
 	    return {
 			
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
-			content: "",
-            workouts: "",
-            comments: ""
+			workouts: "",
 
 	    }
 	},
 	    template: `
 		<div>
-            <div v-if="user.type == 'MANAGER'">
+            <div v-if="user.type == 'BUYER' ">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border border-secondary">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="#/">SportsCenters</a>
@@ -28,6 +26,9 @@ Vue.component("facility-overview", {
                                 <li v-if="user.type == 'BUYER'" class="nav-item">
                                 <a class="nav-link active" aria-current="page" @click="changePage('/workouts')" href="#/workouts" >Workouts</a>
                                 </li>
+                                <li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
+                                <a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
+                                </li>
                                 <li v-if="user.type == 'ADMIN' "class="nav-item">
                                 <a class="nav-link active" aria-current="page" @click="changePage('/add-centers')" href="#/add-centers" >Add Centers</a>
                                 </li>
@@ -41,14 +42,21 @@ Vue.component("facility-overview", {
                                 <a class="nav-link active" aria-current="page" @click="changePage('/all-users')" href="#/all-users">All Users</a>
                                 </li>
                                 <li v-if="user.type == 'MANAGER' "class="nav-item">
-                                <a class="nav-link active" aria-current="page" @click="changePage('/designated-facility')" href="#/designated-facility">Facility overview</a>
+                                <a class="nav-link active" aria-current="page" @click="changePage('/facility-overview')" href="#/facility-overview">Facility overview</a>
                                 </li>
                                 <li v-if="user.type == 'MANAGER' "class="nav-item">
                                 <a class="nav-link active" aria-current="page" @click="changePage('/add-workouts')" href="#/add-workouts">Add workouts</a>
                                 </li>
+                                <li v-if="user.type == 'MANAGER' "class="nav-item">
+                                <a class="nav-link active" aria-current="page" @click="changePage('/approve-arrival')" href="#/approve-arrival">Approve arrivals</a>
+                                </li>
                                 <li v-if="user.type == 'ADMIN' "class="nav-item">
                                 <a class="nav-link active" aria-current="page" @click="changePage('/promo-codes')" href="#/promo-codes">Define promo codes</a>
                                 </li>
+                                <li v-if="user.type == 'ADMIN' "class="nav-item">
+                                <a class="nav-link active" aria-current="page" @click="changePage('/comments-overview')" href="#/comments-overview">Approve comments</a>
+                                </li>
+                                
                             </ul>
                             <div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="changePage('/register')">
                                 Register
@@ -90,81 +98,46 @@ Vue.component("facility-overview", {
                                     {{user.username}}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#edit-profile">Edit Profile</a></li>
-                                    <li><a v-if="user.type=='BUYER' "class="dropdown-item" href="#subscription" >Subscription</a></li>
+                                    <li><a class="dropdown-item" @click="changePage('edit-profile')" href="#edit-profile">Edit Profile</a></li>
+                                    <li><a v-if="user.type=='BUYER'" @click="changePage('subscription')" class="dropdown-item" href="#subscription" >Subscription</a></li>
                                     <li><a class="dropdown-item" @click="logout">Logout</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </nav>
-                <div class="d-flex justify-content-center m-4 bg-secondary row rounded" >
-                    <div class="row mb-3">
-                        <label class="col-6 fs-1 d-flex justify-content-end text-light"> {{content.name}} </label>
-                        <label class="col-6 fs-4 d-flex justify-content-end text-light"> Rating:  <span class="mx-2 text-info">{{content.rating}}/5</span> </label>
+                <div class="row justify-content-center bg-secondary rounded m-4">
+                    <div class="d-flex justify-content-center row fs-2 text-light">
+                        Workouts
                     </div>
-                    <div class="row m-3">
-                        <div class="col-md-5 ">
-                            <img :src="content.image" class="img-thumbnail"/>
+                    <div v-for="w in workouts" class="row">
+                        <div class="col-md-4 ">
+                            <img :src="w.base.photo" class="img-thumbnail"/>
                         </div>
-                        <div class="col-md-6 bg-secondary fs-3">       
+                        <div class="col-md-8 fs-5">
                             <div class="row my-2">
-                                <label class="text-light">Type: <span class="text-info mx-2">{{content.type}}</span></label>
-                            </div>
-                            <div class="row my-2">
-                                <label class="text-light">Status: <span class="text-info mx-2">{{content.status}}</span></label>
+                                <label class="text-light">Facility Name: <span class="text-info mx-2">{{w.facility}}</span></label>
                             </div>
                             <div class="row my-2">
-                                <label class="text-light">Work hours: <span class="text-info mx-2">{{content.startTime}}h - {{content.endTime}}h </span></label>
+                                <label class="text-light">Name: <span class="text-info mx-2">{{w.base.name}}</span></label>
                             </div>
                             <div class="row my-2">
-                                <label class="text-light">Location: <span class="text-info mx-2">{{content.city}}, {{content.poNumber}}, {{content.street}} {{content.stNumber}} </span></label>
+                                <label class="text-light">Type: <span class="text-info mx-2">{{w.base.type}}</span></label>
                             </div>
                             <div class="row my-2">
-                                <label class="text-light">Longitude: <span class="text-info mx-2">{{content.longitude}}</span> Latitude: <span class="text-info mx-2">{{content.latitude}}</span></label>
+                                <label class="text-light">Duration: <span class="text-info mx-2">{{w.base.duration}}min </span></label>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mx-4">
-                    <div class="col-6 justify-content-center bg-secondary rounded ">
-                        <div class="d-flex justify-content-center row fs-2 text-light">
-                            Workouts
-                        </div>
-                        <div v-for="w in workouts" class="row">
-                            <div class="col-md-4 ">
-                                <img :src="w.photo" class="img-thumbnail"/>
+                            <div class="row my-2">
+                                <label class="text-light">Coach: <span class="text-info mx-2">{{w.base.coachUsername}} - {{w.base.coachName}} {{w.base.coachLastname}}</span></label>
                             </div>
-                            <div class="col-md-8 fs-5">
-                                <div class="row my-2">
-                                    <label class="text-light">Name: <span class="text-info mx-2">{{w.name}}</span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Type: <span class="text-info mx-2">{{w.type}}</span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Duration: <span class="text-info mx-2">{{w.duration}}min </span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Coach: <span class="text-info mx-2">{{w.coachUsername}} - {{w.coachName}} {{w.coachLastname}}</span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Description: <span class="text-info mx-2">{{w.description}}</span></label>
-                                </div>
-                                <div class="row m-2">
-                                    <button class="btn btn-primary" type="button" @click="editWorkout(w.id)">
-                                        Edit workout
-                                    </button>
-                                </div>
+                            <div class="row my-2">
+                                <label class="text-light">Description: <span class="text-info mx-2">{{w.base.description}}</span></label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-6 justify-content-center">
-                        <div class="d-flex fs-2 bg-secondary rounded justify-content-center text-light">
-                            Comments
-                        </div>
-                        <div v-for="c in comments" class="row fs-4">
-                            
+                            <div class="row m-2">
+                                <button class="btn btn-primary" type="button" @click="schedule(w.base.id)">
+                                    Schedule workout
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -200,17 +173,12 @@ Vue.component("facility-overview", {
 					then(response => {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
-                            if (this.user.type != "MANAGER" ) {
-                                router.push("/");
-                                window.location.reload();
-                            }
-                            this.checkFacility();
+                            this.getWorkouts();
 						}
                         else{
-                            router.push("/")
+                            router.push('/');
                         }
 					}).catch(error => {
-                        router.push("/");
                     })	
 			},
 			editProfile() {
@@ -220,53 +188,30 @@ Vue.component("facility-overview", {
 				router.push('edit-profile');
 				window.location.reload();
 			},
-            checkFacility : function() {
-				axios.get('/rest/managers/checkFacility', {params : {username: this.user.username}}).
-					then(response => {
-						if(response.status == 204) {
-							alert("You are currently not manager of any facility, please ask admin to add you to your facility");
-                            router.push('/');
-						}
-                        this.getContent();
-					})
-					.catch(error => {
-						router.push('/');
-					})
-			},
-            getContent : function() {
-                axios.get('/rest/centers/getByManager', {params : {username: this.user.username}}).
-                    then(response => {
-                        this.content = response.data;
-                        this.getWorkouts();
-                        this.getComments();
-                    })
-                    .catch(error => {
-                        router.push('/');
-                    })
-            },
+			
             getWorkouts : function() {
-                axios.get('/rest/workouts/getByFacility', {params: {id: this.content.id}})
+                axios.get('/rest/workouts/getAll')
                     .then(response => {
+                        if(response.status == 204){
+                            alert("There are no workouts in the system currently, please check later");
+                            router.push("/");
+                            return;
+                        }
                         this.workouts = response.data;
                     })
                     .catch(error => {
-                
+                        alert("Unknown error has uccured, please check later");
+                        router.push("/");
                     })
             },
-            getComments : function() {
-                axios.get('/rest/comments/getByFacility', {params: {id: this.content.id}})
-                    .then(response => {
-                        this.comments = response.data;
-                    })
-                    .catch(error => {
-                      
-                    })
-            },
-            editWorkout : function(id) {
-                router.push(`edit-workout/${id}`);
+            schedule : function(id) {
+                router.push(`/schedule/${id}`);
             }
+
+            
     	},
     	mounted () {
 			this.getUser();
+           
         }
 });

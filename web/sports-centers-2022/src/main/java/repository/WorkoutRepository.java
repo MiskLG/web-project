@@ -87,6 +87,9 @@ public class WorkoutRepository {
                 public boolean shouldSkipField(FieldAttributes f) {
                     if (f.getName().contains("_"))
                     {
+                        if(f.getName().contains("_name")){
+                            return false;
+                        }
                         if (f.getName().contains("__")) {
                             return false;
                         }

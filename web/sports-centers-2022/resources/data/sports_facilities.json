@@ -3,6 +3,25 @@
     "id": "TTlipsaQ",
     "_name": "WorkoutGym",
     "_type": "GYM",
+    "_content": [
+      {
+        "id": "04DmhIdz",
+        "name": "Push Day",
+        "type": "PERSONAL",
+        "duration": 89.0,
+        "coach": {
+          "username": "coach1",
+          "name": "Marko",
+          "lastname": "Markovic",
+          "password": "123",
+          "gender": "MALE",
+          "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+          "userType": "COACH"
+        },
+        "description": "",
+        "photo": "resources/images/workouts/04DmhIdz.png"
+      }
+    ],
     "_status": true,
     "_location": {
       "latitude": 45.24099816846322,

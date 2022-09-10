@@ -32,6 +32,7 @@ public class SportsFacilityController {
             search();
             getEmpty();
             getByManager();
+            getById();
         });
     }
 
@@ -216,6 +217,31 @@ public class SportsFacilityController {
             res.type("application/json");
             Manager manager = managerService.getById(req.queryParams("username"));
             SportsFacility facility = facilityService.getById(manager.getFacility().getId());
+
+
+            InputStream iSteamReader = new FileInputStream(facility.get_logo());
+            byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
+            String base64 = Base64.getEncoder().encodeToString(imageBytes);
+            base64 = "data:image/png;base64," + base64;
+            String boolToString;
+            if (facility.is_status()) {
+                boolToString = "Open";
+            }
+            else {
+                boolToString = "Closed";
+            }
+            SportsFacilityDTO dto = new SportsFacilityDTO(facility.getId(),facility.get_name(),facility.get_type(),
+                    boolToString, facility.get_location().getLatitude().toString(), facility.get_location().getLongitude().toString(),
+                    facility.get_location().getAddress().getCity(), facility.get_location().getAddress().getStreet(),
+                    facility.get_location().getAddress().getStNumber(), facility.get_location().getAddress().getPoNumber(),
+                    base64, facility.get_rating().toString(), facility.get_startTime()/100+":"+facility.get_startTime()%100, facility.get_endTime()/100+":"+facility.get_endTime()%100);
+            return g.toJson(dto);
+        });
+    }
+    public static void getById() {
+        get("/getById", (req, res) -> {
+            res.type("application/json");
+            SportsFacility facility = facilityService.getById(req.queryParams("id"));
 
 
             InputStream iSteamReader = new FileInputStream(facility.get_logo());
