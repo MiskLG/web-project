@@ -1,12 +1,47 @@
 [
   {
     "points": 0,
+    "buyerType": {
+      "name": "Bronze",
+      "discount": 0.0,
+      "pointsNeeded": 0
+    },
     "username": "buyer1",
-    "name": "Marko",
-    "lastname": "Markovic",
+    "name": "Mira",
+    "lastname": "Miric",
+    "password": "123",
+    "gender": "FEMALE",
+    "dateOfBirth": "Sep 16, 1998, 12:00:00 AM",
+    "userType": "BUYER"
+  },
+  {
+    "points": 0,
+    "buyerType": {
+      "name": "Bronze",
+      "discount": 0.0,
+      "pointsNeeded": 0
+    },
+    "username": "buyer2",
+    "name": "Nema",
+    "lastname": "Nemic",
     "password": "123",
     "gender": "MALE",
-    "dateOfBirth": "Sep 13, 1989, 11:39:42 PM",
+    "dateOfBirth": "Sep 21, 1999, 12:00:00 AM",
+    "userType": "BUYER"
+  },
+  {
+    "points": 0,
+    "buyerType": {
+      "name": "Bronze",
+      "discount": 0.0,
+      "pointsNeeded": 0
+    },
+    "username": "buyer3",
+    "name": "Luka",
+    "lastname": "Peric",
+    "password": "123",
+    "gender": "MALE",
+    "dateOfBirth": "Nov 30, 1994, 12:00:00 AM",
     "userType": "BUYER"
   }
 ]

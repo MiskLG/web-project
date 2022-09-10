@@ -55,6 +55,7 @@ public class BuyerController {
             Date date = cal.getTime();
 
             Buyer buyer = new Buyer(data.getUsername(), data.getName(), data.getLastname(), data.getPassword(), genderType, date);
+            buyer.setPoints(0);
             buyerService.add(buyer);
             UserInfoDTO info = new UserInfoDTO(buyer.getUsername(),buyer.getUserType().toString());
             req.session().attribute("user", info);

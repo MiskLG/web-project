@@ -16,10 +16,36 @@ public class BuyerTypeRepository {
 
     private ArrayList<BuyerType> buyerTypes;
 
+    private static BuyerTypeRepository repo = null;
+
+    private BuyerTypeRepository() {};
+
+    public static BuyerTypeRepository init() {
+        if(repo == null) {
+            repo = new BuyerTypeRepository();
+            repo.buyerTypes = new ArrayList<BuyerType>();
+            repo.read();
+        }
+        return repo;
+    }
     public ArrayList<BuyerType> getBuyerTypes()
     {
-        read();
         return this.buyerTypes;
+    }
+
+    public BuyerType getBuyerType(int points) {
+        BuyerType btToReturn = null;
+        for (BuyerType bt : buyerTypes) {
+            System.out.println(bt.getName());
+            System.out.println(bt.getPointsNeeded());
+            if(bt.getPointsNeeded() <= points) {
+                btToReturn = bt;
+            }
+            else{
+                break;
+            }
+        }
+        return btToReturn;
     }
 
     public void read() {
