@@ -234,8 +234,8 @@ Vue.component("home", {
 						<label class="text-light fs-5">Location: <span class="text-info mx-2">{{center.city}}, {{center.poNumber}}, {{center.street}} {{center.stNumber}} </span></label>
 					</div>
 					<div class="row">
-						<label class="col-6 text-light fs-5">Longitude: <span class="text-info mx-2">{{center.longitude}}</span> Latitude: <span class="text-info mx-2">{{center.latitude}}</span></label>
-						<div class="col-6 d-flex justify-content-end">
+						<label class="col-10 text-light fs-5">Longitude: <span class="text-info mx-2">{{center.longitude}}</span> Latitude: <span class="text-info mx-2">{{center.latitude}}</span></label>
+						<div class="col-2 d-flex justify-content-end">
 							<button class="btn btn-primary" type="button" @click="seeContent(center.id)">
 								See content =>
 							</button>

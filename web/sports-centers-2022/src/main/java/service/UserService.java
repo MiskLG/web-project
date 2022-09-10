@@ -55,6 +55,7 @@ public class UserService {
                 break;
             }
         }
+        userInfoRepository.update(user);
         return;
     }
 

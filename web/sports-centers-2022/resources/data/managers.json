@@ -1,8 +1,5 @@
 [
   {
-    "facility": {
-      "id": "eOTlDWGD"
-    },
     "username": "manager2",
     "name": "Pera",
     "lastname": "Peric",
@@ -12,6 +9,9 @@
     "userType": "MANAGER"
   },
   {
+    "facility": {
+      "id": "TTlipsaQ"
+    },
     "username": "manager3",
     "name": "Luka",
     "lastname": "Lukic",

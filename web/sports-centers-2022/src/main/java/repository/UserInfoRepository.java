@@ -38,6 +38,15 @@ public class UserInfoRepository {
         userLoginInfo.add(new UserLoginInfo(user.getUsername(), user.getPassword(), user.getUserType()));
         write();
     }
+
+    public void update(User user) {
+        for (UserLoginInfo info: userLoginInfo) {
+            if(info.getUsername().equals(user.getUsername())) {
+                info.setPassword(user.getPassword());
+                write();
+            }
+        }
+    }
     public void read() {
         try {
             Gson gson = new Gson();

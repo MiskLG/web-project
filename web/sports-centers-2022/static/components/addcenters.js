@@ -334,8 +334,6 @@ Vue.component("add-centers", {
             trimData : function() {
                 this.center.name.trim();
                 this.center.type.trim();
-                this.center.latitude.trim();
-                this.center.longitude.trim();
                 this.center.city.trim();
                 this.center.street.trim();
                 this.center.stNumber.trim();
