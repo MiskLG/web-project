@@ -53,6 +53,15 @@ public class BuyerRepository {
         return;
     }
 
+    public Buyer getById(String id) {
+        for (Buyer buyer: this.getAll()) {
+            if (buyer.getUsername().equalsIgnoreCase(id)) {
+                return buyer;
+            }
+        }
+        return null;
+    }
+
     public void read() {
         try {
             Gson gson = new Gson();

@@ -50,6 +50,14 @@ public class CoachRepository {
         }
         return;
     }
+    public Coach getById(String id) {
+        for (Coach coach: this.getAll()) {
+            if (coach.getUsername().equalsIgnoreCase(id)) {
+                return coach;
+            }
+        }
+        return null;
+    }
 
     public void read() {
         try {

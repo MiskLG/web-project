@@ -31,6 +31,7 @@ public class UserController {
             add();
             current();
             search();
+            getById();
         });
     }
     public static void login(){
@@ -152,6 +153,25 @@ public class UserController {
             }
 
             return g.toJson(list);
+        });
+    }
+    public static void getById() {
+        get("/getById", (req, res) -> {
+            res.type("application/json");
+            User.UserType type;
+            if(req.queryParams("type").equalsIgnoreCase("ADMIN")) {
+                type = User.UserType.ADMIN;
+            } else if ( req.queryParams("type").equalsIgnoreCase("BUYER")) {
+                type = User.UserType.BUYER;
+            }else if ( req.queryParams("type").equalsIgnoreCase("MANAGER")) {
+                type = User.UserType.MANAGER;
+            } else{
+                type = User.UserType.COACH;
+            }
+            User user = userService.getUserByIdAndType(req.queryParams("username"), type);
+            UserDTO dto = new UserDTO(user.getName(),user.getLastname(),user.getUsername(),user.getUserType().toString(), user.getGender().toString(), user.getDateOfBirth().toString());
+
+            return g.toJson(dto);
         });
     }
 }

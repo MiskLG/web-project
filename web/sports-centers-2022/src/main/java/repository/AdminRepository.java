@@ -46,6 +46,15 @@ public class AdminRepository {
         return;
     }
 
+    public Admin getById(String id) {
+        for (Admin admin: this.getAll()) {
+            if (admin.getUsername().equalsIgnoreCase(id)) {
+                return admin;
+            }
+        }
+        return null;
+    }
+
     public void add(Admin admin) {
         admins.add(admin);
         write();

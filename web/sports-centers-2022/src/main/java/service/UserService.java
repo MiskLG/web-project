@@ -18,6 +18,7 @@ public class UserService {
     private AdminRepository adminRepository;
     private CoachRepository coachRepository;
     private ManagerRepository managerRepository;
+
     public UserService() {
         userInfoRepository = UserInfoRepository.init();
         buyerRepository = BuyerRepository.init();
@@ -61,6 +62,25 @@ public class UserService {
         }
         return list;
     }
+    public User getUserByIdAndType(String username, User.UserType type) {
+        User user = null;
+        switch (type) {
+            case ADMIN -> {
+                user = adminRepository.getById(username);
+            }
+            case BUYER -> {
+                user =  buyerRepository.getById(username);
+            }
+            case COACH -> {
+                user = coachRepository.getById(username);
+            }
+            case MANAGER -> {
+                user = managerRepository.getById(username);
+            }
+        }
+        return user;
+    }
+
 
     public ArrayList<User> search(String name, String lastname, String username, ArrayList<User> list) {
         if (!name.isEmpty()) {

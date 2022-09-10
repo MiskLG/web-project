@@ -68,6 +68,15 @@ public class ManagerRepository {
         }
     };
 
+    public Manager getById(String id) {
+        for (Manager manager: this.getAll()) {
+            if (manager.getUsername().equalsIgnoreCase(id)) {
+                return manager;
+            }
+        }
+        return null;
+    }
+
     public void write(){
         try {
             GsonBuilder gsonBuilder = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
