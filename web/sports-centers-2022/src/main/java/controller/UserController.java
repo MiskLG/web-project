@@ -2,10 +2,7 @@ package controller;
 
 import beans.User;
 import com.google.gson.Gson;
-import dto.Credentials;
-import dto.UserDTO;
-import dto.UserInfoDTO;
-import dto.UserSearchDTO;
+import dto.*;
 import service.UserService;
 
 import java.util.ArrayList;
@@ -32,6 +29,7 @@ public class UserController {
             current();
             search();
             getById();
+            update();
         });
     }
     public static void login(){
@@ -172,6 +170,37 @@ public class UserController {
             UserDTO dto = new UserDTO(user.getName(),user.getLastname(),user.getUsername(),user.getUserType().toString(), user.getGender().toString(), user.getDateOfBirth().toString());
 
             return g.toJson(dto);
+        });
+    }
+    public static void update() {
+        put("/update", (req, res) -> {
+            res.type("application/json");
+            res.status(200);
+
+            String payload = req.body();
+            UserUpdateDTO data = g.fromJson(payload, UserUpdateDTO.class);
+
+            User.UserType type;
+            if(data.getType().equalsIgnoreCase("ADMIN")) {
+                type = User.UserType.ADMIN;
+            } else if (data.getType().equalsIgnoreCase("BUYER")) {
+                type = User.UserType.BUYER;
+            }else if (data.getType().equalsIgnoreCase("MANAGER")) {
+                type = User.UserType.MANAGER;
+            } else{
+                type = User.UserType.COACH;
+            }
+
+            User user = userService.getUserByIdAndType(data.getUsername(), type);
+
+            user.setName(data.getName());
+            user.setLastname(data.getLastname());
+            user.setPassword(data.getPassword());
+
+            userService.update(user);
+
+
+            return res.raw();
         });
     }
 }

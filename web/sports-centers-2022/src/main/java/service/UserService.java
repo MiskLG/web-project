@@ -36,6 +36,28 @@ public class UserService {
         return user;
     }
 
+    public void update(User user) {
+        switch (user.getUserType()) {
+            case ADMIN -> {
+                adminRepository.update((Admin) user);
+                break;
+            }
+            case MANAGER -> {
+                managerRepository.update((Manager) user);
+                break;
+            }
+            case BUYER -> {
+                buyerRepository.update((Buyer) user);
+                break;
+            }
+            case COACH -> {
+                coachRepository.update((Coach) user);
+                break;
+            }
+        }
+        return;
+    }
+
     public ArrayList<User> getAll() {
         ArrayList<User> list = new ArrayList<>();
 

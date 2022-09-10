@@ -6,7 +6,7 @@ Vue.component("edit-profile", {
 	    	credentials: {username: "", password: ""},
 
 			profileData: {username: "", name:"", lastname:"", gender:"", dateOfBirth:""},
-            updateData: {username:"", name:"", lastname:"", password:"", password2:"",}
+            updateData: {username:"", name:"", lastname:"", password:"", password2:"", type:""}
 	    }
 	},
 	    template: `
@@ -232,7 +232,13 @@ Vue.component("edit-profile", {
                         this.user = response.data;
                         this.getProfileData();
                     }
-                })	
+                    else{
+                        router.push('/');
+                    }
+                })
+                .catch(error => {
+                    router.push('/');
+                })
         },
         editProfile() {
             if (user.username.length === 0) {
@@ -257,7 +263,7 @@ Vue.component("edit-profile", {
                 return;
             }
             
-            axios.put('/rest/users/update', this.updateData).
+            axios.put('/rest/user/update', this.updateData).
                 then(response => {
                     window.location.reload();
                 })	
@@ -272,6 +278,7 @@ Vue.component("edit-profile", {
                     this.updateData.name = this.profileData.name;
                     this.updateData.lastname = this.profileData.lastname;
                     this.updateData.username = this.profileData.username;
+                    this.updateData.type = this.user.type;
                 })
                 .catch(error => {
 
