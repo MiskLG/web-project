@@ -220,6 +220,27 @@ Vue.component("schedule", {
                     })
             },
             schedule : function() {
+                var date1 = new Date(this.workout.date);
+                var date2 = new Date();
+                date2.setTime(date2.getTime() + 86400000 * 2);
+                if(this.workout.date.length === 0) {
+                    alert("Please choose date");
+                }
+                if(date1.getTime() <= date2.getTime()) {
+                    alert("You cant schedule workout before 2 days from now");
+                }
+                axios.post("/rest/buyer/schedule", this.workout)
+                    .then(response => {
+                        if(response.status == 204) {
+                            alert("You dont have enough appointment numbers to shedule workout");
+                            return;
+                        }
+                        alert("Workout has been scheduled");
+                    })
+                    .catch(error => {
+                        alert("Error has occured, please try again later");
+                    })
+                    
             }
     	},
     	mounted () {

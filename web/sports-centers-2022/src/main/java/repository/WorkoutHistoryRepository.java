@@ -11,6 +11,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class WorkoutHistoryRepository {
     private ArrayList<WorkoutHistory> workoutHistories;
@@ -26,13 +27,13 @@ public class WorkoutHistoryRepository {
         workoutHistories.add(workoutHistory);
         write();
     }
-
-    public void update(WorkoutHistory workoutHistory) {
-        for (WorkoutHistory wh: getAll()) {
-           //TODO
-            break;
+    public void checkDates() {
+        for (WorkoutHistory wh: this.workoutHistories) {
+            if (Calendar.getInstance().getTime().compareTo(wh.getDateOfRegistration()) < 0 ) {
+                wh.setStatus(true);
+            }
         }
-        return;
+        write();
     }
 
     public static WorkoutHistoryRepository init() {
@@ -40,6 +41,7 @@ public class WorkoutHistoryRepository {
             repo = new WorkoutHistoryRepository();
             repo.workoutHistories = new ArrayList<WorkoutHistory>();
             repo.read();
+            repo.checkDates();
         }
         return repo;
     }

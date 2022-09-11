@@ -5,12 +5,12 @@ import java.util.Date;
 
 public class Buyer extends User{
 	private Subscription subscriptionId;
-	private ArrayList<SportsFacility> visitedFacilities;
+	private ArrayList<String> visitedFacilities;
 	private double points;
 	private BuyerType buyerType;
 		
 	public Buyer(String username, String name, String lastname, String password, GenderType gender, Date dateOfBirth,
-			Subscription subscriptionId, ArrayList<SportsFacility> visitedFacilities, double points,
+			Subscription subscriptionId, ArrayList<String> visitedFacilities, double points,
 			BuyerType buyerType) {
 		super(username, name, lastname, password, gender, dateOfBirth, UserType.BUYER);
 		this.subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ public class Buyer extends User{
 	public void setBuyerType(BuyerType buyerType) {
 		this.buyerType = buyerType;
 	}
-	public ArrayList<SportsFacility> getVisitedFacilities() {
+	public ArrayList<String> getVisitedFacilities() {
 		return visitedFacilities;
 	}
-	public void setVisitedFacilities(ArrayList<SportsFacility> visitedFacilities) {
+	public void setVisitedFacilities(ArrayList<String> visitedFacilities) {
 		this.visitedFacilities = visitedFacilities;
 	}
 	

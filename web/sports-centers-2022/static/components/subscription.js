@@ -6,11 +6,12 @@ Vue.component("subscription", {
 
             discount: "",
             discountCode: "",
+            discountCode2: "",
             code: "",
             originalPrice: "",
             sub: "",
             subscriptionId: "",
-            wrapper: {sub:"", username:""},
+            wrapper: {sub:"", username:"", discountCode:""},
 	    }
 	},
 	    template: `
@@ -265,6 +266,7 @@ Vue.component("subscription", {
                             return;
                         }
                         this.discountCode = response.data;
+                        this.discountCode2 = this.discountCode;
                         
                         if(this.discountCode.discount != 0) {
                             this.sub.price = this.originalPrice - this.originalPrice * this.discountCode.discount /100.;
@@ -274,7 +276,7 @@ Vue.component("subscription", {
                     });
             },
             subscribe : function() {
-                this.wrapper = {sub: this.sub, username: this.user.username};
+                this.wrapper = {sub: this.sub, username: this.user.username, discountCode: this.discountCode2};
                 axios.post("/rest/buyer/subscribe", this.wrapper)
                     .then(response => {
                         alert("Successfully subscribed");

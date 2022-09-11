@@ -1,12 +1,9 @@
 package controller;
 
-import beans.Buyer;
-import beans.Subscription;
-import beans.User;
+import beans.*;
 import com.google.gson.Gson;
 import dto.*;
-import service.BuyerService;
-import service.UserService;
+import service.*;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +15,9 @@ public class BuyerController {
     private static Gson g = new Gson();
     private static BuyerService buyerService = new BuyerService();
     private static UserService userService = new UserService();
+    private static WorkoutService workoutService = new WorkoutService();
+    private static WorkoutHistoryService workoutHistoryService = new WorkoutHistoryService();
+    private static PromoCodeService promoCodeService = new PromoCodeService();
     private static String commonPath = "/rest/buyer";
 
     public static void init() {
@@ -124,6 +124,33 @@ public class BuyerController {
 
             Subscription subs = new Subscription(data.getSub().getId(),date1, date2,Double.parseDouble(data.getSub().getPrice()), status,type, Integer.parseInt(data.getSub().getNumberOfAppointments()));
             buyerService.addSubscription(buyer, subs);
+
+            if(!data.getDiscountCode().equals("")) {
+                promoCodeService.use(data.getDiscountCode());
+            }
+
+            return res.raw();
+        });
+    }
+    public static void schedule() {
+        post("/schedule", (req, res) -> {
+            res.type("application/json");
+            String payload = req.body();
+            ScheduleDTO data = g.fromJson(payload, ScheduleDTO.class);
+
+            Buyer buyer = buyerService.getById(data.getUserId());
+            Workout workout = workoutService.getById(data.getWorkoutId());
+
+            String[] data1 = data.getDate().split("/");
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Integer.parseInt(data1[2]), Integer.parseInt(data1[1])-1, Integer.parseInt(data1[0]), 0, 0, 0);
+            Date date1 = cal.getTime();
+
+            WorkoutHistory wh = new WorkoutHistory(date1,workout,buyer,workout.getCoach(),false);
+            workoutHistoryService.add(wh);
+
+
             return res.raw();
         });
     }
