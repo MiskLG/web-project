@@ -5,7 +5,8 @@ import controller.*;
 import java.io.File;
 import java.io.IOException;
 
-import static spark.Spark.*;
+import static spark.Spark.port;
+import static spark.Spark.staticFiles;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -19,6 +20,7 @@ public class Main {
         CoachController.init();
         WorkoutController.init();
         SubscriptionController.init();
+        PromoCodeController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

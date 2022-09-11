@@ -15,4 +15,5 @@ public class FileNames {
     public static String subscriptionsData = basePath + "subscriptions.json";
     public static String workoutHistoryData = basePath + "workout_histories.json";
     public static String workoutData = basePath + "workouts.json";
+    public static String promoCodesData = basePath + "promo_codes.json";
 }
