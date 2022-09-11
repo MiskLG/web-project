@@ -11,6 +11,7 @@ const AddWorkouts = {template: '<add-workouts></add-workouts>'}
 const FacilityOverview = {template: '<facility-overview></facility-overview>'}
 const EditWorkout = {template: '<edit-workout></edit-workout>'}
 const Workouts = {template: '<workouts></workouts>'}
+const Subscriptions = {template: '<subscriptions></subscriptions>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -28,6 +29,7 @@ const router = new VueRouter({
 		{ path: '/facility-overview', component: FacilityOverview},
 		{ path: '/edit-workout/:id', component: EditWorkout},
 		{ path: '/workouts', component: Workouts},
+		{ path: '/subscriptions', component: Subscriptions},
 	  ]
 });
 

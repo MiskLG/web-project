@@ -12,8 +12,7 @@ import service.UserService;
 import java.util.Calendar;
 import java.util.Date;
 
-import static spark.Spark.path;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class BuyerController {
 
@@ -25,6 +24,7 @@ public class BuyerController {
     public static void init() {
         path(commonPath, () -> {
             register();
+            getSubscription();
         });
     }
 
@@ -60,6 +60,17 @@ public class BuyerController {
             UserInfoDTO info = new UserInfoDTO(buyer.getUsername(),buyer.getUserType().toString());
             req.session().attribute("user", info);
             return g.toJson(info);
+        });
+    }
+    public static void getSubscription() {
+        get("/getSubscription", (req, res) -> {
+            res.type("application/json");
+            Buyer buyer = buyerService.getById(req.queryParams("id"));
+            if(buyer.getSubscriptionId() == null) {
+                res.status(204);
+                return res.raw();
+            }
+            return g.toJson(buyer.getSubscriptionId());
         });
     }
 }

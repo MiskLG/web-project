@@ -1,0 +1,21 @@
+[
+    {
+        "Id" : "weekly1",
+        "type" : "WEEKLY",
+        "price" : 3000,
+        "numberOfAppointments" : 5
+    },
+    {
+        "Id" : "monthly1",
+        "type" : "MONTHLY",
+        "price" : 8000,
+        "numberOfAppointments" : 20
+    },
+    {
+        "Id" : "annual1",
+        "type" : "ANNUAL",
+        "price" : 50000,
+        "numberOfAppointments" : 240
+    }
+
+]

@@ -99,7 +99,7 @@ Vue.component("home", {
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">
 								<li><a class="dropdown-item" @click="changePage('edit-profile')" href="#edit-profile">Edit Profile</a></li>
-								<li><a v-if="user.type=='BUYER'" @click="changePage('subscription')" class="dropdown-item" href="#subscription" >Subscription</a></li>
+								<li><a v-if="user.type=='BUYER'" @click="changePage('subscriptions')" class="dropdown-item" href="#subscriptions" >Subscription</a></li>
 								<li><a class="dropdown-item" @click="logout">Logout</a></li>
 							</ul>
 						</div>

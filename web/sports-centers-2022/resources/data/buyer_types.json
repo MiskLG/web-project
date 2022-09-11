@@ -7,16 +7,16 @@
     {
         "name": "Silver",
         "discount" : 5,
-        "pointsNeeded" : 2500
+        "pointsNeeded" : 600
     },
     {
         "name": "Gold",
         "discount" : 10,
-        "pointsNeeded" : 5000
+        "pointsNeeded" : 2000
     },
     {
         "name": "Platinum",
-        "discount" : 20,
+        "discount" : 25,
         "pointsNeeded" : 10000
     }
 

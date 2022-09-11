@@ -6,6 +6,7 @@ import dto.Credentials;
 import repository.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class UserService {
@@ -223,6 +224,11 @@ public class UserService {
     private User findBuyer(UserLoginInfo info) {
         for (Buyer buyer: buyerRepository.getAll()) {
             if (info.getUsername().equalsIgnoreCase(buyer.getUsername()) && info.getPassword().equals(buyer.getPassword())) {
+                if(buyer.getSubscriptionId() != null) {
+                    if(buyer.getSubscriptionId().getDateOfExparation().compareTo(Calendar.getInstance().getTime()) < 0) {
+                        buyer.getSubscriptionId().setStatus(Subscription.StatusType.INACTIVE);
+                    }
+                }
                 return buyer;
             }
         }
