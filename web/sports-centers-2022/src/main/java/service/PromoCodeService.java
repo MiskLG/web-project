@@ -4,6 +4,7 @@ import beans.PromoCode;
 import repository.PromoCodeRepository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PromoCodeService {
     private PromoCodeRepository repository;
@@ -29,13 +30,18 @@ public class PromoCodeService {
     }
 
     public PromoCode getById(String id) {
-        ArrayList<PromoCode> codes = new ArrayList<>();
+        ArrayList<PromoCode> codes = this.getAll();
         if (codes == null) {
             return null;
         }
         for (PromoCode code: codes) {
             if (code.getId().equalsIgnoreCase(id)) {
-                return code;
+                if (Calendar.getInstance().getTime().compareTo(code.getStartTime()) > 0 && Calendar.getInstance().getTime().compareTo(code.getEndTime()) < 0) {
+                    return code;
+                }
+                else {
+                    break;
+                }
             }
         }
         return null;

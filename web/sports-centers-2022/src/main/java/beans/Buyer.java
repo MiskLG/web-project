@@ -6,11 +6,11 @@ import java.util.Date;
 public class Buyer extends User{
 	private Subscription subscriptionId;
 	private ArrayList<SportsFacility> visitedFacilities;
-	private int points;
+	private double points;
 	private BuyerType buyerType;
 		
 	public Buyer(String username, String name, String lastname, String password, GenderType gender, Date dateOfBirth,
-			Subscription subscriptionId, ArrayList<SportsFacility> visitedFacilities, int points,
+			Subscription subscriptionId, ArrayList<SportsFacility> visitedFacilities, double points,
 			BuyerType buyerType) {
 		super(username, name, lastname, password, gender, dateOfBirth, UserType.BUYER);
 		this.subscriptionId = subscriptionId;
@@ -29,10 +29,10 @@ public class Buyer extends User{
 	public void setSubscriptionId(Subscription subscriptionId) {
 		this.subscriptionId = subscriptionId;
 	}
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
-	public void setPoints(int points) {
+	public void setPoints(double points) {
 		this.points = points;
 	}
 	public BuyerType getBuyerType() {

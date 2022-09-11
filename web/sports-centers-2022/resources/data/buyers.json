@@ -1,10 +1,19 @@
 [
   {
-    "points": 0,
+    "subscriptionId": {
+      "Id": "weekly1",
+      "dateOfPaying": "Sep 11, 2022, 12:00:00 AM",
+      "dateOfExparation": "Sep 18, 2022, 12:00:00 AM",
+      "price": 2100.0,
+      "status": "ACTIVE",
+      "numberOfAppointments": 5,
+      "type": "WEEKLY"
+    },
+    "points": 0.0,
     "buyerType": {
       "name": "Bronze",
       "discount": 0.0,
-      "pointsNeeded": 0
+      "pointsNeeded": 0.0
     },
     "username": "buyer1",
     "name": "Mira",
@@ -15,11 +24,11 @@
     "userType": "BUYER"
   },
   {
-    "points": 0,
+    "points": 0.0,
     "buyerType": {
       "name": "Bronze",
       "discount": 0.0,
-      "pointsNeeded": 0
+      "pointsNeeded": 0.0
     },
     "username": "buyer2",
     "name": "Nema",
@@ -30,11 +39,11 @@
     "userType": "BUYER"
   },
   {
-    "points": 0,
+    "points": 0.0,
     "buyerType": {
       "name": "Bronze",
       "discount": 0.0,
-      "pointsNeeded": 0
+      "pointsNeeded": 0.0
     },
     "username": "buyer3",
     "name": "Luka",

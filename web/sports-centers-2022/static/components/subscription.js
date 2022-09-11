@@ -1,11 +1,16 @@
-Vue.component("subscriptions", {
+Vue.component("subscription", {
 	data: function () {
 	    return {
 			user: {username:"", type:""},
 	    	credentials: {username: "", password: ""},
 
-			subscriptions: "",
-            currentSubscription: ""
+            discount: "",
+            discountCode: "",
+            code: "",
+            originalPrice: "",
+            sub: "",
+            subscriptionId: "",
+            wrapper: {sub:"", username:""},
 	    }
 	},
 	    template: `
@@ -106,71 +111,74 @@ Vue.component("subscriptions", {
 			</nav>
 			<div class="row m-4 bg-secondary rounded">
                 <div class="row m-2 justify-content-center text-light">
-                    <label class="fs-2 justify-content-center d-flex"> Current subscription</label>   
+                    <label class="fs-2 justify-content-center d-flex">Subscription</label>   
                 </div>
-                <div class="row m-2 justify-content-center text-light" v-if="currentSubscription.length === 0">
-                    <label class="fs-2 justify-content-center d-flex"> No current subscription</label>
-                </div>
-                <div class="row m-2 justify-content-center text-light" v-if="currentSubscription.length !== 0">
-                    <div class="row fs-4 mx-4 my-1 bg-secondary rounded">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-5 text-light">Status:</label>
-                            </div>
-                            <div class="col-md-8">
-                            <span class="mx-1 text-info">{{currentSubscription.status}}</span> 
-                            </div>
+                <div class="row fs-4 mx-4 my-1 bg-secondary rounded">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-5 text-light">Type:</label>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-5 text-light">Type:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <span class="mx-1 text-info">{{currentSubscription.type}}</span> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-5 text-light">Number of appointments:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <span class="mx-1 text-info">{{currentSubscription.numberOfAppointments}}</span> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-4 text-light">Duration from:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <span class="mx-1 text-info">{{currentSubscription.date1}}</span> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="fs-5 text-light">Duration to:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <span class="mx-1 text-info">{{currentSubscription.date2}}</span> 
-                            </div>
+                        <div class="col-md-8">
+                            <span class="mx-1 text-info">{{sub.type}}</span> 
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-5 text-light">Number of appointments:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="mx-1 text-info">{{sub.numberOfAppointments}}</span> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-4 text-light">Duration from:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="mx-1 text-info">{{sub.date1}}</span> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-5 text-light">Duration to:</label>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="mx-1 text-info">{{sub.date2}}</span> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-5 text-light">Price:</label>
+                        </div>
+                        <div class="col-md-8">
+                        <span class="mx-1 text-info">{{sub.price}}</span> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="fs-5 text-light">Promo code:</label>
+                        </div>
+                        <div class="col-md-8 d-flex">
+                            <div class="col-md-5">
+                                <input v-model="code" type="text" class="form-control" placeholder="promo code"/>
+                            </div>
+                            <div class="col-md-5">
+                                <button class="ms-2 btn btn-primary col-md-6" type="button" @click="getCodeDiscount">
+                                    Enter Code
+                                </button>
+                            </div>
+                           
+                        </div>
+                    </div>
+    
                 </div>
-            </div>
-            <div class="row m-4 bg-secondary rounded mt-6">
-                <div class="row m-2 justify-content-center text-light">
-                    <label class="fs-2 justify-content-center d-flex"> Subscription offers</label>   
-                </div>
-            </div>
-            <div class="row mx-4 my-1 bg-secondary rounded" v-for="s in subscriptions">
-                <label class="fs-5 text-light col-md-3">Type: <span class="mx-1 text-info">{{s.type}}</span> </label>
-                <label class="fs-5 text-light col-md-3">Price: <span class="mx-1 text-info">{{s.price}}</span> </label>
-                <label class="fs-5 text-light col-md-3">Number of Appointments: <span class="mx-1 text-info">{{s.numberOfAppointments}}</span> </label>
-                <div class="col-md-3">
-                    <button class="btn btn-primary" type="button" @click="subscribe(s.id)">
+                <div class="row">
+                    <button class="ms-2 btn btn-primary" type="button" @click="subscribe()">
                         Subscribe
                     </button>
                 </div>
             </div>
+           
 		</div>
     	`,
     methods : {
@@ -202,7 +210,7 @@ Vue.component("subscriptions", {
 					then(response => {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
-                            this.getUserSub();
+                            getUserSub();
 						}
                         else{
                             router.push("/");
@@ -220,36 +228,66 @@ Vue.component("subscriptions", {
 			},
 			
 
-			getSubs : function() {
-                axios.get("/rest/subscriptions/getAll")
-                    .then(response => {
-                        this.subscriptions = response.data;
-                    })
-                    .catch(error => {
-
-                    })
-            },
-            getUserSub : function() {
-                axios.get("rest/buyer/getSubscription", {params: {id: this.user.username}})
+            getSubscription : function() {
+                axios.get("/rest/subscriptions/getTemplate", {params: {id: this.subscriptionId}})
                     .then(response => {
                         if(response.status == 204) {
 
                         }
                         else {
-                            this.currentSubscription = response.data;
+                            this.sub = response.data;
+                            this.originalPrice = this.sub.price;
+                            this.getUserDiscount();
                         }
                     })
                     .catch(error => {
 
                     })
             },
-            subscribe : function(id) {
-                router.push(`/subscriptions/${id}`);
+            getUserDiscount : function() {
+                axios.get("/rest/buyer/getDiscount", {params: {id: this.user.username}})
+                    .then(response => {
+                        this.discount = response.data;
+                        if(this.discount != 0) {
+                            this.sub.price = this.originalPrice - this.originalPrice * this.discount / 100.;
+                        }
+                        
+                        this.originalPrice = this.sub.price;
+                    })
+                    .catch( error => {
+                    });
+            },
+            getCodeDiscount : function() {
+                axios.get("/rest/promocodes/getById", {params: {id: this.code.trim()}})
+                    .then(response => {
+                        if (response.status == 204) {
+                            alert("Code is not valid");
+                            return;
+                        }
+                        this.discountCode = response.data;
+                        
+                        if(this.discountCode.discount != 0) {
+                            this.sub.price = this.originalPrice - this.originalPrice * this.discountCode.discount /100.;
+                        }
+                    })
+                    .catch( error => {
+                    });
+            },
+            subscribe : function() {
+                this.wrapper = {sub: this.sub, username: this.user.username};
+                axios.post("/rest/buyer/subscribe", this.wrapper)
+                    .then(response => {
+                        alert("Successfully subscribed");
+                        router.push("/");
+                    })
             }
+
 
     	},
     	mounted () {
 			this.getUser();
-			this.getSubs();
+			this.subscriptionId = this.$route.params.id;
+            this.getSubscription();
+
         }
 });

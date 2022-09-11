@@ -1,14 +1,14 @@
 package controller;
 
 import beans.Buyer;
+import beans.Subscription;
 import beans.User;
 import com.google.gson.Gson;
-import dto.UserRegisterDTO;
-import dto.Credentials;
-import dto.UserInfoDTO;
+import dto.*;
 import service.BuyerService;
 import service.UserService;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +25,8 @@ public class BuyerController {
         path(commonPath, () -> {
             register();
             getSubscription();
+            getDiscount();
+            subscribe();
         });
     }
 
@@ -70,7 +72,75 @@ public class BuyerController {
                 res.status(204);
                 return res.raw();
             }
-            return g.toJson(buyer.getSubscriptionId());
+            Subscription subscription = buyer.getSubscriptionId();
+            SubscriptionExpandedDTO dto = new SubscriptionExpandedDTO();
+            dto.setId(subscription.getId());
+            dto.setPrice(subscription.getPrice().toString());
+            dto.setNumberOfAppointments(Integer.toString(subscription.getNumberOfAppointments()));
+            dto.setType(subscription.getType().toString());
+            dto.setStatus(subscription.getStatus().toString());
+            LocalDate date = LocalDate.now();
+
+            dto.setDate1(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
+            switch (subscription.getType()) {
+                case WEEKLY -> {
+                    date = date.plusDays(7);
+                    dto.setDate2(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
+                }
+                case MONTHLY -> {
+                    date = date.plusMonths(1);
+                    dto.setDate2(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
+                }
+                case ANNUAL -> {
+                    date = date.plusYears(1);
+                    dto.setDate2(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
+                }
+            }
+
+            return g.toJson(dto);
+        });
+    }
+    public static void getDiscount() {
+        get("/getDiscount", (req, res) -> {
+            res.type("application/json");
+            Buyer buyer = buyerService.getById(req.queryParams("id"));
+            return g.toJson(buyer.getBuyerType().getDiscount());
+        });
+    }
+
+    public static void subscribe() {
+        post("/subscribe", (req, res) -> {
+            res.type("application/json");
+            String payload = req.body();
+            BuyerSubscribeDTO data = g.fromJson(payload, BuyerSubscribeDTO.class);
+
+            Buyer buyer = buyerService.getById(data.getUsername());
+
+            String[] data1 = data.getSub().getDate1().split("/");
+            String[] data2 = data.getSub().getDate2().split("/");
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Integer.parseInt(data1[2]), Integer.parseInt(data1[1])-1, Integer.parseInt(data1[0]), 0, 0, 0);
+            Date date1 = cal.getTime();
+            cal.set(Integer.parseInt(data2[2]), Integer.parseInt(data2[1])-1, Integer.parseInt(data2[0]), 0, 0, 0);
+            Date date2 = cal.getTime();
+
+            Subscription.SubscriptionType type;
+            if(data.getSub().getType().equalsIgnoreCase("weekly")) {
+                type = Subscription.SubscriptionType.WEEKLY;
+            }
+            else if(data.getSub().getType().equalsIgnoreCase("monthly")) {
+                type = Subscription.SubscriptionType.MONTHLY;
+            }
+            else {
+                type = Subscription.SubscriptionType.ANNUAL;
+            }
+
+            Subscription.StatusType status = Subscription.StatusType.ACTIVE;
+
+            Subscription subs = new Subscription(data.getSub().getId(),date1, date2,Double.parseDouble(data.getSub().getPrice()), status,type, Integer.parseInt(data.getSub().getNumberOfAppointments()));
+            buyerService.addSubscription(buyer, subs);
+            return res.raw();
         });
     }
 }

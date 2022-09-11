@@ -50,7 +50,12 @@ public class PromoCodeController {
 
     public static void getById() {
         get("/getById", (req, res) -> {
-            return g.toJson(service.getById(req.queryParams("id")));
+            PromoCode code = service.getById(req.queryParams("id"));
+            if(code == null) {
+                res.status(204);
+                return res.raw();
+            }
+            return g.toJson(code);
         });
     }
 }

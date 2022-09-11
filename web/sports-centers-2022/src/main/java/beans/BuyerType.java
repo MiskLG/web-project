@@ -3,7 +3,7 @@ package beans;
 public class BuyerType {
 	private String name;
 	private Double discount;
-	private int pointsNeeded;
+	private double pointsNeeded;
 		
 	public BuyerType(String name, Double discount, int pointsNeeded) {
 		super();
@@ -24,10 +24,10 @@ public class BuyerType {
 	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
-	public int getPointsNeeded() {
+	public double getPointsNeeded() {
 		return pointsNeeded;
 	}
-	public void setPointsNeeded(int pointsNeeded) {
+	public void setPointsNeeded(double pointsNeeded) {
 		this.pointsNeeded = pointsNeeded;
 	}
 	

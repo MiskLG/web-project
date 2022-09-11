@@ -189,6 +189,9 @@ Vue.component("addcodes", {
 								router.push("/");
 							}
 						}
+                        else{
+                            router.push("/");
+                        }
 						
 					}).catch(error => {
                         

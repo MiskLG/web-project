@@ -33,11 +33,9 @@ public class BuyerTypeRepository {
         return this.buyerTypes;
     }
 
-    public BuyerType getBuyerType(int points) {
+    public BuyerType getBuyerType(double points) {
         BuyerType btToReturn = null;
         for (BuyerType bt : buyerTypes) {
-            System.out.println(bt.getName());
-            System.out.println(bt.getPointsNeeded());
             if(bt.getPointsNeeded() <= points) {
                 btToReturn = bt;
             }
