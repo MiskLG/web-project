@@ -19,12 +19,16 @@ public class BuyerRepository {
     private ArrayList<Buyer> buyers;
 
     private static BuyerRepository repo = null;
+    private SubscriptionRepository subRepo = null;
+    private BuyerTypeRepository buyerTRepo = null;
 
     private BuyerRepository() {};
 
     public static BuyerRepository init() {
         if(repo == null) {
             repo = new BuyerRepository();
+            repo.subRepo = SubscriptionRepository.init();
+            repo.buyerTRepo = BuyerTypeRepository.init();
             repo.buyers = new ArrayList<Buyer>();
             repo.read();
             repo.checkSubscriptions();
@@ -37,6 +41,18 @@ public class BuyerRepository {
             if(b.getSubscriptionId() != null) {
                 if (Calendar.getInstance().getTime().compareTo(b.getSubscriptionId().getDateOfExparation()) > 0) {
                     b.getSubscriptionId().setStatus(Subscription.StatusType.INACTIVE);
+                    for (Subscription sub: subRepo.getAll()) {
+                        if (b.getSubscriptionId().getNumberOfAppointments()  < sub.getNumberOfAppointments()/3) {
+                            b.setPoints(b.getPoints() + b.getSubscriptionId().getPrice()/1000 * sub.getNumberOfAppointments());
+                        }
+                        else {
+                            b.setPoints(b.getPoints() + b.getSubscriptionId().getPrice()/1000 * 1.33* b.getSubscriptionId().getNumberOfAppointments());
+                        }
+                        if(b.getPoints() < 0) {
+                            b.setPoints(0);
+                        }
+                        b.setBuyerType(buyerTRepo.getBuyerType(b.getPoints()));
+                    }
                     update(b);
                 }
             }
