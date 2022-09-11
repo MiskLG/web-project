@@ -29,7 +29,7 @@ public class WorkoutHistoryRepository {
     }
     public void checkDates() {
         for (WorkoutHistory wh: this.workoutHistories) {
-            if (Calendar.getInstance().getTime().compareTo(wh.getDateOfRegistration()) < 0 ) {
+            if (Calendar.getInstance().getTime().compareTo(wh.getDateOfRegistration()) > 0 ) {
                 wh.setStatus(true);
             }
         }

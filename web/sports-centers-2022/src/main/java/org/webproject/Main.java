@@ -21,6 +21,7 @@ public class Main {
         WorkoutController.init();
         SubscriptionController.init();
         PromoCodeController.init();
+        WorkoutHistoryController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

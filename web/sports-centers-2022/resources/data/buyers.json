@@ -6,7 +6,7 @@
       "dateOfExparation": "Sep 11, 2023, 12:00:00 AM",
       "price": 50000.0,
       "status": "ACTIVE",
-      "numberOfAppointments": 240,
+      "numberOfAppointments": 239,
       "type": "ANNUAL"
     },
     "visitedFacilities": [],
