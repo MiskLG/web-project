@@ -26,6 +26,7 @@ public class BuyerController {
             getSubscription();
             getDiscount();
             subscribe();
+            schedule();
         });
     }
 
@@ -122,12 +123,15 @@ public class BuyerController {
 
             Subscription.StatusType status = Subscription.StatusType.ACTIVE;
 
-            Subscription subs = new Subscription(data.getSub().getId(),date1, date2,Double.parseDouble(data.getSub().getPrice()), status,type, Integer.parseInt(data.getSub().getNumberOfAppointments()));
-            buyerService.addSubscription(buyer, subs);
-
             if(!data.getDiscountCode().equals("")) {
                 promoCodeService.use(data.getDiscountCode());
             }
+
+
+            Subscription subs = new Subscription(data.getSub().getId(),date1, date2,Double.parseDouble(data.getSub().getPrice()), status,type, Integer.parseInt(data.getSub().getNumberOfAppointments()));
+            buyerService.addSubscription(buyer, subs);
+
+
 
             return res.raw();
         });
@@ -141,16 +145,20 @@ public class BuyerController {
             Buyer buyer = buyerService.getById(data.getUserId());
             Workout workout = workoutService.getById(data.getWorkoutId());
 
-            String[] data1 = data.getDate().split("/");
+            String[] data1 = data.getDate().split("-");
+
+            System.out.println(data.getDate());
 
             Calendar cal = Calendar.getInstance();
             cal.set(Integer.parseInt(data1[2]), Integer.parseInt(data1[1])-1, Integer.parseInt(data1[0]), 0, 0, 0);
             Date date1 = cal.getTime();
 
+            if (buyerService.useAppointment(buyer) == false) {
+                res.status(400);
+                return res.raw();
+            }
             WorkoutHistory wh = new WorkoutHistory(date1,workout,buyer,workout.getCoach(),false);
             workoutHistoryService.add(wh);
-
-
             return res.raw();
         });
     }

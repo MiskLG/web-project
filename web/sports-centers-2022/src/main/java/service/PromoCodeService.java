@@ -36,6 +36,9 @@ public class PromoCodeService {
         }
         for (PromoCode code: codes) {
             if (code.getId().equalsIgnoreCase(id)) {
+                if(code.getNumberOfUsage() <= 0) {
+                    break;
+                }
                 if (Calendar.getInstance().getTime().compareTo(code.getStartTime()) > 0 && Calendar.getInstance().getTime().compareTo(code.getEndTime()) < 0) {
                     return code;
                 }

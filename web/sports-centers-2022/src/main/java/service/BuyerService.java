@@ -28,7 +28,13 @@ public class BuyerService {
     }
 
     public void addSubscription(Buyer buyer, Subscription subscription) {
+        if(buyer.getSubscriptionId() != null) {
+            // LEFT FOR TESTING
+            buyer.setPoints(buyer.getPoints() + buyer.getSubscriptionId().getPrice()/1000 * 100);
+        }
+        System.out.println(buyer.getPoints());
         buyer.setSubscriptionId(subscription);
+        buyer.setBuyerType(buyerTypeRepository.getBuyerType(buyer.getPoints()));
         buyerRepository.update(buyer);
     }
     public void add(Buyer buyer) {
@@ -37,6 +43,15 @@ public class BuyerService {
             buyerRepository.add(buyer);
             userInfoRepository.generateAndAddUserInfo(buyer);
         }
+    }
+
+    public boolean useAppointment(Buyer buyer) {
+        if (buyer.getSubscriptionId().getNumberOfAppointments() > 0) {
+            buyer.getSubscriptionId().setNumberOfAppointments(buyer.getSubscriptionId().getNumberOfAppointments() - 1);
+            buyerRepository.update(buyer);
+            return true;
+        }
+        return false;
     }
 
     public Buyer getById(String id) {

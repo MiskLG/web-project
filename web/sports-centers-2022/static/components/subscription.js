@@ -266,7 +266,7 @@ Vue.component("subscription", {
                             return;
                         }
                         this.discountCode = response.data;
-                        this.discountCode2 = this.discountCode;
+                        this.discountCode2 = this.code;
                         
                         if(this.discountCode.discount != 0) {
                             this.sub.price = this.originalPrice - this.originalPrice * this.discountCode.discount /100.;

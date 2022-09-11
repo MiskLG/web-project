@@ -1,23 +1,24 @@
 [
   {
     "subscriptionId": {
-      "Id": "weekly1",
+      "Id": "annual1",
       "dateOfPaying": "Sep 11, 2022, 12:00:00 AM",
-      "dateOfExparation": "Sep 18, 2022, 12:00:00 AM",
-      "price": 2100.0,
+      "dateOfExparation": "Sep 11, 2023, 12:00:00 AM",
+      "price": 50000.0,
       "status": "ACTIVE",
-      "numberOfAppointments": 5,
-      "type": "WEEKLY"
+      "numberOfAppointments": 240,
+      "type": "ANNUAL"
     },
-    "points": 0.0,
+    "visitedFacilities": [],
+    "points": 10710.0,
     "buyerType": {
-      "name": "Bronze",
-      "discount": 0.0,
-      "pointsNeeded": 0.0
+      "name": "Platinum",
+      "discount": 25.0,
+      "pointsNeeded": 10000.0
     },
     "username": "buyer1",
     "name": "Mira",
-    "lastname": "Miric",
+    "lastname": "Miricc",
     "password": "123",
     "gender": "FEMALE",
     "dateOfBirth": "Sep 16, 1998, 12:00:00 AM",
