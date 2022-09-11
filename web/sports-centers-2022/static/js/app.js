@@ -14,6 +14,7 @@ const Workouts = {template: '<workouts></workouts>'}
 const Subscriptions = {template: '<subscriptions></subscriptions>'}
 const PromoCodes = {template: '<addcodes></addcodes>'}
 const Subscription = {template: '<subscription></subscription>'}
+const Schedule = {template: '<schedule></schedule>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -34,6 +35,7 @@ const router = new VueRouter({
 		{ path: '/subscriptions', component: Subscriptions},
 		{ path: '/promo-codes', component: PromoCodes},
 		{ path: '/subscriptions/:id', component: Subscription},
+		{ path: '/schedule/:id', component: Schedule},
 	  ]
 });
 

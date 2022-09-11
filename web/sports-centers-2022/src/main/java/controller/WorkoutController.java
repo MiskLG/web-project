@@ -36,6 +36,7 @@ public class WorkoutController {
             getById();
             update();
             getAll();
+            getByIdExpended();
         });
     }
 
@@ -149,4 +150,26 @@ public class WorkoutController {
         });
     }
 
+    public static void getByIdExpended() {
+        get("/getByIdExpended", (req, res) -> {
+            res.type("application/json");
+            Workout workout = workoutService.getById(req.queryParams("id"));
+
+            if (workout == null) {
+                res.status(204);
+                return res.raw();
+            }
+
+            InputStream iSteamReader = new FileInputStream(workout.getPhoto());
+            byte[] imageBytes = IOUtils.toByteArray(iSteamReader);
+            String base64 = Base64.getEncoder().encodeToString(imageBytes);
+            base64 = "data:image/png;base64," + base64;
+            WorkoutDTO w = new WorkoutDTO(workout.getId(), workout.getName(), workout.getType(), workout.getDuration().toString(),
+                    workout.getCoach().getUsername(), workout.getCoach().getName(), workout.getCoach().getLastname(),
+                    workout.getDescription(), base64);
+            WorkoutExpandedDTO w1 = new WorkoutExpandedDTO(workout.get__facility().get_name(), w);
+
+            return g.toJson(w1);
+        });
+    }
 }
