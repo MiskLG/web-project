@@ -1,6 +1,7 @@
 package repository;
 
 import beans.Buyer;
+import beans.Subscription;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +12,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class BuyerRepository {
 
@@ -25,8 +27,20 @@ public class BuyerRepository {
             repo = new BuyerRepository();
             repo.buyers = new ArrayList<Buyer>();
             repo.read();
+            repo.checkSubscriptions();
         }
         return repo;
+    }
+
+    private void checkSubscriptions() {
+        for (Buyer b : this.buyers) {
+            if(b.getSubscriptionId() != null) {
+                if (Calendar.getInstance().getTime().compareTo(b.getSubscriptionId().getDateOfExparation()) > 0) {
+                    b.getSubscriptionId().setStatus(Subscription.StatusType.INACTIVE);
+                    update(b);
+                }
+            }
+        }
     }
 
     public ArrayList<Buyer> getAll() {
@@ -46,6 +60,7 @@ public class BuyerRepository {
                 buy.setLastname(buyer.getLastname());
                 buy.setGender(buyer.getGender());
                 buy.setDateOfBirth(buyer.getDateOfBirth());
+                buy.setSubscriptionId(buyer.getSubscriptionId());
                 write();
                 break;
             }

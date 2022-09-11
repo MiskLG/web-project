@@ -8,7 +8,6 @@ import dto.*;
 import service.BuyerService;
 import service.UserService;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -79,23 +78,8 @@ public class BuyerController {
             dto.setNumberOfAppointments(Integer.toString(subscription.getNumberOfAppointments()));
             dto.setType(subscription.getType().toString());
             dto.setStatus(subscription.getStatus().toString());
-            LocalDate date = LocalDate.now();
-
-            dto.setDate1(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
-            switch (subscription.getType()) {
-                case WEEKLY -> {
-                    date = date.plusDays(7);
-                    dto.setDate2(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
-                }
-                case MONTHLY -> {
-                    date = date.plusMonths(1);
-                    dto.setDate2(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
-                }
-                case ANNUAL -> {
-                    date = date.plusYears(1);
-                    dto.setDate2(date.getDayOfMonth()+ "/" + date.getMonthValue() + "/" + date.getYear());
-                }
-            }
+            dto.setDate1(subscription.getDateOfPaying().toString());
+            dto.setDate2(subscription.getDateOfExparation().toString());
 
             return g.toJson(dto);
         });
