@@ -3,6 +3,8 @@ package beans;
 import java.util.Date;
 
 public class WorkoutHistory {
+
+	private String id;
 	private Date dateOfRegistration;
 	private Workout workout;
 	private Buyer buyer;
@@ -56,4 +58,12 @@ public class WorkoutHistory {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 }

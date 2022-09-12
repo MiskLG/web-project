@@ -70,4 +70,10 @@ public class BuyerService {
         }
         return null;
     }
+
+    public void giveAppointment(String username) {
+        Buyer buyer = this.getById(username);
+        buyer.getSubscriptionId().setNumberOfAppointments(buyer.getSubscriptionId().getNumberOfAppointments() + 1);
+        buyerRepository.update(buyer);
+    }
 }

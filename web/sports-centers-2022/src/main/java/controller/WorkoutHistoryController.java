@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import dto.WorkoutDTO;
 import dto.WorkoutHistoryDTO;
 import service.WorkoutHistoryService;
+import spark.Spark;
 import spark.utils.IOUtils;
 
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ public class WorkoutHistoryController {
         path(commonPath, () -> {
             getPast();
             getFuture();
+            delete();
         });
     }
     public static void getPast() {
@@ -66,14 +68,14 @@ public class WorkoutHistoryController {
                 WorkoutDTO w = new WorkoutDTO(wh.getWorkout().getId(), wh.getWorkout().getName(), wh.getWorkout().getType(), wh.getWorkout().getDuration().toString(),
                         wh.getCoach().getUsername(), wh.getCoach().getName(), wh.getCoach().getLastname(),
                         wh.getWorkout().getDescription(), base64);
-                WorkoutHistoryDTO w1 = new WorkoutHistoryDTO(wh.getWorkout().get__facility().get_name(), w, date);
+                WorkoutHistoryDTO w1 = new WorkoutHistoryDTO(wh.getWorkout().get__facility().get_name(), w, date, wh.getBuyer().getName()+ " " + wh.getBuyer().getLastname() , wh.getId());
                 wls.add(w1);
             }
             return g.toJson(wls);
         });
     }
     public static void getFuture() {
-        get("/getFuture", (req, res) -> {
+        Spark.get("/getFuture", (req, res) -> {
             res.type("application/json");
 
             ArrayList<WorkoutHistory> whs;
@@ -108,10 +110,18 @@ public class WorkoutHistoryController {
                 WorkoutDTO w = new WorkoutDTO(wh.getWorkout().getId(), wh.getWorkout().getName(), wh.getWorkout().getType(), wh.getWorkout().getDuration().toString(),
                         wh.getCoach().getUsername(), wh.getCoach().getName(), wh.getCoach().getLastname(),
                         wh.getWorkout().getDescription(), base64);
-                WorkoutHistoryDTO w1 = new WorkoutHistoryDTO(wh.getWorkout().get__facility().get_name(), w, date);
+                WorkoutHistoryDTO w1 = new WorkoutHistoryDTO(wh.getWorkout().get__facility().get_name(), w, date, wh.getBuyer().getName()+ " " + wh.getBuyer().getLastname(), wh.getId());
                 wls.add(w1);
             }
             return g.toJson(wls);
+        });
+    }
+
+    public static void delete() {
+        Spark.delete("/delete", (req, res) -> {
+            String id = req.queryParams("id");
+            workoutHistoryService.delete(id);
+            return res.raw();
         });
     }
 

@@ -2,17 +2,24 @@ package service;
 
 import beans.WorkoutHistory;
 import repository.WorkoutHistoryRepository;
+import util.IdGenerator;
 
 import java.util.ArrayList;
 
 public class WorkoutHistoryService {
     private WorkoutHistoryRepository workoutHistoryRepository;
+    private BuyerService buyerService;
 
     public WorkoutHistoryService() {
         workoutHistoryRepository = WorkoutHistoryRepository.init();
     }
 
     public void add(WorkoutHistory workout) {
+        String id = "";
+        do {
+            id = IdGenerator.generate();
+        }while (this.getById(id) != null);
+        workout.setId(id);
         workoutHistoryRepository.add(workout);
     }
 
@@ -20,6 +27,12 @@ public class WorkoutHistoryService {
         return workoutHistoryRepository.getAll();
     }
 
+    public void delete(String id) {
+        buyerService = new BuyerService();
+        buyerService.giveAppointment(this.getById(id).getBuyer().getUsername());
+        workoutHistoryRepository.remove(id);
+        return;
+    }
     public ArrayList<WorkoutHistory> getByBuyer(String buyerId) {
         ArrayList<WorkoutHistory> wh = new ArrayList<>();
         for (WorkoutHistory workout: workoutHistoryRepository.getAll()) {
@@ -63,6 +76,15 @@ public class WorkoutHistoryService {
             }
         }
         return wh;
+    }
+
+    public WorkoutHistory getById(String id) {
+        for (WorkoutHistory workout: workoutHistoryRepository.getAll()) {
+           if(workout.getId().equals(id)) {
+               return workout;
+           }
+        }
+        return null;
     }
 
 }

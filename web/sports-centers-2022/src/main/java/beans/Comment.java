@@ -3,18 +3,27 @@ package beans;
 public class Comment {
 	
 	enum RatingScale{ONE,TWO,THREE,FOUR,FIVE;}
-	
+
+	private boolean approved;
 	private Buyer buyer;
 	private SportsFacility facility;
 	private String text;
 	private RatingScale rating;
-	
-	public Comment(Buyer buyer, SportsFacility facility, String text, RatingScale rating) {
-		super();
+
+	public Comment(boolean approved, Buyer buyer, SportsFacility facility, String text, RatingScale rating) {
+		this.approved = approved;
 		this.buyer = buyer;
 		this.facility = facility;
 		this.text = text;
 		this.rating = rating;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	public Buyer getBuyer() {
@@ -48,6 +57,4 @@ public class Comment {
 	public void setRating(RatingScale rating) {
 		this.rating = rating;
 	}
-	
-	
 }

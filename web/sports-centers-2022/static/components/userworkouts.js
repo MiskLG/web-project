@@ -129,8 +129,11 @@ Vue.component("user-workouts", {
                                     <div class="row my-2">
                                         <label class="text-light">Duration: <span class="text-info mx-2">{{w.base.duration}}min </span></label>
                                     </div>
-                                    <div class="row my-2">
-                                        <label class="text-light">Coach: <span class="text-info mx-2">{{w.base.coachUsername}} - {{w.base.coachName}} {{w.base.coachLastname}}</span></label>
+                                    <div class="row my-2" v-if="user.type=='BUYER'">
+                                        <label class="text-light">Coach: <span class="text-info mx-2">{{w.base.coachName}} {{w.base.coachLastname}}</span></label>
+                                    </div>
+                                    <div class="row my-2" v-if="user.type=='COACH'">
+                                        <label class="text-light">Buyer: <span class="text-info mx-2">{{w.buyerUsername}}</span></label>
                                     </div>
                                     <div class="row my-2">
                                         <label class="text-light">Description: <span class="text-info mx-2">{{w.base.description}}</span></label>
@@ -161,14 +164,22 @@ Vue.component("user-workouts", {
                                     <div class="row my-2">
                                         <label class="text-light">Duration: <span class="text-info mx-2">{{w.base.duration}}min </span></label>
                                     </div>
-                                    <div class="row my-2">
+                                    <div class="row my-2" v-if="user.type=='BUYER'">
                                         <label class="text-light">Coach: <span class="text-info mx-2">{{w.base.coachName}} {{w.base.coachLastname}}</span></label>
+                                    </div>
+                                    <div class="row my-2" v-if="user.type=='COACH'">
+                                        <label class="text-light">Buyer: <span class="text-info mx-2">{{w.buyerUsername}}</span></label>
                                     </div>
                                     <div class="row my-2">
                                         <label class="text-light">Description: <span class="text-info mx-2">{{w.base.description}}</span></label>
                                     </div>
                                     <div class="row my-2">
                                         <label class="text-light">Date: <span class="text-info mx-2">{{w.date}}</span></label>
+                                    </div>
+                                    <div v-if="user.type=='COACH' && w.base.type == 'PERSONAL' ">
+                                        <button @click="cancelAppointment(w.id)" type="button" class="btn btn-primary">
+                                            Cancel appointment
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -251,6 +262,16 @@ Vue.component("user-workouts", {
                         router.push("/");
                     })
             },
+            cancelAppointment : function(id) {
+                axios.delete("/rest/workoutHistory/delete", {params: {id: id}})
+                    .then(response => {
+                        alert("Sucessfully canceled an appointment");
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        alert("Error has occured, please try again later");
+                    })
+            }
 
     	},
     	mounted () {

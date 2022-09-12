@@ -1,6 +1,7 @@
 [
   {
-    "dateOfRegistration": "Mar 15, 2027, 12:00:00 AM",
+    "id": "4CgCqEST",
+    "dateOfRegistration": "Mar 15, 2035, 12:00:00 AM",
     "workout": {
       "id": "04DmhIdz",
       "name": "Push Day - 17:30",
@@ -32,7 +33,7 @@
         "dateOfExparation": "Sep 11, 2023, 12:00:00 AM",
         "price": 50000.0,
         "status": "ACTIVE",
-        "numberOfAppointments": 239,
+        "numberOfAppointments": 238,
         "type": "ANNUAL"
       },
       "visitedFacilities": [],

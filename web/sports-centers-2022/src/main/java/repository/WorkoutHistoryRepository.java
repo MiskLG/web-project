@@ -75,4 +75,17 @@ public class WorkoutHistoryRepository {
             ex.printStackTrace();
         }
     };
+
+    public void remove(String id) {
+        int index = -1;
+        for (WorkoutHistory wh: this.workoutHistories) {
+            if(wh.getId().equalsIgnoreCase(id)) {
+                index = workoutHistories.indexOf(wh);
+            }
+        }
+        if(index != -1) {
+            this.workoutHistories.remove(index);
+            write();
+        }
+    }
 }

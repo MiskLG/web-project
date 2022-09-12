@@ -5,10 +5,23 @@ public class WorkoutHistoryDTO {
     private WorkoutDTO base;
     private String date;
 
-    public WorkoutHistoryDTO(String facility, WorkoutDTO base, String date) {
+    private String buyerUsername;
+    private String id;
+
+    public WorkoutHistoryDTO(String facility, WorkoutDTO base, String date, String buyerUsername,String id) {
         this.facility = facility;
         this.base = base;
         this.date = date;
+        this.buyerUsername = buyerUsername;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFacility() {
@@ -33,5 +46,13 @@ public class WorkoutHistoryDTO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getBuyerUsername() {
+        return buyerUsername;
+    }
+
+    public void setBuyerUsername(String buyerUsername) {
+        this.buyerUsername = buyerUsername;
     }
 }
