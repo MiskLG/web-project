@@ -211,6 +211,7 @@ Vue.component("center", {
 					then(response => {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
+                            this.getContent();
 						}
 					}).catch(error => {
                         
@@ -230,7 +231,12 @@ Vue.component("center", {
                     then(response => {
                         this.content = response.data;
                         this.getWorkouts();
-                        this.getComments();
+                        if(this.user.type == 'ADMIN') {
+                            this.getAllComments();
+                        }
+                        else{
+                            this.getComments();
+                        }
                     })
                     .catch(error => {
                         router.push('/');
@@ -246,7 +252,16 @@ Vue.component("center", {
                     })
             },
             getComments : function() {
-                axios.get('/rest/comments/getByFacility', {params: {id: this.content.id}})
+                axios.get('/rest/comments/getByFacilityApproved', {params: {id: this.content.id}})
+                    .then(response => {
+                        this.comments = response.data;
+                    })
+                    .catch(error => {
+                      
+                    })
+            },
+            getComments : function() {
+                axios.get('/rest/comments/getByFacilityAll', {params: {id: this.content.id}})
                     .then(response => {
                         this.comments = response.data;
                     })
@@ -261,6 +276,6 @@ Vue.component("center", {
     	mounted () {
             this.passedId = this.$route.params.id;
 			this.getUser();
-            this.getContent();
+
         }
 });

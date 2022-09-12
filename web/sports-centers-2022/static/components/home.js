@@ -47,9 +47,6 @@ Vue.component("home", {
 							<li v-if="user.type == 'MANAGER' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-workouts')" href="#/add-workouts">Add workouts</a>
 							</li>
-							<li v-if="user.type == 'MANAGER' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="changePage('/approve-arrival')" href="#/approve-arrival">Approve arrivals</a>
-							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/promo-codes')" href="#/promo-codes">Define promo codes</a>
 							</li>

@@ -61,6 +61,7 @@ public class SportsFacilityRepository {
                 fac.set_type(facility.get_type());
                 fac.set_startTime(facility.get_startTime());
                 fac.set_content(facility.get_content());
+                fac.set_rating(facility.get_rating());
                 write();
                 break;
             }

@@ -19,7 +19,6 @@ public class CommentRepository {
     private CommentRepository() {};
 
     public ArrayList<Comment> getAll() {
-        read();
         return this.comments;
     }
 

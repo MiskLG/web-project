@@ -48,6 +48,12 @@ public class SportsFacilityService {
         return null;
     }
 
+    public void updateRating(double rating, String id) {
+        SportsFacility facility = this.getById(id);
+        facility.set_rating(rating);
+        facilityRepository.update(facility);
+    }
+
     public ArrayList<SportsFacility> getAll() {
 
         ArrayList<SportsFacility> list = facilityRepository.getAll();
