@@ -211,8 +211,8 @@ Vue.component("center", {
 					then(response => {
 						if(response.data != 'NOUSER') {
 							this.user = response.data;
-                            this.getContent();
 						}
+                        this.getContent();
 					}).catch(error => {
                         
                     })	
