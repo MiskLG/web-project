@@ -30,6 +30,9 @@ Vue.component("schedule", {
 							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
 							</li>
+							<li v-if="user.type == 'BUYER'" class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/user-comments')" href="#/user-comments" >Comment</a>
+							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-centers')" href="#/add-centers" >Add Centers</a>
 							</li>
@@ -47,9 +50,6 @@ Vue.component("schedule", {
 							</li>
 							<li v-if="user.type == 'MANAGER' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-workouts')" href="#/add-workouts">Add workouts</a>
-							</li>
-							<li v-if="user.type == 'MANAGER' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="changePage('/approve-arrival')" href="#/approve-arrival">Approve arrivals</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/promo-codes')" href="#/promo-codes">Define promo codes</a>
@@ -99,8 +99,8 @@ Vue.component("schedule", {
 								{{user.username}}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">
-								<li><a class="dropdown-item" @click="changePage('edit-profile')" href="#edit-profile">Edit Profile</a></li>
-								<li><a v-if="user.type=='BUYER'" @click="changePage('subscriptions')" class="dropdown-item" href="#subscriptions" >Subscription</a></li>
+								<li><a class="dropdown-item" @click="changePage('/edit-profile')" href="#edit-profile">Edit Profile</a></li>
+								<li><a v-if="user.type=='BUYER'" @click="changePage('/subscriptions')" class="dropdown-item" href="#subscriptions" >Subscription</a></li>
 								<li><a class="dropdown-item" @click="logout">Logout</a></li>
 							</ul>
 						</div>
@@ -193,13 +193,7 @@ Vue.component("schedule", {
                         
                     })	
 			},
-			editProfile() {
-				if (user.username.length === 0) {
-					return;
-				}
-				router.push('edit-profile');
-				window.location.reload();
-			},
+
 			
 
 			getWorkout : function() {

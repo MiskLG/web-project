@@ -29,7 +29,7 @@ Vue.component("home", {
 							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
 							</li>
-							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
+							<li v-if="user.type == 'BUYER'" class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/user-comments')" href="#/user-comments" >Comment</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
@@ -98,8 +98,8 @@ Vue.component("home", {
 								{{user.username}}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">
-								<li><a class="dropdown-item" @click="changePage('edit-profile')" href="#edit-profile">Edit Profile</a></li>
-								<li><a v-if="user.type=='BUYER'" @click="changePage('subscriptions')" class="dropdown-item" href="#subscriptions" >Subscription</a></li>
+								<li><a class="dropdown-item" @click="changePage('/edit-profile')" href="#edit-profile">Edit Profile</a></li>
+								<li><a v-if="user.type=='BUYER'" @click="changePage('/subscriptions')" class="dropdown-item" href="#subscriptions" >Subscription</a></li>
 								<li><a class="dropdown-item" @click="logout">Logout</a></li>
 							</ul>
 						</div>
@@ -289,14 +289,6 @@ Vue.component("home", {
                         
                     })	
 			},
-			editProfile() {
-				if (user.username.length === 0) {
-					return;
-				}
-				router.push('edit-profile');
-				window.location.reload();
-			},
-			
 
 			search : function () {
 				if(isNaN(this.wrapper.rating)) {

@@ -1,6 +1,6 @@
 [
   {
-    "approved": 0,
+    "approved": 1,
     "buyer": {
       "subscriptionId": {
         "Id": "annual1",

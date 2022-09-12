@@ -19,31 +19,44 @@ Vue.component("add-managers", {
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="homeMove" href="#/">Home</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/')" href="#/">Home</a>
 							</li>
 							<li v-if="user.type == 'BUYER'" class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="workoutsMove" href="#/workouts" >Workouts</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/workouts')" href="#/workouts" >Workouts</a>
+							</li>
+							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
+							</li>
+							<li v-if="user.type == 'BUYER'" class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/user-comments')" href="#/user-comments" >Comment</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="addCentersMove" href="#/add-centers" >Add Centers</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/add-centers')" href="#/add-centers" >Add Centers</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="addManagersMove" href="#/add-managers" >Add Managers</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/add-managers')" href="#/add-managers" >Add Managers</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="addCoachesMove" href="#/add-coaches">Add Coaches</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/add-coaches')" href="#/add-coaches">Add Coaches</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="allUsersMove" href="#/all-users">All Users</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/all-users')" href="#/all-users">All Users</a>
 							</li>
 							<li v-if="user.type == 'MANAGER' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="addWorkoutsMove" href="#/add-workouts">Add workouts</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/facility-overview')" href="#/facility-overview">Facility overview</a>
+							</li>
+							<li v-if="user.type == 'MANAGER' "class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/add-workouts')" href="#/add-workouts">Add workouts</a>
 							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
-							<a class="nav-link active" aria-current="page" @click="promoCodesMove" href="#/promo-codes">Define promo codes</a>
+							<a class="nav-link active" aria-current="page" @click="changePage('/promo-codes')" href="#/promo-codes">Define promo codes</a>
 							</li>
+							<li v-if="user.type == 'ADMIN' "class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/comments-overview')" href="#/comments-overview">Approve comments</a>
+							</li>
+							
 						</ul>
-						<div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="registerMove">
+						<div v-if="user.username == ''" class="bg-secondary btn btn-dark mx-2" @click="changePage('/register')">
 							Register
 						</div>
 						<button v-if="user.username == ''" type="button" class="btn bg-secondary btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -83,8 +96,8 @@ Vue.component("add-managers", {
 								{{user.username}}
 							</button>
 							<ul class="dropdown-menu dropdown-menu-dark">
-								<li><a class="dropdown-item" href="#edit-profile">Edit Profile</a></li>
-								<li><a v-if="user.type=='BUYER' "class="dropdown-item" href="#subscription" >Subscription</a></li>
+								<li><a class="dropdown-item" @click="changePage('/edit-profile')" href="#edit-profile">Edit Profile</a></li>
+								<li><a v-if="user.type=='BUYER'" @click="changePage('/subscriptions')" class="dropdown-item" href="#subscriptions" >Subscription</a></li>
 								<li><a class="dropdown-item" @click="logout">Logout</a></li>
 							</ul>
 						</div>
@@ -179,7 +192,7 @@ Vue.component("add-managers", {
 							alert("Wrong username or password");
 						})
 				}		
-    		},
+			},
 			logout : function () {
 				this.user.username = "";
 				this.user.type = "";
@@ -188,42 +201,9 @@ Vue.component("add-managers", {
 						router.push('/');
 					})
 			},
-			registerMove : function () {
-				router.push('/register');
-				window.location.reload();
-    		},
-			homeMove : function () {
-				router.push('/');
-				window.location.reload();
-    		},
-			workoutsMove : function () {
-				router.push('/workouts');
-				window.location.reload();
-    		},
-			addCentersMove : function () {
-				router.push('/add-centers');
-				window.location.reload();
-    		},
-			addManagersMove : function () {
-				router.push('/add-managers');
-				window.location.reload();
-    		},
-			addCoachesMove : function () {
-				router.push('/add-coaches');
-				window.location.reload();
-    		},
-			allUsersMove : function () {
-				router.push('/all-users');
-				window.location.reload();
-    		},
-			addWorkoutsMove : function () {
-				router.push('/add-workouts');
-				window.location.reload();
-    		},
-			promoCodesMove : function () {
-				router.push('/promo-codes');
-				window.location.reload();
-    		},
+			changePage : function(path) {
+				router.push(path);
+			},
 			getUser : function () {
 				axios.get('rest/user/current').
 					then(response => {
@@ -241,13 +221,6 @@ Vue.component("add-managers", {
 					}).catch(error => {
                         
                     })	
-			},
-			editProfile() {
-				if (user.username.length === 0) {
-					return;
-				}
-				router.push('edit-profile');
-				window.location.reload();
 			},
 
             register : function () {

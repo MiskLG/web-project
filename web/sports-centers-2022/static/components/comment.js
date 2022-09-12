@@ -29,6 +29,9 @@ Vue.component("user-comments", {
 							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
 							</li>
+							<li v-if="user.type == 'BUYER'" class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/user-comments')" href="#/user-comments" >Comment</a>
+							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-centers')" href="#/add-centers" >Add Centers</a>
 							</li>
@@ -155,29 +158,29 @@ Vue.component("user-comments", {
 		</div>
     	`,
     methods : {
-			login : function () {
-				if(this.credentials.username.trim() != "" && this.credentials.password.trim() != ""){
-					axios.post('/rest/user/login', this.credentials).
-						then(response => {
-							this.user = response.data;
-							window.location.reload();
-						})	
-						.catch(error => {
-							alert("Wrong username or password");
-						})
-				}		
-    		},
-			logout : function () {
-				this.user.username = "";
-				this.user.type = "";
-				axios.post('/rest/user/logout')
-					.then(response => {
-						router.push('/');
-					})
-			},
-			changePage : function(path) {
-				router.push(path);
-			},
+            login : function () {
+                if(this.credentials.username.trim() != "" && this.credentials.password.trim() != ""){
+                    axios.post('rest/user/login', this.credentials).
+                        then(response => {
+                            this.user = response.data;
+                            window.location.reload();
+                        })	
+                        .catch(error => {
+                            alert("Wrong username or password");
+                        })
+                }		
+            },
+            logout : function () {
+                this.user.username = "";
+                this.user.type = "";
+                axios.post('rest/user/logout')
+                    .then(response => {
+                        router.push('/');
+                    })
+            },
+            changePage : function(path) {
+                router.push(path);
+            },
 			getUser : function () {
 				axios.get('/rest/user/current').
 					then(response => {
@@ -191,13 +194,6 @@ Vue.component("user-comments", {
 					}).catch(error => {
                         
                     })	
-			},
-			editProfile() {
-				if (user.username.length === 0) {
-					return;
-				}
-				router.push('edit-profile');
-				window.location.reload();
 			},
 
             getCenters : function () {

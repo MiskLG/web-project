@@ -5,6 +5,7 @@ import beans.Comment;
 import beans.SportsFacility;
 import com.google.gson.Gson;
 import dto.CommentDTO;
+import dto.CommentUpdateDTO;
 import dto.SportsFacilityDTO;
 import service.BuyerService;
 import service.CommentService;
@@ -110,15 +111,27 @@ public class CommentController {
 
     public static void approve() {
         put("/approve",(req, res) -> {
-            commentService.approve(req.queryParams("facilityId"), req.queryParams("userId"));
-            return res;
+            res.type("application/json");
+            res.status(200);
+
+            String payload = req.body();
+            CommentUpdateDTO data = g.fromJson(payload, CommentUpdateDTO.class);
+            commentService.approve(data.getFacilityId(), data.getUserId());
+
+            return g.toJson(res.raw());
         });
     }
 
     public static void disapprove() {
         put("/disapprove",(req, res) -> {
-            commentService.approve(req.queryParams("facilityId"), req.queryParams("userId"));
-            return res;
+            res.type("application/json");
+            res.status(200);
+
+            String payload = req.body();
+            CommentUpdateDTO data = g.fromJson(payload, CommentUpdateDTO.class);
+            commentService.disapprove(data.getFacilityId(), data.getUserId());
+
+            return g.toJson(res.raw());
         });
     }
     public static void getUncommented() {
