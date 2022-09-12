@@ -137,15 +137,16 @@ Vue.component("center", {
                     </div>
                 </div>
                 <div class="row mx-4">
-                    <div class="col-6 justify-content-center bg-secondary rounded ">
-                        <div class="d-flex justify-content-center row fs-2 text-light">
-                            Workouts
-                        </div>
-                        <div v-for="w in workouts" class="row">
+                <div class="col-6 justify-content-center ">
+                    <div class="d-flex justify-content-center bg-secondary rounded m-2 row fs-2 text-light">
+                        Workouts
+                    </div>
+                    <div v-for="w in workouts" class="row m-2">
+                        <div class="d-flex bg-secondary rounded"> 
                             <div class="col-md-4 ">
-                                <img :src="w.photo" class="img-thumbnail"/>
+                                <img :src="w.photo" class="m-2 img-thumbnail"/>
                             </div>
-                            <div class="col-md-8 fs-5">
+                            <div class="col-md-6 fs-5">
                                 <div class="row my-2">
                                     <label class="text-light">Name: <span class="text-info mx-2">{{w.name}}</span></label>
                                 </div>
@@ -161,24 +162,44 @@ Vue.component("center", {
                                 <div class="row my-2">
                                     <label class="text-light">Description: <span class="text-info mx-2">{{w.description}}</span></label>
                                 </div>
-                                <div class="row m-2" v-if="user.type=='BUYER'">
-                                    <button class="btn btn-primary" type="button" @click="schedule(w.id)">
-                                        Schedule workout
-                                    </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 justify-content-center">
+                    <div class="d-flex fs-2 bg-secondary rounded justify-content-center text-light row m-2">
+                        Comments
+                    </div>
+                    <div v-for="c in comments" class="row fs-4 m-2">
+                        <div class="bg-secondary rounded">
+                            <div class="row my-2">
+                                <div class="col-md-6">
+                                <label class="text-light">User:</label>
+                                </div>
+                                <div class="col-md-6">
+                                <span class="text-info mx-2">{{c.user}} </span>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-6">
+                                <label class="text-light">Comment text:</label>
+                                </div>
+                                <div class="col-md-6">
+                                <span class="text-info mx-2">{{c.text}} </span>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-md-6">
+                                <label class="text-light">Rating:</label>
+                                </div>
+                                <div class="col-md-6">
+                                <span class="text-info mx-2">{{c.rating}} </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 justify-content-center">
-                        <div class="d-flex fs-2 bg-secondary rounded justify-content-center text-light">
-                            Comments
-                        </div>
-                        <div v-for="c in comments" class="row fs-4">
-                            
-                        </div>
-                    </div>
-                    
                 </div>
+            </div>
             </div>
 		</div>
     	`,
@@ -231,6 +252,7 @@ Vue.component("center", {
                     then(response => {
                         this.content = response.data;
                         this.getWorkouts();
+                        
                         if(this.user.type == 'ADMIN') {
                             this.getAllComments();
                         }
@@ -245,6 +267,7 @@ Vue.component("center", {
                 axios.get('/rest/workouts/getByFacility', {params: {id: this.content.id}})
                     .then(response => {
                         this.workouts = response.data;
+                        return;
                     })
                     .catch(error => {
                 
@@ -254,15 +277,17 @@ Vue.component("center", {
                 axios.get('/rest/comments/getByFacilityApproved', {params: {id: this.content.id}})
                     .then(response => {
                         this.comments = response.data;
+                        return;
                     })
                     .catch(error => {
                       
                     })
             },
-            getComments : function() {
+            getAllComments : function() {
                 axios.get('/rest/comments/getByFacilityAll', {params: {id: this.content.id}})
                     .then(response => {
                         this.comments = response.data;
+                        return;
                     })
                     .catch(error => {
                       
