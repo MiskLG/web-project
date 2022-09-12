@@ -127,44 +127,71 @@ Vue.component("facility-overview", {
                     </div>
                 </div>
                 <div class="row mx-4">
-                    <div class="col-6 justify-content-center bg-secondary rounded ">
-                        <div class="d-flex justify-content-center row fs-2 text-light">
+                    <div class="col-6 justify-content-center ">
+                        <div class="d-flex justify-content-center bg-secondary rounded m-2 row fs-2 text-light">
                             Workouts
                         </div>
-                        <div v-for="w in workouts" class="row">
-                            <div class="col-md-4 ">
-                                <img :src="w.photo" class="img-thumbnail"/>
-                            </div>
-                            <div class="col-md-8 fs-5">
-                                <div class="row my-2">
-                                    <label class="text-light">Name: <span class="text-info mx-2">{{w.name}}</span></label>
+                        <div v-for="w in workouts" class="row m-2">
+                            <div class="d-flex bg-secondary rounded"> 
+                                <div class="col-md-4 ">
+                                    <img :src="w.photo" class="m-2 img-thumbnail"/>
                                 </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Type: <span class="text-info mx-2">{{w.type}}</span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Duration: <span class="text-info mx-2">{{w.duration}}min </span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Coach: <span class="text-info mx-2">{{w.coachUsername}} - {{w.coachName}} {{w.coachLastname}}</span></label>
-                                </div>
-                                <div class="row my-2">
-                                    <label class="text-light">Description: <span class="text-info mx-2">{{w.description}}</span></label>
-                                </div>
-                                <div class="row m-2">
-                                    <button class="btn btn-primary" type="button" @click="editWorkout(w.id)">
-                                        Edit workout
-                                    </button>
+                                <div class="col-md-6 fs-5">
+                                    <div class="row my-2">
+                                        <label class="text-light">Name: <span class="text-info mx-2">{{w.name}}</span></label>
+                                    </div>
+                                    <div class="row my-2">
+                                        <label class="text-light">Type: <span class="text-info mx-2">{{w.type}}</span></label>
+                                    </div>
+                                    <div class="row my-2">
+                                        <label class="text-light">Duration: <span class="text-info mx-2">{{w.duration}}min </span></label>
+                                    </div>
+                                    <div class="row my-2">
+                                        <label class="text-light">Coach: <span class="text-info mx-2">{{w.coachUsername}} - {{w.coachName}} {{w.coachLastname}}</span></label>
+                                    </div>
+                                    <div class="row my-2">
+                                        <label class="text-light">Description: <span class="text-info mx-2">{{w.description}}</span></label>
+                                    </div>
+                                    <div class="row m-2">
+                                        <button class="btn btn-primary" type="button" @click="editWorkout(w.id)">
+                                            Edit workout
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 justify-content-center">
-                        <div class="d-flex fs-2 bg-secondary rounded justify-content-center text-light">
+                        <div class="d-flex fs-2 bg-secondary rounded justify-content-center text-light row m-2">
                             Comments
                         </div>
-                        <div v-for="c in comments" class="row fs-4">
-                            
+                        <div v-for="c in comments" class="row fs-4 m-2">
+                            <div class="bg-secondary rounded">
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                    <label class="text-light">User:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <span class="text-info mx-2">{{c.user}} </span>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                    <label class="text-light">Comment text:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <span class="text-info mx-2">{{c.text}} </span>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                    <label class="text-light">Rating:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <span class="text-info mx-2">{{c.rating}} </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -226,6 +253,7 @@ Vue.component("facility-overview", {
 						if(response.status == 204) {
 							alert("You are currently not manager of any facility, please ask admin to add you to your facility");
                             router.push('/');
+                            return;
 						}
                         this.getContent();
 					})
@@ -254,7 +282,7 @@ Vue.component("facility-overview", {
                     })
             },
             getComments : function() {
-                axios.get('/rest/comments/getByFacility', {params: {id: this.content.id}})
+                axios.get('/rest/comments/getByFacilityAll', {params: {id: this.content.id}})
                     .then(response => {
                         this.comments = response.data;
                     })
