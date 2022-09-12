@@ -22,6 +22,7 @@ public class Main {
         SubscriptionController.init();
         PromoCodeController.init();
         WorkoutHistoryController.init();
+        CommentController.init();
         //get("/rest", (request, response) -> "HELLO");
     }
 }

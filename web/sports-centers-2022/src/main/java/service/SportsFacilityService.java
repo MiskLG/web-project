@@ -12,6 +12,7 @@ import java.util.Collections;
 public class SportsFacilityService {
     private SportsFacilityRepository facilityRepository;
     private ManagerService managerService;
+
     public enum SortingParameter {NAME, LOCATION, RATING};
     public enum SortingOrientation {ASC, DESC};
 
@@ -242,4 +243,5 @@ public class SportsFacilityService {
     public void update(SportsFacility sportsFacility) {
         facilityRepository.update(sportsFacility);
     }
+
 }

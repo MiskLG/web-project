@@ -1,7 +1,7 @@
 [
   {
     "id": "4CgCqEST",
-    "dateOfRegistration": "Mar 15, 2035, 12:00:00 AM",
+    "dateOfRegistration": "Mar 15, 2021, 12:00:00 AM",
     "workout": {
       "id": "04DmhIdz",
       "name": "Push Day - 17:30",
@@ -60,6 +60,6 @@
       "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
       "userType": "COACH"
     },
-    "status": false
+    "status": true
   }
 ]

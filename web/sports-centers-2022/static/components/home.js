@@ -29,6 +29,9 @@ Vue.component("home", {
 							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/user-workouts')" href="#/user-workouts" >Appointed workouts</a>
 							</li>
+							<li v-if="user.type == 'BUYER' || user.type == 'COACH'" class="nav-item">
+							<a class="nav-link active" aria-current="page" @click="changePage('/user-comments')" href="#/user-comments" >Comment</a>
+							</li>
 							<li v-if="user.type == 'ADMIN' "class="nav-item">
 							<a class="nav-link active" aria-current="page" @click="changePage('/add-centers')" href="#/add-centers" >Add Centers</a>
 							</li>

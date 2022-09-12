@@ -22,7 +22,7 @@
         "photo": "resources/images/workouts/04DmhIdz.png"
       }
     ],
-    "_status": true,
+    "_status": false,
     "_location": {
       "latitude": 45.24099816846322,
       "longitude": 19.811565054653887,
@@ -34,7 +34,7 @@
       }
     },
     "_logo": "resources/images/sports_centers/TTlipsaQ.png",
-    "_rating": 0.0,
+    "_rating": 5.0,
     "_startTime": 800,
     "_endTime": 2200
   }

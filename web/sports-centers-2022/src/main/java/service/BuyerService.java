@@ -27,6 +27,8 @@ public class BuyerService {
         userService = new UserService();
     }
 
+
+
     public void addSubscription(Buyer buyer, Subscription subscription) {
         if(buyer.getSubscriptionId() != null) {
             // LEFT FOR TESTING

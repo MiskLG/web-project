@@ -239,7 +239,6 @@ Vue.component("center", {
                         }
                     })
                     .catch(error => {
-                        router.push('/');
                     })
             },
             getWorkouts : function() {

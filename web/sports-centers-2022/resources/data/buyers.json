@@ -9,7 +9,9 @@
       "numberOfAppointments": 239,
       "type": "ANNUAL"
     },
-    "visitedFacilities": [],
+    "visitedFacilities": [
+      "TTlipsaQ"
+    ],
     "points": 10710.0,
     "buyerType": {
       "name": "Platinum",
