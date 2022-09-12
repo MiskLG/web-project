@@ -1,0 +1,73 @@
+[
+  {
+    "approved": 1,
+    "buyer": {
+      "subscriptionId": {
+        "Id": "annual1",
+        "dateOfPaying": "Sep 11, 2022, 12:00:00 AM",
+        "dateOfExparation": "Sep 11, 2023, 12:00:00 AM",
+        "price": 50000.0,
+        "status": "ACTIVE",
+        "numberOfAppointments": 239,
+        "type": "ANNUAL"
+      },
+      "visitedFacilities": [
+        "TTlipsaQ"
+      ],
+      "points": 10710.0,
+      "buyerType": {
+        "name": "Platinum",
+        "discount": 25.0,
+        "pointsNeeded": 10000.0
+      },
+      "username": "buyer1",
+      "name": "Mira",
+      "lastname": "Miricc",
+      "password": "123",
+      "gender": "FEMALE",
+      "dateOfBirth": "Sep 16, 1998, 12:00:00 AM",
+      "userType": "BUYER"
+    },
+    "facility": {
+      "id": "TTlipsaQ",
+      "_name": "WorkoutGym",
+      "_type": "GYM",
+      "_content": [
+        {
+          "id": "04DmhIdz",
+          "name": "Push Day",
+          "type": "PERSONAL",
+          "duration": 89.0,
+          "coach": {
+            "username": "coach1",
+            "name": "Marko",
+            "lastname": "Markovic",
+            "password": "123",
+            "gender": "MALE",
+            "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+            "userType": "COACH"
+          },
+          "description": "",
+          "photo": "resources/images/workouts/04DmhIdz.png"
+        }
+      ],
+      "_status": false,
+      "_location": {
+        "latitude": 45.24099816846322,
+        "longitude": 19.811565054653887,
+        "address": {
+          "street": "Rejmontova",
+          "stNumber": "4",
+          "city": "Novi Sad",
+          "poNumber": "21000"
+        }
+      },
+      "_logo": "resources/images/sports_centers/TTlipsaQ.png",
+      "_rating": 5.0,
+      "_startTime": 800,
+      "_endTime": 2200
+    },
+    "text": "berry gud",
+    "rating": 5
+  }
+]

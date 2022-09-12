@@ -1,0 +1,23 @@
+[
+  {
+    "id": "04DmhIdz",
+    "name": "Push Day - 17:30",
+    "type": "PERSONAL",
+    "duration": 89.0,
+    "__facility": {
+      "id": "TTlipsaQ",
+      "_name": "WorkoutGym"
+    },
+    "coach": {
+      "username": "coach1",
+      "name": "Marko",
+      "lastname": "Markovic",
+      "password": "123",
+      "gender": "MALE",
+      "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+      "userType": "COACH"
+    },
+    "description": "",
+    "photo": "resources/images/workouts/04DmhIdz.png"
+  }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Bronze",
+        "discount" : 0,
+        "pointsNeeded" : 0
+    },
+    {
+        "name": "Silver",
+        "discount" : 5,
+        "pointsNeeded" : 500
+    },
+    {
+        "name": "Gold",
+        "discount" : 10,
+        "pointsNeeded" : 2000
+    },
+    {
+        "name": "Platinum",
+        "discount" : 25,
+        "pointsNeeded" : 10000
+    }
+
+]

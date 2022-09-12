@@ -1,0 +1,41 @@
+[
+  {
+    "id": "TTlipsaQ",
+    "_name": "WorkoutGym",
+    "_type": "GYM",
+    "_content": [
+      {
+        "id": "04DmhIdz",
+        "name": "Push Day",
+        "type": "PERSONAL",
+        "duration": 89.0,
+        "coach": {
+          "username": "coach1",
+          "name": "Marko",
+          "lastname": "Markovic",
+          "password": "123",
+          "gender": "MALE",
+          "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+          "userType": "COACH"
+        },
+        "description": "",
+        "photo": "resources/images/workouts/04DmhIdz.png"
+      }
+    ],
+    "_status": false,
+    "_location": {
+      "latitude": 45.24099816846322,
+      "longitude": 19.811565054653887,
+      "address": {
+        "street": "Rejmontova",
+        "stNumber": "4",
+        "city": "Novi Sad",
+        "poNumber": "21000"
+      }
+    },
+    "_logo": "resources/images/sports_centers/TTlipsaQ.png",
+    "_rating": 5.0,
+    "_startTime": 800,
+    "_endTime": 2200
+  }
+]

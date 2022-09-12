@@ -1,0 +1,65 @@
+[
+  {
+    "id": "4CgCqEST",
+    "dateOfRegistration": "Mar 15, 2021, 12:00:00 AM",
+    "workout": {
+      "id": "04DmhIdz",
+      "name": "Push Day - 17:30",
+      "type": "PERSONAL",
+      "duration": 89.0,
+      "__facility": {
+        "id": "TTlipsaQ",
+        "_name": "WorkoutGym",
+        "_status": false,
+        "_startTime": 0,
+        "_endTime": 0
+      },
+      "coach": {
+        "username": "coach1",
+        "name": "Marko",
+        "lastname": "Markovic",
+        "password": "123",
+        "gender": "MALE",
+        "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+        "userType": "COACH"
+      },
+      "description": "",
+      "photo": "resources/images/workouts/04DmhIdz.png"
+    },
+    "buyer": {
+      "subscriptionId": {
+        "Id": "annual1",
+        "dateOfPaying": "Sep 11, 2022, 12:00:00 AM",
+        "dateOfExparation": "Sep 11, 2023, 12:00:00 AM",
+        "price": 50000.0,
+        "status": "ACTIVE",
+        "numberOfAppointments": 238,
+        "type": "ANNUAL"
+      },
+      "visitedFacilities": [],
+      "points": 10710.0,
+      "buyerType": {
+        "name": "Platinum",
+        "discount": 25.0,
+        "pointsNeeded": 10000.0
+      },
+      "username": "buyer1",
+      "name": "Mira",
+      "lastname": "Miricc",
+      "password": "123",
+      "gender": "FEMALE",
+      "dateOfBirth": "Sep 16, 1998, 12:00:00 AM",
+      "userType": "BUYER"
+    },
+    "coach": {
+      "username": "coach1",
+      "name": "Marko",
+      "lastname": "Markovic",
+      "password": "123",
+      "gender": "MALE",
+      "dateOfBirth": "Aug 20, 2003, 6:41:15 PM",
+      "userType": "COACH"
+    },
+    "status": true
+  }
+]
